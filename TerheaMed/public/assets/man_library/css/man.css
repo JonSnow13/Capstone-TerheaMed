@@ -1,0 +1,8 @@
+.man-link{
+	display: block;
+    padding: .5rem 1rem;
+    color: #716a6a;
+}
+a.man-link{
+	text-decoration: none;
+}

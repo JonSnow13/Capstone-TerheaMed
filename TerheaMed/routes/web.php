@@ -15,6 +15,7 @@
 //     return view('welcome');
 // });
 
-Route::get('/', function () {
-    return view('layout.index');
-});
+Route::get(
+	'/',
+	'HomeController@index'
+	);
