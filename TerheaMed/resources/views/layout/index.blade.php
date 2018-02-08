@@ -1,20 +1,6 @@
 @extends('layout.app')
 
 @section('content')
-	<nav class="navbar justify-content-between" style="background-color: #d40015">
-	  <a class="navbar-brand" style="color: #fff">Terhea</a>
-	  <form class="form-inline">
-	    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-	    <button class="btn btn-outline-default my-2 my-sm-0" type="submit">Search</button>
-	  </form>
-	</nav>
-	<nav class="nav" style="border: 1px solid #c3baba">
-	  <a class="man-link active" href="#">Home</a>
-	  <span class="nav-link">|</span>
-	  <a class="man-link" href="#">Adults</a>
-	  <span class="nav-link">|</span>
-	  <a class="man-link" href="#">Kids</a>
-	</nav>
 	<div class="content">
 		{{-- <div class="row">
 			<div class="col-md-12">
@@ -36,26 +22,138 @@
 			</div>
 		</div> --}}
 		<div class="row">
-			<div class="col-md-7">
+			<div class="col-md-6">
+				<h5 style="padding: .5rem .5rem; color: #696a6d;">Suggested Medicine(s):</h5>
+				<div class="card">
+					<div style="padding: 5px;">
+				  		<div class="man-row">
+				  			<div class="col-md-4" style="border: 1px solid rgba(0,0,0,.125); max-height: 170px; overflow: hidden; height: 170px; ">
+					  			<img src="{{asset('assets/images/biogesic.jpg')}}" style="width: 100%;">
+					  		</div>
+					  		<div class="col-md-8">
+					  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
+					  		</div>
+				  		</div>
+				  	</div>
+				  	<hr style="margin-right: 1%; margin-left: 1%;">
+				  	<div style="padding: 5px;">
+				  		<div class="man-row">
+				  			<div class="col-md-4" style="border: 1px solid rgba(0,0,0,.125); max-height: 170px; overflow: hidden; height: 170px; ">
+					  			<img src="{{asset('assets/images/img1.jpg')}}" style="width: 100%;">
+					  		</div>
+					  		<div class="col-md-8">
+					  			<p style="font-size: 15px;">These medicines are used for the relief of clogged nose, runny nose, postnasal drip, itchy and watery eyes, sneezing, headache, body aches, and fever associated with the common cold, allergic rhinitis, sinusitis, flu, and other minor respiratory tract infections. They also help decongest sinus openings and passages.</p>
+					  		</div>
+				  		</div>
+				  	</div>
+				  	<hr style="margin-right: 1%; margin-left: 1%;">
+				  	<div style="padding: 5px;">
+				  		<div class="man-row">
+				  			<div class="col-md-4" style="border: 1px solid rgba(0,0,0,.125); max-height: 170px; overflow: hidden; height: 170px; ">
+					  			<img src="{{asset('assets/images/biogesic.jpg')}}" style="width: 100%;">
+					  		</div>
+					  		<div class="col-md-8">
+					  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
+					  		</div>
+				  		</div>
+				  	</div>
+				  	<hr style="margin-right: 1%; margin-left: 1%;">
+				  	<div style="padding: 5px;">
+				  		<div class="man-row">
+				  			<div class="col-md-4" style="border: 1px solid rgba(0,0,0,.125); max-height: 170px; overflow: hidden; height: 170px; ">
+					  			<img src="{{asset('assets/images/img1.jpg')}}" style="width: 100%;">
+					  		</div>
+					  		<div class="col-md-8">
+					  			<p style="font-size: 15px;">These medicines are used for the relief of clogged nose, runny nose, postnasal drip, itchy and watery eyes, sneezing, headache, body aches, and fever associated with the common cold, allergic rhinitis, sinusitis, flu, and other minor respiratory tract infections. They also help decongest sinus openings and passages.</p>
+					  		</div>
+				  		</div>
+				  	</div>
+				  	<hr style="margin-right: 1%; margin-left: 1%;">
+				  	<div style="padding: 5px;">
+				  		<div class="man-row">
+				  			<div class="col-md-4" style="border: 1px solid rgba(0,0,0,.125); max-height: 170px; overflow: hidden; height: 170px; ">
+					  			<img src="{{asset('assets/images/biogesic.jpg')}}" style="width: 100%;">
+					  		</div>
+					  		<div class="col-md-8">
+					  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
+					  		</div>
+				  		</div>
+				  	</div>
+				</div>
+			</div>
+			<div class="col-md-3" id="pharmacy-section-holder">
+				<h6 style="padding: .5rem .5rem; color: #696a6d;">Pharmacy in your location:</h6>
+				<div class="card pharmacy-container">
+					<div class="pharmacy-panel">
+						<img class="card-img-top" src="{{asset('assets/images/mercury.jpg')}}" alt="Card image cap">
+					  	<div class="card-body">
+					  		<h6 class="pharma-title">Mercury</h6>
+					  		<div class="man-row location-label">
+					  			<i class="material-icons location-pointer">location_on</i>
+					  			<p class="distance-label"><b>Distance: </b>150m away from your location</p>
+					  		</div>
+						</div>
+					</div>
+
+					<hr style="margin: 1%;">
+
+					<div class="pharmacy-panel">
+						<img class="card-img-top" src="{{asset('assets/images/generic.jpg')}}" alt="Card image cap">
+					  	<div class="card-body">
+					  		<h6 class="pharma-title">Generic pharmacy</h6>
+					  		<div class="man-row location-label">
+					  			<i class="material-icons">location_on</i>
+					  			<p class="distance-label"><b>Distance: </b>1km away from your location</p>
+					  		</div>
+						</div>
+					</div>
+
+					<hr style="margin: 1%;">
+
+					<div class="pharmacy-panel">
+						<img class="card-img-top" src="{{asset('assets/images/mercury.jpg')}}" alt="Card image cap">
+					  	<div class="card-body">
+					  		<h6 class="pharma-title">Mercury</h6>
+					  		<div class="man-row location-label">
+					  			<i class="material-icons">location_on</i>
+					  			<p class="distance-label"><b>Distance: </b>150m away from your location</p>
+					  		</div>
+						</div>
+					</div>
+
+					<hr style="margin: 1%;">
+
+					<div class="pharmacy-panel aaa">
+						<img class="card-img-top" src="{{asset('assets/images/mercury.jpg')}}" alt="Card image cap">
+					  	<div class="card-body">
+					  		<h6 class="pharma-title">Mercury Last</h6>
+					  		<div class="man-row location-label">
+					  			<i class="material-icons">location_on</i>
+					  			<p class="distance-label"><b>Distance: </b>150m away from your location</p>
+					  		</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<h6 style="padding: .5rem .5rem; color: #696a6d;">Clinic in your location:</h6>
 				<div class="card">
 				  	<div class="card-body">
 				    	<h5 class="card-title">Card title</h5>
-				    	<form>
-						  	<div class="form-group">
-						    	<label for="exampleInputEmail1">Email address</label>
-						    	<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-						    	<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-						  	</div>
-						 	<div class="form-group">
-						    	<label for="exampleInputPassword1">Password</label>
-						    	<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-						  	</div>
-						  	<div class="form-check">
-						    	<input type="checkbox" class="form-check-input" id="exampleCheck1">
-						    	<label class="form-check-label" for="exampleCheck1">Check me out</label>
-						  	</div>
-						  	<button type="submit" class="btn btn-primary">Submit</button>
-						</form>
+					  	<div class="form-group">
+					    	<label >Email address</label>
+					    	<input type="email" class="form-control"  aria-describedby="emailHelp" placeholder="Enter email">
+					    	<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+					  	</div>
+					 	<div class="form-group">
+					    	<label for="exampleInputPassword1">Password</label>
+					    	<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+					  	</div>
+					  	<div class="form-check">
+					    	<input type="checkbox" class="form-check-input" id="exampleCheck1">
+					    	<label class="form-check-label" for="exampleCheck1">Check me out</label>
+					  	</div>
+					  	<button type="submit" class="btn btn-primary">Submit</button>
 				  	</div>
 				</div>
 			</div>

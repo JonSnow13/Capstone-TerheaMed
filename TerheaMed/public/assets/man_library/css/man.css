@@ -1,8 +1,58 @@
 .man-link{
 	display: block;
     padding: .5rem 1rem;
-    color: #716a6a;
+    color: #fff;
 }
 a.man-link{
 	text-decoration: none;
+}
+.man-search-form{
+	display: inline-block;
+    width: 500px;
+    vertical-align: middle;
+}
+.man-active{
+	background: #3882e9;
+}
+.man-row{
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.man-fixed-top{
+	position: fixed;
+    top: 0;
+    right: 15px;
+    left: 15px;
+    z-index: 1030;
+}
+.pharma-title{
+	margin-top: -15px;
+	margin-left: -15px;
+}
+.location-label{
+	margin-left: -1.13rem;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-right: -1.187rem;
+	margin-bottom: -1.8rem;
+	border-top:1px solid rgba(0,0,0,.125);
+}
+.distance-label{
+	font-size: 10px; 
+	margin-top: 1rem;
+}
+.pharma-fixed-top{
+	position: fixed;
+    top: 61px;
+    left: 500px;
+    z-index: 1030;
+}
+.location-pointer{
+	cursor: pointer;
+}
+@media(max-width: 978px){
+
 }
