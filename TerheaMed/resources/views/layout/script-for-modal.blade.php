@@ -33,9 +33,9 @@
               lng: position.coords.longitude
             };
             
-            // infoWindow.setPosition(pos);
-            // infoWindow.setContent('<i class="material-icons">my_location</i> your location');
-            // infoWindow.open(map);
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('<i class="material-icons">my_location</i> your location');
+            infoWindow.open(map);
 
 
      //        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
@@ -98,9 +98,9 @@
 		      $('#panel-1').append('<div class="pharmacy-panel"><div class="img-box" id="pharma'+i+'"></div><div class="card-body"><h6 class="pharma-title">'+ place.name +'</h6><div class="man-row location-label" onclick="locationView()"><i class="material-icons location-pointer">location_on</i><p class="distance-label"><b>Distance: </b>150m away from your location</p></div></div></div>');
 
 		      // renderStreetView(results[i].geometry.location, 'pharma'+i);
-		      
 		    }
 		    
+		    getClassOfPharmaPanel();
 		  }
 		}
 
@@ -111,9 +111,10 @@
 		      // console.log(place);
 		      // createMarker(results[i]);
 
-		     $('#panel-2').append('<div class="pharmacy-panel"><img class="card-img-top" src="{{asset('assets/images/mercury.jpg')}}" alt="Card image cap"><div class="card-body"><h6 class="pharma-title">'+ place.name +'</h6><div class="man-row location-label" onclick="locationView()"><i class="material-icons location-pointer">location_on</i><p class="distance-label"><b>Distance: </b>150m away from your location</p></div></div></div>');
+		     $('#panel-2').append('<div class="pharmacy-panel-2"><img class="card-img-top" src="{{asset('assets/images/mercury.jpg')}}" alt="Card image cap"><div class="card-body"><h6 class="pharma-title">'+ place.name +'</h6><div class="man-row location-label" onclick="locationView()"><i class="material-icons location-pointer">location_on</i><p class="distance-label"><b>Distance: </b>150m away from your location</p></div></div></div>');
 		      
 		    }
+		    getClassOfHospitalPanel();
 		  }
 		}
 

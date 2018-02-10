@@ -2,26 +2,7 @@
 	$(function(){
 		$('.navbar').scrollToFixed();
 		// $('#pharmacy-section-holder').scrollToFixed();
-		var secondToLastElement = $('.pharmacy-panel').eq(-2);
-
-            secondToLastElement.scrollToFixed ({
-                marginTop: $ ( '.navbar'). outerHeight (true) + 10
-        	});
-
-        var lastElement = $('.pharmacy-panel').eq(-1);
-        	lastElement.scrollToFixed ({
-                marginTop: $('.pharmacy-panel').eq(-2). outerHeight (true) + 65
-        	});
-
-        var secondToLastClinic = $('.pharmacy-panel-2').eq(-2);
-        	secondToLastClinic.scrollToFixed ({
-                marginTop: $ ( '.navbar'). outerHeight (true) + 10
-        	});
-
-        var lastClinic = $('.pharmacy-panel-2').eq(-1);
-        	lastClinic.scrollToFixed ({
-                marginTop: $('.pharmacy-panel-2').eq(-2). outerHeight (true) + 65
-        	});
+		
 
 		// var lastElement = $('.pharmacy-container .pharmacy-panel:last-child');
 		// $(window).scroll(function(){
@@ -64,4 +45,32 @@
 		// }
 
 	});
+
+	function getClassOfPharmaPanel()
+	{
+		var secondToLastElement = $('.pharmacy-panel').eq(-2);
+
+            secondToLastElement.scrollToFixed ({
+                marginTop: $ ( '.navbar'). outerHeight (true) + 10
+        	});
+
+        var lastElement = $('.pharmacy-panel').eq(-1);
+        	lastElement.scrollToFixed ({
+                marginTop: $('.pharmacy-panel').eq(-2). outerHeight (true) + 65
+        	});
+	}
+
+	function getClassOfHospitalPanel()
+	{
+
+        var secondToLastClinic = $('.pharmacy-panel-2').eq(-2);
+        	secondToLastClinic.scrollToFixed ({
+                marginTop: $ ( '.navbar'). outerHeight (true) + 10
+        	});
+
+        var lastClinic = $('.pharmacy-panel-2').eq(-1);
+        	lastClinic.scrollToFixed ({
+                marginTop: $('.pharmacy-panel-2').eq(-2). outerHeight (true) + 65
+        	});
+	}
 </script>
