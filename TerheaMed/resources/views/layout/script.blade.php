@@ -13,14 +13,14 @@
                 marginTop: $('.pharmacy-panel').eq(-2). outerHeight (true) + 65
         	});
 
-        var secondToLastClinic = $('.list-group-item').eq(-2);
+        var secondToLastClinic = $('.pharmacy-panel-2').eq(-2);
         	secondToLastClinic.scrollToFixed ({
                 marginTop: $ ( '.navbar'). outerHeight (true) + 10
         	});
 
-        var lastClinic = $('.list-group-item').eq(-1);
+        var lastClinic = $('.pharmacy-panel-2').eq(-1);
         	lastClinic.scrollToFixed ({
-                marginTop: $('.list-group-item').eq(-2). outerHeight (true) + 65
+                marginTop: $('.pharmacy-panel-2').eq(-2). outerHeight (true) + 65
         	});
 
 		// var lastElement = $('.pharmacy-container .pharmacy-panel:last-child');

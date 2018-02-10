@@ -82,56 +82,65 @@
 				</div>
 			</div>
 
-			<div class="col-md-3" id="pharmacy-section-holder">
-				<h6 style="padding: .5rem .5rem; color: #696a6d;" id="nearestPhamacy">Pharmacy in your location:</h6>
-				<div class="pharmacy-container">
-					<div class="pharmacy-panel">
-						<img class="card-img-top" src="{{asset('assets/images/mercury.jpg')}}" alt="Card image cap">
-					  	<div class="card-body">
-					  		<h6 class="pharma-title">Mercury</h6>
-					  		<div class="man-row location-label" onclick="locationView()">
-					  			<i class="material-icons location-pointer">location_on</i>
-					  			<p class="distance-label"><b>Distance: </b>150m away from your location</p>
-					  		</div>
-						</div>
-					</div>
+			<div class="col-md-6">
+				<h6 style="padding: .5rem .5rem; color: #696a6d;" id="nearestPhamacy">Nearby pharmacy and hospital in your area:</h6>
+				<div class="row">
+					<div class="col-md-6">
+					<div class="pharmacy-container" id="panel-1">
+						
 
-					<div class="pharmacy-panel aaa">
-						<img class="card-img-top" src="{{asset('assets/images/generic.jpg')}}" alt="Card image cap">
-					  	<div class="card-body">
-					  		<h6 class="pharma-title">Generic pharmacy</h6>
-					  		<div class="man-row location-label" onclick="locationView()">
-					  			<i class="material-icons">location_on</i>
-					  			<p class="distance-label"><b>Distance: </b>1km away from your location</p>
-					  		</div>
+						{{-- <div class="pharmacy-panel">
+							<img class="card-img-top" src="{{asset('assets/images/generic.jpg')}}" alt="Card image cap">
+						  	<div class="card-body">
+						  		<h6 class="pharma-title">Generic pharmacy</h6>
+						  		<div class="man-row location-label" onclick="locationView()">
+						  			<i class="material-icons">location_on</i>
+						  			<p class="distance-label"><b>Distance: </b>1km away from your location</p>
+						  		</div>
+							</div>
 						</div>
-					</div>
 
-					<div class="pharmacy-panel">
-						<img class="card-img-top" src="{{asset('assets/images/mercury.jpg')}}" alt="Card image cap">
-					  	<div class="card-body">
-					  		<h6 class="pharma-title">Mercury Last</h6>
-					  		<div class="man-row location-label" onclick="locationView()">
-					  			<i class="material-icons">location_on</i>
-					  			<p class="distance-label"><b>Distance: </b>150m away from your location</p>
-					  		</div>
-						</div>
+						<div class="pharmacy-panel">
+							<img class="card-img-top" src="{{asset('assets/images/mercury.jpg')}}" alt="Card image cap">
+						  	<div class="card-body">
+						  		<h6 class="pharma-title">Mercury Last</h6>
+						  		<div class="man-row location-label" onclick="locationView()">
+						  			<i class="material-icons">location_on</i>
+						  			<p class="distance-label"><b>Distance: </b>150m away from your location</p>
+						  		</div>
+							</div>
+						</div> --}}
 					</div>
 				</div>
+
+				<div class="col-md-6">
+					<div class="pharmacy-container" id="panel-2">
+						{{-- <div class="pharmacy-panel-2">
+							<img class="card-img-top" src="{{asset('assets/images/generic.jpg')}}" alt="Card image cap">
+						  	<div class="card-body">
+						  		<h6 class="pharma-title">Generic pharmacy</h6>
+						  		<div class="man-row location-label" onclick="locationView()">
+						  			<i class="material-icons">location_on</i>
+						  			<p class="distance-label"><b>Distance: </b>1km away from your location</p>
+						  		</div>
+							</div>
+						</div>
+
+						<div class="pharmacy-panel-2">
+							<img class="card-img-top" src="{{asset('assets/images/mercury.jpg')}}" alt="Card image cap">
+						  	<div class="card-body">
+						  		<h6 class="pharma-title">Mercury Last</h6>
+						  		<div class="man-row location-label" onclick="locationView()">
+						  			<i class="material-icons">location_on</i>
+						  			<p class="distance-label"><b>Distance: </b>150m away from your location</p>
+						  		</div>
+							</div>
+						</div> --}}
+					</div>
+				</div>
+				</div>
 			</div>
-			<div class="col-md-3">
-				<h6 style="padding: .5rem .5rem; color: #696a6d;">Clinic in your location:</h6>
-				<ul class="list-group">
-				  	<li class="list-group-item">Kabataan
-				  		<i class="material-icons">location_on</i>
-					  	<p class="distance-label"><b>Distance: </b>150m away from your location</p>
-				  	</li>
-				  	<li class="list-group-item">Zanorte</li>
-				  	<li class="list-group-item">Agape</li>
-				  	<li class="list-group-item">Porta ac consectetur ac</li>
-				  	<li class="list-group-item">Vestibulum at eros</li>
-				</ul>
-			</div>
+			
 		</div>
 	</div>
 
