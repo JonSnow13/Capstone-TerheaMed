@@ -8,19 +8,38 @@
 	$('.man-map').css('height', mapHeight+'px');
 	$('#streetView').css({'height' : (mapHeight*.60)+'px', 'width' : streetViewWidth+'px'});
 
-	function locationView()
+	function locationView(i)
 	{
-		renderMap();
-		$('#mapModal').modal('show');
+		
+		// var service = new google.maps.DistanceMatrixService();
+		// service.getDistanceMatrix(
+		//   {
+		//     origins: [myAddress, pos],
+		//     destinations: [pharmaPlace[i].vicinity, pharmaPlace[i].geometry.location],
+		//     travelMode: 'WALKING',
+		//     unitSystem: google.maps.UnitSystem.METRIC,
+	 //        avoidHighways: false,
+	 //        avoidTolls: false
+		//   }, 
+		//   	function(response, status)
+		//   	{
+		//   		var result = response.rows[0].elements;
+		//   		// alert(result[0].distance.text);
+		//   		console.log(result);
+		//   	}
+		//   );
+		// renderMap();
+		// $('#mapModal').modal('show');
 	}
 
 	var map, infoWindow, pos, service;
+	var myAddress;
+	var pharmaPlace;
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
           zoom: 15
         });
-
 
         // map = new google.maps.Map(document.getElementById('map'));
         infoWindow = new google.maps.InfoWindow;
@@ -33,16 +52,35 @@
               lng: position.coords.longitude
             };
             
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('<i class="material-icons">my_location</i> your location');
-            infoWindow.open(map);
+            var geocoder = new google.maps.Geocoder;
+            geocoder.geocode({'location': pos}, function(results, status) {
+		      if (status == google.maps.GeocoderStatus.OK) 
+		      	{
+		      		// console.log(results);
+			      myAddress = results[0].formatted_address;
+			    }
+			    else
+			    {
+			    	myAddress = 'Dipolog City'
+			    }
+			});
+            
+            // infoWindow.setPosition(pos);
+            // infoWindow.setContent('<i class="material-icons">my_location</i> your location');
+            // infoWindow.open(map);
 
 
      //        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+     		var icon = {
+				    url: "{{asset('assets/images/pulse_dot.gif')}}", // url
+				    scaledSize: new google.maps.Size(28, 28), // scaled size
+				    origin: new google.maps.Point(0,0), // origin
+				    anchor: new google.maps.Point(0, 0) // anchor
+					};
 		  	var marker = new google.maps.Marker({
 		    	position: pos,
 		    	map: map,
-		    	icon: '{{asset('assets/images/my_location.png')}}'
+		    	icon: icon
 		  	});
             map.setCenter(pos);
 
@@ -78,75 +116,199 @@
 
       }
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-      }
+	function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	    infoWindow.setPosition(pos);
+	    infoWindow.setContent(browserHasGeolocation ?
+	                          'Error: The Geolocation service failed.' :
+	                          'Error: Your browser doesn\'t support geolocation.');
+	    infoWindow.open(map);
+	}
 
 
 
-      	function callbackPharmacy(results, status) {
-		  if (status == google.maps.places.PlacesServiceStatus.OK) {
-		    for (var i = 0; i < results.length; i++) {
-		      var place = results[i];
-		      console.log(place);
-		      createMarker(results[i]);
+  	function callbackPharmacy(results, status) {
+	  if (status == google.maps.places.PlacesServiceStatus.OK) {
+	  	pharmaPlace = results;
+	    for (var i = 0; i < 5; i++) {
+	      var place = results[i];
+	      // createMarker(results[i]);
 
-		      $('#panel-1').append('<div class="pharmacy-panel"><div class="img-box" id="pharma'+i+'"></div><div class="card-body"><h6 class="pharma-title">'+ place.name +'</h6><div class="man-row location-label" onclick="locationView()"><i class="material-icons location-pointer">location_on</i><p class="distance-label"><b>Distance: </b>150m away from your location</p></div></div></div>');
+	      $('#panel-1').append('<div class="pharmacy-panel"><div class="img-box" id="pharma'+i+'" ></div><div class="card-body"><h6 class="pharma-title">'+ place.name +'</h6><div class="man-row location-label" onclick="locationView('+ "'" +i+ "'" +')"><i class="material-icons location-pointer">location_on</i><p class="distance-label" id="pharmaD'+ i +'"></p></div></div></div>');
 
-		      // renderStreetView(results[i].geometry.location, 'pharma'+i);
-		    }
-		    
-		    getClassOfPharmaPanel();
-		  }
-		}
+	      	showStreetView(place, i, 'pharma');
+	      	calculateDistance(place, '#pharmaD'+i);
 
-		function callbackClinic(results, status) {
-		  if (status == google.maps.places.PlacesServiceStatus.OK) {
-		    for (var i = 0; i < results.length; i++) {
-		      var place = results[i];
-		      // console.log(place);
-		      // createMarker(results[i]);
-
-		     $('#panel-2').append('<div class="pharmacy-panel-2"><img class="card-img-top" src="{{asset('assets/images/mercury.jpg')}}" alt="Card image cap"><div class="card-body"><h6 class="pharma-title">'+ place.name +'</h6><div class="man-row location-label" onclick="locationView()"><i class="material-icons location-pointer">location_on</i><p class="distance-label"><b>Distance: </b>150m away from your location</p></div></div></div>');
-		      
-		    }
-		    getClassOfHospitalPanel();
-		  }
-		}
-
-		function createMarker(place) {
-	        var placeLoc = place.geometry.location;
-	        var marker = new google.maps.Marker({
-	          map: map,
-	          position: place.geometry.location
-	        });
-
-	        google.maps.event.addListener(marker, 'click', function() {
-	          infowindow.setContent(place.name);
-	          infowindow.open(map, this);
-	          renderStreetView(place.geometry.location, 'streetView');
-	          $('#mapModal .modal-title').text(place.name)
-	        });
+	      // renderStreetView(results[i].geometry.location, 'pharma'+i);
 	    }
+	    
+	    getClassOfPharmaPanel();
+	    // sortByNearestDistance(results);
 
-	    function renderStreetView(pos1, viewId)
-	    {
-			  var panorama = new google.maps.StreetViewPanorama(
-			      document.getElementById(viewId), {
-			        position: pos1,
-			        pov: {
-			          heading: 34,
-			          pitch: 10
-			        },
-			        enableCloseButton: true
-			      }
-			      );
-			  map.setStreetView(panorama);
+	  }
+	}
+
+	function callbackClinic(results, status) {
+	  if (status == google.maps.places.PlacesServiceStatus.OK) {
+	    for (var i = 0; i < 5; i++) {
+	      var place = results[i];
+	      // console.log(place);
+	      // createMarker(results[i]);
+
+	     $('#panel-2').append('<div class="pharmacy-panel-2"><div class="img-box" id="pharmaX'+i+'"></div><div class="card-body"><h6 class="pharma-title">'+ place.name +'</h6><div class="man-row location-label" onclick="locationView()"><i class="material-icons location-pointer">location_on</i><p class="distance-label" id="pharmaDX'+ i +'"></p></div></div></div>');
+
+		     showStreetView(place, i, 'pharmaX');
+		     calculateDistance(place, '#pharmaDX'+i);
+	      
 	    }
+	    getClassOfHospitalPanel();
+	  }
+	}
+
+	function createMarker(place) {
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map, this);
+          renderStreetView(place.geometry.location, 'streetView');
+          $('#mapModal .modal-title').text(place.name)
+        });
+    }
+
+    function showStreetView(place, i, id)
+	{
+		var panorama = new google.maps.StreetViewPanorama(
+		      document.getElementById(id+i), {
+		        position: place.geometry.location,
+		        disableDefaultUI: true,
+		      }
+		      );
+		  map.setStreetView(panorama);
+	}
+
+	function calculateDistance(distination, id)
+	{
+		var service = new google.maps.DistanceMatrixService();
+		service.getDistanceMatrix(
+		  {
+		    origins: [pos, pos],
+		    destinations: [distination.geometry.location, distination.geometry.location],
+		    travelMode: 'DRIVING',
+		    unitSystem: google.maps.UnitSystem.METRIC,
+	        avoidHighways: false,
+	        avoidTolls: false
+		  }, 
+		  	function(response, status)
+		  	{
+		  		var result = response.rows[0].elements;
+		  		$(id).html('<b>Distance: </b>' + result[0].distance.text + ' away');
+		  	}
+		  );
+	}
+
+	function sortByNearestDistance(place)
+	{
+		var service = new google.maps.DistanceMatrixService();
+		var distance1;
+		var ok;
+		for( var i = 0; i < place.length; i++) 
+		{
+
+			var exec1 = service.getDistanceMatrix(
+			{
+			    origins: [pos, pos],
+			    destinations: [place[i].geometry.location, place[i].geometry.location],
+			    travelMode: 'DRIVING',
+			    unitSystem: google.maps.UnitSystem.METRIC,
+		        avoidHighways: false,
+		        avoidTolls: false
+			}, function(response, status)
+			{
+			  	var result = response.rows[0].elements;
+			  	distance1 = result[0].distance.text;
+			});
+			
+			$.when(exec1).done(function(){
+				console.log(distance1);
+				for( var j = i; j < place.length; j++ ) 
+				{
+					var distance2;
+					var exec2 = service.getDistanceMatrix(
+					{
+					    origins: [pos, pos],
+					    destinations: [place[j].geometry.location, place[j].geometry.location],
+					    travelMode: 'DRIVING',
+					    unitSystem: google.maps.UnitSystem.METRIC,
+				        avoidHighways: false,
+				        avoidTolls: false
+					}, function(response, status)
+					{
+					  	var result2 = response.rows[0].elements;
+					  	distance2 = result2[0].distance.value;
+					});
+
+					$.when(exec2).done(function(){
+
+						if (distance1 <= distance2) 
+						{
+							ok = true;
+						}
+						else
+						{
+							ok = false;
+						}
+
+					});
+
+				}
+				
+			});
+
+			if (ok) 
+			{
+				$('#panel-1').append('<div class="pharmacy-panel"><div class="img-box" id="pharma'+i+'" ></div><div class="card-body"><h6 class="pharma-title">'+ place[i].name +'</h6><div class="man-row location-label" onclick="locationView('+ "'" +i+ "'" +')"><i class="material-icons location-pointer">location_on</i><p class="distance-label" id="pharmaD'+ i +'"></p></div></div></div>');
+			}
+		}
+	}
+
+    function renderStreetView(pos1, viewId)
+    {
+    	console.log(pos1);
+		  var panorama = new google.maps.StreetViewPanorama(
+		      document.getElementById(viewId), {
+		        position: pos1,
+		        pov: {
+		          heading: 34,
+		          pitch: 10
+		        },
+		        enableCloseButton: true
+		      }
+		      );
+		  map.setStreetView(panorama);
+    }
+
+    function viewPlaceImg()
+    {
+    	var myPano = new google.maps.StreetViewPanorama(document.getElementById("pharma1"), panoramaOptions);
+    	myPano.setVisible(true);
+    }
+
+    function getPlaceDetails(place_id, element)
+    {
+    	var serviceDetails = new google.maps.places.PlacesService(map);
+    	serviceDetails.getDetails({
+    		placeId: place_id
+    	}, function(place, status){
+    		var dd =place.reviews;
+    		console.log(dd);
+    		console.log(dd[0].profile_photo_url);
+    	});
+    	$('#'+element).html('<img>');
+    }
 
     var mapRenderCount = 0;
 	function renderMap()
