@@ -1,5 +1,15 @@
 <script type="text/javascript">
+	var windowHeight = $( window ).height();
 	$(function(){
+
+		var loaderWidth = $(".card-panel-medicine").css('width');
+		console.log(loaderWidth);
+
+		setTimeout(function(){
+			$('.man-loader').css({'height' : windowHeight+'px'});
+
+		},100)
+
 		$('.navbar').scrollToFixed();
 		// $('#pharmacy-section-holder').scrollToFixed();
 		
@@ -72,5 +82,28 @@
         	lastClinic.scrollToFixed ({
                 marginTop: $('.pharmacy-panel-2').eq(-2). outerHeight (true) + 65
         	});
+	}
+
+	function view_medicine()
+	{
+		$('.man-loader').css('display', 'flex');
+		setTimeout(function(){
+			$('.man-loader').css('display', 'none');
+			$('.card-panel-medicine').hide();
+			$('.card-specific-med').show();
+		},800);
+		// $('.card-panel-medicine').hide();
+
+	}
+
+	function backToAllSearchMed()
+	{
+		$('.man-loader').css('display', 'flex');
+		setTimeout(function(){
+			$('.man-loader').css('display', 'none');
+			$('.card-specific-med').hide();
+			$('.card-panel-medicine').show();
+		},800);
+		
 	}
 </script>

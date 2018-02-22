@@ -21,6 +21,13 @@ a.man-link{
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
+.man-card{
+    padding: 5px;
+    cursor: pointer;
+}
+.man-card:hover{
+    background: rgba(0,0,0,.125);
+}
 .man-fixed-top{
 	position: fixed;
     top: 0;
@@ -92,6 +99,14 @@ a.man-link{
 	overflow: hidden; 
 	height: 170px;
 }
+.man-img-center{
+    border: 1px solid rgba(0,0,0,.125); 
+    max-height: 170px; 
+    overflow: hidden; 
+    height: 170px;
+    display: flex;
+    justify-content: center;
+}
 .man-map{
 	height: 100%;
 }
@@ -105,4 +120,14 @@ a.man-link{
 }
 .gmnoprint div {
     background:none !important;
+}
+.man-loader{
+    position: fixed;
+    align-items: center; 
+    display: none; 
+    width: 100%;
+    z-index: 999; 
+    justify-content: center;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.10);
 }
