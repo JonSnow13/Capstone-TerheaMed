@@ -2,6 +2,8 @@
 	var windowHeight = $( window ).height();
 	$(function(){
 
+		// $('#mapModal').modal('show');
+
 		var loaderWidth = $(".card-panel-medicine").css('width');
 		console.log(loaderWidth);
 

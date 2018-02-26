@@ -11,6 +11,19 @@
           <div id="streetView" style="position: absolute; z-index: 500px;"></div>
           <div class="man-map" id="map"></div>
         {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEe9Jl9DxQwW2vDMyd0iUW4TSGYDapeIE&callback=initMap" async></script> --}}
+          <div class="row moreMapInfo">
+            <div class="col-md-6" id="startingPoint">
+            </div>
+            <div class="col-md-6" id="time">
+            </div>
+          </div>
+          <div class="row moreMapInfo">
+            <div class="col-md-6" id="distination">
+            </div>
+            <div class="col-md-6" id="distance">
+            </div>
+          </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
