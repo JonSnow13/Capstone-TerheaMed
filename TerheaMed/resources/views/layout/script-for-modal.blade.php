@@ -36,17 +36,24 @@
 	{
 		setMapOnAll(map);
 		map.setZoom(15);
-		panorama.setVisible(false)
 		directionsDisplay.setMap(null);
 		$('.moreMapInfo').hide();
+
+		if (panorama != undefined) 
+		{
+			panorama.setVisible(false);
+		}
+
 		$.when(directionsDisplay).done(function(){
+			$('#mapModal .modal-title').text('Nearby pharmacy and clinic / hospital');
 			$('#mapModal').modal('show');
 		});
+
+		// $('#mapModal').css('padding', '10px');
 	}
 
 	var map, infoWindow, pos, service;
 	var myAddress;
-	var pharmaPlace;
 	var directionsDisplay;
 	var directionsService;
 	var markers = []; //pharma marker
@@ -152,26 +159,41 @@
 				createMarker(this);
 			});
 
-	    for (var i = 0; i < 6; i++) {
+	    for (var i = 0; i < 5; i++) {
 	      var place = results[i];
 	      createMarker(place);
-	      if (i > 4) 
-	      {
-	      	$('#panel-1').append('<div class="pharmacy-panel" hidden><div class="img-box" id="pharma'+i+'" ></div><div class="card-body"><h6 class="pharma-title">'+ place.name +'</h6><div class="man-row location-label" id="directionView'+i+'"><i class="material-icons location-pointer">location_on</i><p class="distance-label" id="pharmaD'+ i +'"></p></div></div></div>');
-	      }
-	      else
-	      {
-	      	$('#panel-1').append('<div class="pharmacy-panel"><div class="img-box" id="pharma'+i+'" ></div><div class="card-body"><h6 class="pharma-title">'+ place.name +'</h6><div class="man-row location-label" id="directionView'+i+'"><i class="material-icons location-pointer">location_on</i><p class="distance-label" id="pharmaD'+ i +'"></p></div></div></div>');
-	      }
 
-	      	showStreetView(place, 'pharma'+i);
+	      var bgColor = getRandomColor();
+		  var textColor = getContrastYIQ(bgColor);
+
+		  var cardView = '<div class="pharmacy-panel">' +
+								'<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="pharma'+i+'" >' +
+									'<h6 class="pharma-title">'+ place.name +'</h6>' +
+								'</div>' +
+								'<div class="man-card-body">' +
+									'<div class="distance-view" id="directionView'+i+'">' +
+										'<i class="material-icons location-pointer">location_on</i>' +
+										'<p class="distance-label" id="pharmaD'+ i +'"></p>' +
+									'</div>' +
+									'<div class="option-view">' +
+										'<i class="material-icons">more_vert</i>' +
+									'</div>' +
+								'</div>' +
+							'</div>';
+
+	      $('#panel-1').append(cardView);
+
+	      $('#directionView' + i ).siblings('.option-view').attr({'data-toggle' : 'popover', 'data-content' : '<div class="man-list-btn">Open Hours</div>'});
+		  $('[data-toggle="popover"]').popover({ trigger: 'click', 'html':true, container: 'body' });
+
+	      	// showStreetView(place, 'pharma'+i);
 	      	calculateDistance(place, '#pharmaD'+i);
 	      	directionView('#directionView'+i, place);
 
 	      // renderStreetView(results[i].geometry.location, 'pharma'+i);
 	    }
 	    
-	    getClassOfPharmaPanel();
+	    // getClassOfPharmaPanel();
 	    // sortByNearestDistance(results);
 
 	  }
@@ -180,30 +202,41 @@
 	function callbackClinic(results, status) {
 
 		if (status == google.maps.places.PlacesServiceStatus.OK) {
-
+			clinicPlace = results;
 			$.each(results, function(i, val){
 				createMarkerClinic(this);
 			});
 
-		    for (var i = 0; i < 6; i++) {
+		    for (var i = 0; i < 5; i++) {
 		      var place = results[i];
 		      // console.log(place);
 		      // createMarker(results[i]);
-			    if (i > 4) 
-			    {
-			      	$('#panel-2').append('<div class="pharmacy-panel" hidden><div class="img-box" id="pharmaX'+i+'" ></div><div class="card-body"><h6 class="pharma-title">'+ place.name +'</h6><div class="man-row location-label" id="directionViewX'+i+'"><i class="material-icons location-pointer">location_on</i><p class="distance-label" id="pharmaDX'+ i +'"></p></div></div></div>');
-			    }
-			    else
-			    {
-			      	$('#panel-2').append('<div class="pharmacy-panel"><div class="img-box" id="pharmaX'+i+'" ></div><div class="card-body"><h6 class="pharma-title">'+ place.name +'</h6><div class="man-row location-label" id="directionViewX'+i+'"><i class="material-icons location-pointer">location_on</i><p class="distance-label" id="pharmaDX'+ i +'"></p></div></div></div>');
-			    }
+		      	var bgColor = getRandomColor();
+		  		var textColor = getContrastYIQ(bgColor);
 
-			     showStreetView(place, 'pharmaX'+i);
-			     calculateDistance(place, '#pharmaDX'+i);
+		  		var cardView = '<div class="clinic-panel">' +
+								'<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="clinic'+i+'" >' +
+									'<h6 class="pharma-title">'+ place.name +'</h6>' +
+								'</div>' +
+								'<div class="man-card-body">' +
+									'<div class="distance-view" id="directionViewX'+i+'">' +
+										'<i class="material-icons location-pointer">location_on</i>' +
+										'<p class="distance-label" id="clinicX'+ i +'"></p>' +
+									'</div>' +
+									'<div class="option-view">' +
+										'<i class="material-icons">more_vert</i>' +
+									'</div>' +
+								'</div>' +
+							'</div>';
+
+			    $('#panel-2').append(cardView);
+
+			     // showStreetView(place, 'clinic'+i);
+			     calculateDistance(place, '#clinicX'+i);
 			     directionView('#directionViewX'+i, place);
 		      
 		    }
-		    getClassOfHospitalPanel();
+		    // getClassOfHospitalPanel();
 		}
 	}
 
@@ -271,6 +304,8 @@
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.setContent(place.name);
           infowindow.open(map, this);
+          renderStreetView(place.geometry.location, 'streetView');
+
         });
     }
 
@@ -348,12 +383,6 @@
 		  map.setStreetView(panorama);
     }
 
-    function viewPlaceImg()
-    {
-    	var myPano = new google.maps.StreetViewPanorama(document.getElementById("pharma1"), panoramaOptions);
-    	myPano.setVisible(true);
-    }
-
     function getPlaceDetails(place_id, element)
     {
     	var serviceDetails = new google.maps.places.PlacesService(map);
@@ -377,7 +406,7 @@
 		}
 	}
 
-	function calculateAndDisplayRoute(directionsService, directionsDisplay, end, distance, time) 
+	function calculateAndDisplayRoute(directionsService, directionsDisplay, end, distance, timeDriving, timeWalking) 
 	{
 		directionsDisplay.setMap(map);
 		setMapOnAll(null);
@@ -394,7 +423,7 @@
             $('#startingPoint').html('<label style="display: flex; align-items: center;"> <i class="material-icons">my_location</i>&nbsp Starting point: '+ myAddress +'</label>');
             $('#distination').html('<label style="display: flex; align-items: center;"> <i class="material-icons">location_on</i>&nbsp Distination point: '+ end.vicinity +'</label>');
             $('#distance').html('<label style="display: flex; align-items: center;"> <i class="material-icons">local_movies</i>&nbsp Distance: '+ distance +'</label>');
-            $('#time').html('<label style="display: flex; align-items: center;"> <i class="material-icons">timer</i>&nbsp Distance: '+ time +'</label>');
+            $('#time').html('<label style="display: flex; align-items: center;"> <i class="material-icons">timer</i>&nbsp Estemated time:</label> <label style="display: flex; align-items: center;"> <i style="margin-left: 20px;" class="material-icons">drive_eta</i>: &nbsp '+ timeDriving +' </label> <label style="display: flex; align-items: center;"> <i style="margin-left: 20px;" class="material-icons">directions_walk</i>: &nbsp '+ timeWalking +' </label>');
 
             $('#mapModal').modal('show');
 
@@ -414,10 +443,12 @@
     function directionView(elmt, end)
     {
     	$(elmt).click(function(){
-    		panorama.setVisible(false);
-    		var distance;
-    		var time;
-
+    		// panorama.setVisible(false);
+    		if (panorama != undefined) 
+			{
+				panorama.setVisible(false);
+			}
+			
     		var service = new google.maps.DistanceMatrixService();
 			service.getDistanceMatrix(
 			  {
@@ -431,10 +462,27 @@
 			  	function(response, status)
 			  	{
 			  		var result = response.rows[0].elements;
-			  		distance = result[0].distance.text;
-			  		time = result[0].duration.text;
-			  		calculateAndDisplayRoute(directionsService, directionsDisplay, end, distance, time);
-			  		$('.moreMapInfo').show();
+			  		var distance = result[0].distance.text;
+			  		var timeDriving = result[0].duration.text;
+
+			  		var service2 = new google.maps.DistanceMatrixService();
+					service2.getDistanceMatrix(
+					  {
+					    origins: [pos, pos],
+					    destinations: [end.geometry.location, end.geometry.location],
+					    travelMode: 'WALKING',
+					    unitSystem: google.maps.UnitSystem.METRIC,
+				        avoidHighways: false,
+				        avoidTolls: false
+					  }, 
+					  	function(response, status)
+					  	{
+					  		var result2 = response.rows[0].elements;
+					  		var timeWalking = result2[0].duration.text;
+					  		calculateAndDisplayRoute(directionsService, directionsDisplay, end, distance, timeDriving, timeWalking);
+					  		$('.moreMapInfo').show();
+					  	}
+					  );
 			  	}
 			  );
     		

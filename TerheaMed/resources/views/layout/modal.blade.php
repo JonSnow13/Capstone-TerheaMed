@@ -1,5 +1,5 @@
 <div id="mapModal" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog" style="max-width: 90%">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -12,15 +12,17 @@
           <div class="man-map" id="map"></div>
         {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEe9Jl9DxQwW2vDMyd0iUW4TSGYDapeIE&callback=initMap" async></script> --}}
           <div class="row moreMapInfo">
-            <div class="col-md-6" id="startingPoint">
+            <div class="col-md-6">
+              <div id="startingPoint">
+              </div>
+              <div id="distination">
+              </div>
             </div>
-            <div class="col-md-6" id="time">
-            </div>
-          </div>
-          <div class="row moreMapInfo">
-            <div class="col-md-6" id="distination">
-            </div>
-            <div class="col-md-6" id="distance">
+            <div class="col-md-6">
+              <div id="distance">
+              </div>
+              <div id="time">
+              </div>
             </div>
           </div>
 
