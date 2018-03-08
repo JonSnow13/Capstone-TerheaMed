@@ -12,6 +12,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="{{asset('assets/js/jquery-scrolltofixed.js')}}"></script>
 	<script type="text/javascript" src="{{asset('assets/js/bootstrap.js')}}"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 	{{-- <script type="text/javascript" src="{{asset('assets/js/jquery.visible.js')}}"></script> --}}
 
@@ -62,7 +63,7 @@
 @include('layout.script')
 @include('layout.script-for-modal')
 
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEe9Jl9DxQwW2vDMyd0iUW4TSGYDapeIE&libraries=places&streetview?size=600x300&location=46.414382,10.013988&heading=151.78&pitch=-0.76&callback=initMap" async defer></script>
 <script type="text/javascript" src="{{asset('assets/js/bootstrap.min.js')}}"></script>
 {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> --}}

@@ -6,6 +6,7 @@
 	var streetViewWidth = windowWidth * .30; 
 
 	$('.man-map').css('height', mapHeight+'px');
+	$('#man-streeview').css('height', mapHeight+'px');
 	$('#streetView').css({'height' : (mapHeight*.60)+'px', 'width' : streetViewWidth+'px'});
 
 	function locationView(i)
@@ -41,7 +42,7 @@
 
 		if (panorama != undefined) 
 		{
-			panorama.setVisible(false);
+			$('#streetView').hide();
 		}
 
 		$.when(directionsDisplay).done(function(){
@@ -161,34 +162,10 @@
 
 	    for (var i = 0; i < 5; i++) {
 	      var place = results[i];
-	      createMarker(place);
-
-	      var bgColor = getRandomColor();
-		  var textColor = getContrastYIQ(bgColor);
-
-		  var cardView = '<div class="pharmacy-panel">' +
-								'<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="pharma'+i+'" >' +
-									'<h6 class="pharma-title">'+ place.name +'</h6>' +
-								'</div>' +
-								'<div class="man-card-body">' +
-									'<div class="distance-view" id="directionView'+i+'">' +
-										'<i class="material-icons location-pointer">location_on</i>' +
-										'<p class="distance-label" id="pharmaD'+ i +'"></p>' +
-									'</div>' +
-									'<div class="option-view">' +
-										'<i class="material-icons">more_vert</i>' +
-									'</div>' +
-								'</div>' +
-							'</div>';
-
-	      $('#panel-1').append(cardView);
-
-	      $('#directionView' + i ).siblings('.option-view').attr({'data-toggle' : 'popover', 'data-content' : '<div class="man-list-btn">Open Hours</div>'});
-		  $('[data-toggle="popover"]').popover({ trigger: 'click', 'html':true, container: 'body' });
+	      // createMarker(place);
 
 	      	// showStreetView(place, 'pharma'+i);
-	      	calculateDistance(place, '#pharmaD'+i);
-	      	directionView('#directionView'+i, place);
+	      	appendPharmacyHtml(place, i);
 
 	      // renderStreetView(results[i].geometry.location, 'pharma'+i);
 	    }
@@ -211,29 +188,7 @@
 		      var place = results[i];
 		      // console.log(place);
 		      // createMarker(results[i]);
-		      	var bgColor = getRandomColor();
-		  		var textColor = getContrastYIQ(bgColor);
-
-		  		var cardView = '<div class="clinic-panel">' +
-								'<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="clinic'+i+'" >' +
-									'<h6 class="pharma-title">'+ place.name +'</h6>' +
-								'</div>' +
-								'<div class="man-card-body">' +
-									'<div class="distance-view" id="directionViewX'+i+'">' +
-										'<i class="material-icons location-pointer">location_on</i>' +
-										'<p class="distance-label" id="clinicX'+ i +'"></p>' +
-									'</div>' +
-									'<div class="option-view">' +
-										'<i class="material-icons">more_vert</i>' +
-									'</div>' +
-								'</div>' +
-							'</div>';
-
-			    $('#panel-2').append(cardView);
-
-			     // showStreetView(place, 'clinic'+i);
-			     calculateDistance(place, '#clinicX'+i);
-			     directionView('#directionViewX'+i, place);
+		      appendClinicHtml(place, i);
 		      
 		    }
 		    // getClassOfHospitalPanel();
@@ -261,6 +216,7 @@
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.setContent(place.name);
           infowindow.open(map, this);
+          $('#streetView').show();
           renderStreetView(place.geometry.location, 'streetView');
           $('#mapModal .modal-title').text(place.name);
         });
@@ -287,6 +243,7 @@
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.setContent(place.name);
           infowindow.open(map, this);
+          $('#streetView').show();
           renderStreetView(place.geometry.location, 'streetView');
           $('#mapModal .modal-title').text(place.name);
         });
@@ -304,6 +261,7 @@
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.setContent(place.name);
           infowindow.open(map, this);
+          $('#streetView').show();
           renderStreetView(place.geometry.location, 'streetView');
 
         });
@@ -367,35 +325,24 @@
 		}
 	}
 
-    function renderStreetView(pos1, viewId)
+    function renderStreetView(posTemp, viewId)
     {
     	// console.log(pos1);
+    		panorama;
 		    panorama = new google.maps.StreetViewPanorama(
 		      document.getElementById(viewId), {
-		        position: pos1,
+		        position: posTemp,
 		        pov: {
-		          heading: 34,
-		          pitch: 10
+		          heading: 280,
+		          pitch: 0
 		        },
-		        enableCloseButton: true
+		        enableCloseButton: true,
+		        fullscreenControl: false
 		      }
 		      );
-		  map.setStreetView(panorama);
+		  // map.setStreetView(panorama);
     }
-
-    function getPlaceDetails(place_id, element)
-    {
-    	var serviceDetails = new google.maps.places.PlacesService(map);
-    	serviceDetails.getDetails({
-    		placeId: place_id
-    	}, function(place, status){
-    		var dd =place.reviews;
-    		console.log(dd);
-    		console.log(dd[0].profile_photo_url);
-    	});
-    	$('#'+element).html('<img>');
-    }
-
+    
     var mapRenderCount = 0;
 	function renderMap()
 	{
@@ -443,11 +390,7 @@
     function directionView(elmt, end)
     {
     	$(elmt).click(function(){
-    		// panorama.setVisible(false);
-    		if (panorama != undefined) 
-			{
-				panorama.setVisible(false);
-			}
+			$('#streetView').hide();
 			
     		var service = new google.maps.DistanceMatrixService();
 			service.getDistanceMatrix(

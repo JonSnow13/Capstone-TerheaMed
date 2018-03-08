@@ -153,29 +153,7 @@
 			for (var i = count; i < execute; i++) 
 			{
 				var place = clinicPlace[i];
-				var bgColor = getRandomColor();
-		      	var textColor = getContrastYIQ(bgColor);
-
-		      	var cardView = '<div class="clinic-panel">' +
-								'<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="clinic'+i+'" >' +
-									'<h6 class="pharma-title">'+ place.name +'</h6>' +
-								'</div>' +
-								'<div class="man-card-body">' +
-									'<div class="distance-view" id="directionViewX'+i+'">' +
-										'<i class="material-icons location-pointer">location_on</i>' +
-										'<p class="distance-label" id="clinicX'+ i +'"></p>' +
-									'</div>' +
-									'<div class="option-view">' +
-										'<i class="material-icons">more_vert</i>' +
-									'</div>' +
-								'</div>' +
-							'</div>';
-
-		      	$('#panel-2').append(cardView);
-
-				// showStreetView(place, 'pharma'+i);
-		      	calculateDistance(place, '#clinicX'+i);
-		      	directionView('#directionViewX'+i, place);
+				appendClinicHtml(place, i);
 			}
 			// getClassOfPharmaPanel();
 		}
@@ -203,29 +181,7 @@
 			for (var i = count; i < execute; i++) 
 			{
 				var place = pharmaPlace[i];
-				var bgColor = getRandomColor();
-		      	var textColor = getContrastYIQ(bgColor);
-
-		      	var cardView = '<div class="pharmacy-panel">' +
-								'<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="pharma'+i+'" >' +
-									'<h6 class="pharma-title">'+ place.name +'</h6>' +
-								'</div>' +
-								'<div class="man-card-body">' +
-									'<div class="distance-view" id="directionView'+i+'">' +
-										'<i class="material-icons location-pointer">location_on</i>' +
-										'<p class="distance-label" id="pharmaD'+ i +'"></p>' +
-									'</div>' +
-									'<div class="option-view">' +
-										'<i class="material-icons">more_vert</i>' +
-									'</div>' +
-								'</div>' +
-							'</div>';
-
-		      	$('#panel-1').append(cardView);
-
-				// showStreetView(place, 'pharma'+i);
-		      	calculateDistance(place, '#pharmaD'+i);
-		      	directionView('#directionView'+i, place);
+				appendPharmacyHtml(place, i);
 			}
 			// getClassOfPharmaPanel();
 		}
@@ -248,5 +204,227 @@
 	  }
 	  return color;
 	}
+
+	function appendPopover(elmt)
+	{
+		elmt.popover({ trigger: "manual" , html: true, animation:false})
+	        .on("mouseenter", function () {
+	            
+	            elmt.popover("show");
+	            $(".popover").on("mouseleave", function () {
+	                elmt.popover('hide');
+	            });
+	        }).on("mouseleave", function () {
+	            
+	            setTimeout(function () {
+	                if (!$(".popover:hover").length) {
+	                    elmt.popover("hide");
+	                }
+	            }, 300);
+	    });
+	}
+
+	function openHoursClinic(index) 
+	{
+		getPlaceDetails(clinicPlace[index].place_id);
+		$('#openHoursModal .modal-title').text(clinicPlace[index].name);
+		$('#openHoursModal').modal('show');
+	}
+
+	function openHoursPharma(index) 
+	{
+		getPlaceDetails(pharmaPlace[index].place_id);
+		$('#openHoursModal .modal-title').text(pharmaPlace[index].name);
+		$('#openHoursModal').modal('show');
+	}
+
+	function getPlaceDetails(place_id)
+    {
+    	$('.open-hours-loader').show();
+    	$('.option-view').popover('hide');
+    	$('#establishment').text('');
+    	var serviceDetails = new google.maps.places.PlacesService(map);
+    	serviceDetails.getDetails({
+    		placeId: place_id
+    	}, function(place, status){
+    		console.log(place);
+    		$('.open-hours-loader').hide();
+    		try
+    		{
+    			$('#establishment').append('<table class="table"> <thead> <tr> <th>Open Hours</th> </tr> </thead> <tbody>');
+    			for (var i = 0; i < place.opening_hours.weekday_text.length; i++) 
+	    		{
+	    			$('#establishment').append( '<tr> <td>' + place.opening_hours.weekday_text[i] + '</td> </tr>');
+	    		}
+	    		$('#establishment').append('</tbody> </table>');	
+    		}
+    		catch(err)
+    		{
+    			$('#establishment').text('No open hours available.');
+    		}
+    		
+    	});
+    }
+
+    function appendPharmacyHtml(place, i) 
+    {
+    	var bgColor = getRandomColor();
+	  	var textColor = getContrastYIQ(bgColor);
+
+	  	var openNowDisplay = '<div class="open-icon" style="color: white; background: rgba(0, 0, 0, 0.125);">' +
+		  						'<i class="material-icons">help</i> Unknown' +
+		  					 '</div>';
+
+	  	try
+	  	{
+	  		if (place.opening_hours.open_now == true) 
+		  	{
+		  		openNowDisplay = '<div class="open-icon" style="color: white;">' +
+		  							'<i class="material-icons">check_circle</i> Open now' +
+		  						  '</div>';
+		  	}
+		  	else 
+		  	{
+		  		openNowDisplay = '<div class="open-icon" style="color: white; background: red;">' +
+		  							'<i class="material-icons">highlight_off</i> Closed' +
+		  						  '</div>';
+		  	}
+	  	}catch(err){}
+
+	  	var cardView = '<div class="pharmacy-panel">' +
+							'<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="pharma'+i+'" >' +
+								'<h6 class="pharma-title">'+ place.name +'</h6>' +
+								openNowDisplay +
+							'</div>' +
+							'<div class="man-card-body">' +
+								'<div class="distance-view" id="directionView'+i+'">' +
+									'<i class="material-icons location-pointer">location_on</i>' +
+									'<p class="distance-label" id="pharmaD'+ i +'"></p>' +
+								'</div>' +
+								'<div class="option-view">' +
+									'<i class="material-icons">more_vert</i>' +
+								'</div>' +
+							'</div>' +
+						'</div>';
+
+      	$('#panel-1').append(cardView);
+      	var popoverElmt = $('#directionView' + i ).siblings('.option-view');
+      	popoverElmt.attr({'data-toggle' : 'popover', 'data-placement': 'bottom', 'data-content' : '<div class="man-list-btn" onclick="openHoursPharma('+ i +')" ><i class="material-icons">schedule</i> Open Hours</div>' +
+  						'<div class="man-list-btn" onclick="openPharmaStreetview('+ i +')"><i class="material-icons">streetview</i> Streetview</div>'
+  						});
+      	appendPopover(popoverElmt);
+
+      	calculateDistance(place, '#pharmaD'+i);
+	    directionView('#directionView'+i, place);
+    }
+
+    function appendClinicHtml(place, i)
+    {
+    	var bgColor = getRandomColor();
+  		var textColor = getContrastYIQ(bgColor);
+
+  		var openNowDisplay = '<div class="open-icon" style="color: white; background: rgba(0, 0, 0, 0.125);">' +
+		  						'<i class="material-icons">help</i> Unknown' +
+		  					 '</div>';
+
+	  	try
+	  	{
+	  		if (place.opening_hours.open_now == true) 
+		  	{
+		  		openNowDisplay = '<div class="open-icon" style="color: white;">' +
+		  							'<i class="material-icons">check_circle</i> Open now' +
+		  						  '</div>';
+		  	}
+		  	else 
+		  	{
+		  		openNowDisplay = '<div class="open-icon" style="color: white; background: red;">' +
+		  							'<i class="material-icons">highlight_off</i> Closed' +
+		  						  '</div>';
+		  	}
+	  	}catch(err){}
+
+  		var cardView = '<div class="clinic-panel">' +
+						'<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="clinic'+i+'" >' +
+							'<h6 class="pharma-title">'+ place.name +'</h6>' +
+							openNowDisplay +
+						'</div>' +
+						'<div class="man-card-body">' +
+							'<div class="distance-view" id="directionViewX'+i+'">' +
+								'<i class="material-icons location-pointer">location_on</i>' +
+								'<p class="distance-label" id="clinicX'+ i +'"></p>' +
+							'</div>' +
+							'<div class="option-view">' +
+								'<i class="material-icons">more_vert</i>' +
+							'</div>' +
+						'</div>' +
+					'</div>';
+
+	    $('#panel-2').append(cardView);
+
+	    var popoverElmt = $('#directionViewX' + i ).siblings('.option-view');
+     	popoverElmt.attr({'data-toggle' : 'popover', 'data-placement': 'bottom', 'data-content' : '<div class="man-list-btn" onclick="openHoursClinic('+ i +')"><i class="material-icons">schedule</i> Open Hours</div>' +
+	  						'<div class="man-list-btn" onclick="openClinicStreetview('+ i +')"><i class="material-icons">streetview</i> Streetview</div>'
+	  						});
+      	appendPopover(popoverElmt);
+
+	     // showStreetView(place, 'clinic'+i);
+	    calculateDistance(place, '#clinicX'+i);
+	    directionView('#directionViewX'+i, place);
+    }
+
+    function openClinicStreetview(i)
+    {
+    	$('.option-view').popover('hide');
+    	$('#openStreetview').modal('show');
+    	$('#streetViewLoader').show();
+
+    	try
+    	{
+    		panorama.setVisible(false);
+    	}catch(err){}
+
+    	setTimeout(function(){
+
+    		$('#openStreetview .modal-title').text(clinicPlace[i].name);
+    		renderStreetView(clinicPlace[i].geometry.location, 'man-streeview');
+
+	    	$('#streetViewLoader').hide();
+    	},1000);
+    	
+    }
+
+    function openPharmaStreetview(i)
+    {
+    	$('.option-view').popover('hide');
+    	$('#openStreetview').modal('show');
+    	$('#streetViewLoader').show();
+
+    	try
+    	{
+    		panorama.setVisible(false);
+    	}catch(err){}
+
+    	setTimeout(function(){
+    		$('#openStreetview .modal-title').text(pharmaPlace[i].name);
+    		renderStreetView(pharmaPlace[i].geometry.location, 'man-streeview');
+    // 		try
+	   //  	{
+	   //  		panorama.setVisible(true);
+				// panorama.setPosition(pharmaPlace[i].geometry.location);
+	   //  		panorama.setPano(pharmaPlace[i].geometry.location.pano)
+	   //  		panorama.setPov({
+		  //           heading: 280,
+		  //           pitch: 0
+		  //         });
+	   //  	}
+	   //  	catch(err)
+	   //  	{
+	   //  		renderStreetView(pharmaPlace[i].geometry.location, 'man-streeview');
+	   //  	}
+
+	    	$('#streetViewLoader').hide();
+    	},1000);
+    	
+    }
 
 </script>

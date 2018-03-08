@@ -143,6 +143,9 @@
 							{{-- <div class="pharmacy-panel">
 								<div class="img-box" style="background: grey; color: white" id="pharma'+i+'" >
 									<h6 class="pharma-title">Generic</h6>
+									<div class="open-icon">
+										<i class="material-icons">check_circle</i> Open now
+									</div>
 								</div>
 								<div class="man-card-body">
 									<div class="distance-view" id="directionView'+i+'">

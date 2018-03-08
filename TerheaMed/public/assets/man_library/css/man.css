@@ -76,6 +76,7 @@ a.man-link{
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
+    overflow: hidden;
 }
 .clinic-panel{
     position: relative;
@@ -92,6 +93,7 @@ a.man-link{
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
+    overflow: hidden;
 }
 .man-img-med-shell{
 	border: 1px solid rgba(0,0,0,.125); 
@@ -174,12 +176,50 @@ a.man-link{
     background: rgba(0, 0, 0, 0.10);
 }
 .man-list-btn{
-    max-width: 100%;
+    width: 100%;
     justify-content: center;
     position: relative;
-    padding: 3px;
+    padding: 10px;
     cursor: default;
+    align-items: center;
+    display: flex;
 }
 .man-list-btn:hover{
     background: rgba(0, 0, 0, 0.10);
+}
+.open-hours-loader{
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    height: 250px;
+}
+.open-icon{
+    position: absolute; 
+    top: 0; 
+    left: -112px; 
+    z-index: 10;
+    align-items: center;
+    background: green;
+    padding: 5px;
+    display: flex;
+    transition: .5s ease;
+    transition-delay: .3s;
+    border-bottom-right-radius: 3px;
+    font-size: 12px;
+}
+.pharmacy-panel:hover .open-icon{
+    left: 0;
+    transition: .5s ease;
+}
+.clinic-panel:hover .open-icon{
+    left: 0;
+    transition: .5s ease;
+}
+.open-loader{
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    z-index: 999;
+    background: white;
+    height: 100%;
 }

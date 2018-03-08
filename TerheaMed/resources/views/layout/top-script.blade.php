@@ -2,14 +2,14 @@
 	
 	$(function(){
 	
-
+		// $('#openHoursModal').modal('show');
 		$('.navbar').scrollToFixed();
 		var pharmaClinicPanel = $('.pharma-clinic-panel');
 		pharmaClinicPanel.scrollToFixed ({
                 marginTop: $ ( '.navbar'). outerHeight (true) + 10
         	});
-
-		pharmaClinicPanel.css('max-height', (windowHeight - 150));
+		var minusHeight = windowHeight * .10;
+		pharmaClinicPanel.css('max-height', (windowHeight - minusHeight));
 
 		var loaderWidth = $(".card-panel-medicine").css('width');
 		// console.log(loaderWidth);
@@ -66,5 +66,6 @@
 		};
 
 	})
+
 
 </script>
