@@ -220,6 +220,13 @@ a.man-link{
     align-items: center; 
     justify-content: center;
     z-index: 999;
-    background: white;
+    background: rgba(0, 0, 0, 0);
     height: 100%;
+    max-height: inherit;
+    width: 100%;
+    position: absolute;
+}
+.err-msg{
+    color: red;
+    font-size: 13px;
 }
