@@ -139,12 +139,15 @@
 					<div class="col-md-6">
 						<div class="pharmacy-container" id="panel-1">
 							
-
-							{{-- <div class="pharmacy-panel">
-								<div class="img-box" style="background: grey; color: white" id="pharma'+i+'" >
+							{{-- @for($i = 0; $i < 5; $i++)
+							<div class="pharmacy-panel">
+								<div class="img-box" style="background: grey; color: white;" id="pharma'+i+'" >
 									<h6 class="pharma-title">Generic</h6>
 									<div class="open-icon">
 										<i class="material-icons">check_circle</i> Open now
+									</div>
+									<div class="person-waving">
+										<img src="{{asset('assets/images/nurse4.gif')}}" style="width: 50%">
 									</div>
 								</div>
 								<div class="man-card-body">
@@ -156,7 +159,8 @@
 										<i class="material-icons">more_vert</i>
 									</div>
 								</div>
-							</div> --}}
+							</div>
+							@endfor --}}
 
 							{{-- <div class="pharmacy-panel">
 								<img class="card-img-top" src="{{asset('assets/images/mercury.jpg')}}" alt="Card image cap">

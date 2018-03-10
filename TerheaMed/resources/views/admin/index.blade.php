@@ -64,8 +64,8 @@
 			  	<div class="form-group">
 				    <label for="type">Type</label>
 			    	<select class="form-control" id="type">
-				      	<option>Non - herbal</option>
-				      	<option>Herbal</option>
+				      	<option value="1">Non - herbal</option>
+				      	<option value="2">Herbal</option>
 			    	</select>
 			    	<i class="err-msg"></i>
 			  	</div>
@@ -92,12 +92,12 @@
 			    	<div class="row" style="align-items: center;">
 			    		<select class="form-control col-md-5" id="minAge">
 			    			@for($i = 1; $i < 99; $i++)
-					      		<option>{{$i}}</option>
+					      		<option value="{{$i}}">{{$i}}</option>
 					      	@endfor
 				    	</select> to
 				    	<select class="form-control col-md-5" id="maxAge">
 					      	@for($i = 1; $i < 199; $i++)
-					      		<option>{{$i}}</option>
+					      		<option value="{{$i}}">{{$i}}</option>
 					      	@endfor
 				    	</select>
 			    	</div>

@@ -230,3 +230,15 @@ a.man-link{
     color: red;
     font-size: 13px;
 }
+.person-waving{
+    position: absolute; 
+    bottom: -110px; 
+    right: 0;
+    transition: .9s ease;
+    transition-delay: .3s;
+}
+.wave{
+    bottom: -61px;
+    transition: .5s ease;
+    transition-delay: .3s;
+}

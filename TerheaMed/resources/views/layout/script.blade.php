@@ -155,6 +155,7 @@
 				var place = clinicPlace[i];
 				appendClinicHtml(place, i);
 			}
+			personWavingRandom();
 			// getClassOfPharmaPanel();
 		}
 	}
@@ -183,6 +184,7 @@
 				var place = pharmaPlace[i];
 				appendPharmacyHtml(place, i);
 			}
+			personWavingRandom();
 			// getClassOfPharmaPanel();
 		}
 	}
@@ -274,6 +276,7 @@
 	  	var openNowDisplay = '<div class="open-icon" style="color: white; background: rgba(0, 0, 0, 0.125);">' +
 		  						'<i class="material-icons">help</i> Unknown' +
 		  					 '</div>';
+		var personWaving = '';
 
 	  	try
 	  	{
@@ -282,6 +285,9 @@
 		  		openNowDisplay = '<div class="open-icon" style="color: white;">' +
 		  							'<i class="material-icons">check_circle</i> Open now' +
 		  						  '</div>';
+		  		personWaving =  '<div class="person-waving">' +
+									'<img src="{{asset('assets/images/nurse4.gif')}}" style="width: 50%">' +
+								'</div>';				  
 		  	}
 		  	else 
 		  	{
@@ -295,6 +301,7 @@
 							'<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="pharma'+i+'" >' +
 								'<h6 class="pharma-title">'+ place.name +'</h6>' +
 								openNowDisplay +
+								personWaving +
 							'</div>' +
 							'<div class="man-card-body">' +
 								'<div class="distance-view" id="directionView'+i+'">' +
@@ -326,6 +333,7 @@
   		var openNowDisplay = '<div class="open-icon" style="color: white; background: rgba(0, 0, 0, 0.125);">' +
 		  						'<i class="material-icons">help</i> Unknown' +
 		  					 '</div>';
+		var personWaving = '';
 
 	  	try
 	  	{
@@ -333,7 +341,10 @@
 		  	{
 		  		openNowDisplay = '<div class="open-icon" style="color: white;">' +
 		  							'<i class="material-icons">check_circle</i> Open now' +
-		  						  '</div>';
+		  						 '</div>';
+		  		personWaving =  '<div class="person-waving">' +
+									'<img src="{{asset('assets/images/nurse4.gif')}}" style="width: 50%">' +
+								'</div>';
 		  	}
 		  	else 
 		  	{
@@ -347,6 +358,7 @@
 						'<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="clinic'+i+'" >' +
 							'<h6 class="pharma-title">'+ place.name +'</h6>' +
 							openNowDisplay +
+							personWaving +
 						'</div>' +
 						'<div class="man-card-body">' +
 							'<div class="distance-view" id="directionViewX'+i+'">' +

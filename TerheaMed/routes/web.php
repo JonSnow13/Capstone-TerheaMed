@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,3 +24,11 @@ Route::get(
 	'/admin',
 	'AdminController@index'
 );
+
+Route::post(
+	'/saveMedInfo',
+	['as' => 'json_add_medicine', 'uses' => 'AdminController@create']
+);
+
+// Route::group(['middleware' => 'csrf'], function()
+// {});

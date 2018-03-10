@@ -92,6 +92,7 @@
 
 	function saveMed(elmt)
 	{
+		var medInfoArray = [];
 		var name = $('#name');
 		var brandName = $('#brandName');
 		var type = $('#type');
@@ -114,10 +115,37 @@
 
 		if (valid) 
 		{
-			$('#addMedicineModal input, textarea').unbind('change');
-			$('#addMedicineModal input, textarea')
-			$('#addMedicineModal input, textarea').val('');
-			$('#addMedicineModal').modal('hide');
+
+			medInfoArray.push({
+				name: name.val(),
+				brandName: brandName.val(),
+				type: type.val(),
+				age: minAge.val() + ' - ' + maxAge.val(),
+				untakers: untakers.val(),
+				directionOfUse: directionOfUse.val(),
+				picture: picture,
+				desc: desc.val(),
+				purpose: purpose.val(),
+				takers: takers.val()
+			});
+
+			setTimeout(function(){
+				$.ajax({
+					url: '{{ route("json_add_medicine") }}',
+					headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' },
+					type: 'POST',
+					data: {medInfoArray: medInfoArray},
+					success: function(){
+
+						$('#addMedicineModal input, textarea').unbind('change');
+						$('#addMedicineModal input, textarea')
+						$('#addMedicineModal input, textarea').val('');
+						$('#addMedicineModal').modal('hide');
+
+					}
+				});
+
+			},100);
 		}
 
 	}

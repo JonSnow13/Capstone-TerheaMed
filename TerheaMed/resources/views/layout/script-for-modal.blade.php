@@ -122,6 +122,13 @@
 	          type: ['pharmacy']
 	        }, callbackPharmacy);
 
+	        // var service3 = new google.maps.places.PlacesService(map);
+	        // service3.nearbySearch({
+	        //   location: pos,
+	        //   rankBy: google.maps.places.RankBy.DISTANCE,
+	        //   type: ['drug store']
+	        // }, callbackPharmacy);
+
 
 	        var service2 = new google.maps.places.PlacesService(map);
 	        service2.nearbySearch({
@@ -174,6 +181,7 @@
 	    // sortByNearestDistance(results);
 
 	  }
+	  personWavingRandom();
 	}
 
 	function callbackClinic(results, status) {
@@ -193,6 +201,7 @@
 		    }
 		    // getClassOfHospitalPanel();
 		}
+		personWavingRandom();
 	}
 
 	//Pharma icon
