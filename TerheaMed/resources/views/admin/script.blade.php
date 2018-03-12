@@ -68,8 +68,17 @@
 		}
 	}
 
+	var lastFileSelected = '';
 	$('#picture').change(function(){
-		loader(this, 'show');
+
+		if ($(this).val() == undefined || $(this).val() == '') 
+		{
+			return false;
+		}
+
+		lastFileSelected = $(this).val();
+		console.log(lastFileSelected);
+		loader($(this).siblings('div'), 'show');
 		readURL(this);
 	});
 
@@ -80,17 +89,24 @@
 				   		'</div>';
 		if (opt == 'show') 
 		{
-			$(elmt).siblings('div').append(htmlLoad);
+			elmt.append(htmlLoad);
 		}
 		else
 		{
 			try{
-				$(elmt).siblings('div').children('.open-loader').remove();
+				$('.open-loader').remove();
 			}catch(err){}
 		}
 	}
 
-	function saveMed(elmt)
+	$('#addMedicineModal input, textarea').keypress(function(e){
+		if (e.which == 13) 
+		{
+			saveMed();
+		}
+	});
+
+	function saveMed()
 	{
 		var medInfoArray = [];
 		var name = $('#name');
@@ -112,9 +128,9 @@
 		}
 
 		$('#addMedicineModal input, textarea').bind('change', handler);
-
 		if (valid) 
 		{
+			$('#saveMedBtn').text('Saving...');
 
 			medInfoArray.push({
 				name: name.val(),
@@ -141,7 +157,9 @@
 						$('#addMedicineModal input, textarea')
 						$('#addMedicineModal input, textarea').val('');
 						$('#addMedicineModal').modal('hide');
-
+						$('#saveMedBtn').text('Save');
+						$('#picture').siblings('div').find('img').attr('src', '');
+						displayMedicineDataTable.ajax.reload();
 					}
 				});
 
@@ -149,6 +167,68 @@
 		}
 
 	}
+
+	var displayMedicineDataTable;
+	$(function(){
+		$.fn.dataTable.ext.errMode = 'none';
+
+		displayMedicineDataTable = $('#medicineDataTable').DataTable({
+			destroy: true,
+			"pageLength": 10,
+			"ajax" : "{{ url('/getAllMedicineData') }}",
+			"columns": [
+				{
+					data: 'picture',
+					render: function(data, type, row){
+						return '<img src="'+ data +'" style="width:50px;">';
+					}
+				},
+				{
+					data: 'name',
+					render: function(data, type, row){
+						return data;
+					}
+				},
+				{
+					data: 'brand_name',
+					render: function(data, type, row){
+						return data;
+					}
+				},
+				{
+					data: 'desc',
+					render: function(data, type, row){
+						return data;
+					}
+				},
+				{
+					render: function(data, type, row){
+						var temp = row['takers'];
+						temp = temp.replace(/\&quot;/g, '"');
+						var obj = jQuery.parseJSON(temp);
+
+						return obj.age + ' yo';
+					}
+				},
+				{
+					data: 'untakers',
+					render: function(data, type, row){
+						return data;
+					}
+				},
+				{
+					data: 'how_to_take',
+					render: function(data, type, row){
+						return data;
+					}
+				}
+			],
+			"createdRow": function( nRow, aData, iDataIndex ) {
+                            $(nRow).data('medicineData', aData);
+                        }
+		});
+
+	});
 
 
 </script>

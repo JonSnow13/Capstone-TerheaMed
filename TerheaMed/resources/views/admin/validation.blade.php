@@ -59,4 +59,46 @@
 		return valid;
 	}
 
+	// function validateWhenEnterkeyIsPressed()
+	// {
+	// 	var name = $('#name');
+	// 	var brandName = $('#brandName');
+	// 	var type = $('#type');
+	// 	var minAge = $('#minAge');
+	// 	var maxAge = $('#maxAge');
+	// 	var directionOfUse = $('#directionOfUse');
+	// 	var desc = $('#desc');
+	// 	var purpose = $('#purpose');
+	// 	var takers = $('#takers');
+
+	// 	var valid = true;
+
+	// 	if (isNullOrWhitespace(name.val())) 
+	// 	{
+	// 		valid = false;
+	// 	}
+	// 	if (isNullOrWhitespace(brandName.val())) 
+	// 	{
+	// 		valid = false;
+	// 	}
+	// 	if (isNullOrWhitespace(directionOfUse.val())) 
+	// 	{
+	// 		valid = false;
+	// 	}
+	// 	if (isNullOrWhitespace(desc.val())) 
+	// 	{
+	// 		valid = false;
+	// 	}
+	// 	if (isNullOrWhitespace(purpose.val())) 
+	// 	{
+	// 		valid = false;
+	// 	}
+	// 	if (isNullOrWhitespace(takers.val())) 
+	// 	{
+	// 		valid = false;
+	// 	}
+
+	// 	return valid;
+	// }
+
 </script>

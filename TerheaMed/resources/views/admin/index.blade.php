@@ -6,17 +6,21 @@
 	<div class="form-group">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMedicineModal">Add Medicine</button>
 	</div>
-	<table class="table">
+	<table class="table responsive table-hover" id="medicineDataTable">
 	  	<thead class="thead-dark">
 	    	<tr>
-	      	<th scope="col">#</th>
-	      	<th scope="col">First</th>
-	      	<th scope="col">Last</th>
-	      	<th scope="col">Handle</th>
+		      	{{-- <th scope="col">#</th> --}}
+		      	<th scope="col">Picture</th>
+		      	<th scope="col">Name</th>
+		      	<th scope="col">Brand Name</th>
+		      	<th scope="col">Description</th>
+		      	<th scope="col">Age</th>
+		      	<th scope="col">Non Takers</th>
+		      	<th scope="col">Usage</th>
 	    	</tr>
 	  	</thead>
 	  	<tbody>
-		    <tr>
+		    {{-- <tr>
 		      <th scope="row">1</th>
 		      <td>Mark</td>
 		      <td>Otto</td>
@@ -33,7 +37,7 @@
 		      <td>Larry</td>
 		      <td>the Bird</td>
 		      <td>@twitter</td>
-		    </tr>
+		    </tr> --}}
 	 	</tbody>
 	</table>
 </div>
@@ -125,7 +129,7 @@
 
       </div>
       <div class="modal-footer">
-      	<button type="button" class="btn btn-primary" onclick="saveMed(this)">Save</button>
+      	<button type="button" class="btn btn-primary" onclick="saveMed()" id="saveMedBtn">Save</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

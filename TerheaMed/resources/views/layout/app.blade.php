@@ -38,7 +38,7 @@
 	    	<div class="input-group" style="justify-content: center;">
 			    <input type="text" class="form-control" placeholder="Search" aria-label="Input group example" aria-describedby="btnGroupAddon">
 			    <div class="input-group-prepend">
-			      <button class="input-group-text" id="btnGroupAddon"><i class="material-icons" style="font-size:20px;">search</i></button>
+			      <button class="input-group-text" onclick="searchBtn()"><i class="material-icons" style="font-size:20px;">search</i></button>
 			    </div>
 			</div>
 	    </div>

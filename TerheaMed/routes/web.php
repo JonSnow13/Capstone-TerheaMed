@@ -30,5 +30,10 @@ Route::post(
 	['as' => 'json_add_medicine', 'uses' => 'AdminController@create']
 );
 
+Route::get(
+	'/getAllMedicineData',
+	'AdminController@getAllMedicineData'
+);
+
 // Route::group(['middleware' => 'csrf'], function()
 // {});
