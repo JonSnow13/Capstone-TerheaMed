@@ -35,5 +35,15 @@ Route::get(
 	'AdminController@getAllMedicineData'
 );
 
+Route::get(
+	'/search={searchName}',
+	'HomeController@search'
+);
+
+Route::post(
+	'/deleteMedicine',
+	['as' => 'deleteMedicine','uses' => 'AdminController@deleteMedicine']
+);
+
 // Route::group(['middleware' => 'csrf'], function()
 // {});

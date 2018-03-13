@@ -36,7 +36,7 @@
 	      <li>
 	      	<div class="man-search-form">
 	    	<div class="input-group" style="justify-content: center;">
-			    <input type="text" class="form-control" placeholder="Search" aria-label="Input group example" aria-describedby="btnGroupAddon">
+			    <input type="text" id="searchBox" class="form-control" placeholder="Search" aria-describedby="btnGroupAddon">
 			    <div class="input-group-prepend">
 			      <button class="input-group-text" onclick="searchBtn()"><i class="material-icons" style="font-size:20px;">search</i></button>
 			    </div>
@@ -63,6 +63,7 @@
 @include('layout.script')
 @include('layout.script-for-modal')
 @include('layout.animationScript')
+@include('admin.validation')
 
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEe9Jl9DxQwW2vDMyd0iUW4TSGYDapeIE&libraries=places&streetview?size=600x300&location=46.414382,10.013988&heading=151.78&pitch=-0.76&callback=initMap" async defer></script>

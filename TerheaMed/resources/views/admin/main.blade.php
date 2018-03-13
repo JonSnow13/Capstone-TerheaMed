@@ -4,6 +4,7 @@
 	<title>Terhea Med</title>
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/man_library/css/man.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('assets/sweet-alert/sweetalert.css')}}">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -13,6 +14,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="{{asset('assets/js/jquery-scrolltofixed.js')}}"></script>
 	<script type="text/javascript" src="{{asset('assets/js/bootstrap.js')}}"></script>
+	<script type="text/javascript" src="{{asset('assets/sweet-alert/sweetalert.js')}}"></script>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 	{{-- <script type="text/javascript" src="{{asset('assets/js/jquery.visible.js')}}"></script> --}}
@@ -35,9 +37,9 @@
 	      <li>
 	      	<div class="man-search-form">
 	    	<div class="input-group" style="justify-content: center;">
-			    <input type="text" class="form-control" placeholder="Search" aria-label="Input group example" aria-describedby="btnGroupAddon">
+			    <input type="text" class="form-control" id="searchBox" placeholder="Search" aria-label="Input group example" aria-describedby="btnGroupAddon">
 			    <div class="input-group-prepend">
-			      <button class="input-group-text" id="btnGroupAddon"><i class="material-icons" style="font-size:20px;">search</i></button>
+			      <button class="input-group-text" onclick="searchBtn()"><i class="material-icons" style="font-size:20px;">search</i></button>
 			    </div>
 			</div>
 	    </div>
@@ -61,6 +63,7 @@
 
 <script type="text/javascript" src="{{asset('assets/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="{{asset('assets/sweet-alert/sweetalert.min.js')}}"></script>
 {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> --}}
 
 

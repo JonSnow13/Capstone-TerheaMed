@@ -69,18 +69,17 @@
 	}
 
 	var lastFileSelected = '';
-	$('#picture').change(function(){
-
-		if ($(this).val() == undefined || $(this).val() == '') 
+	function uploadPicture(elmt)
+	{
+		if ($(elmt).val() == undefined || $(elmt).val() == '') 
 		{
 			return false;
 		}
 
-		lastFileSelected = $(this).val();
-		console.log(lastFileSelected);
-		loader($(this).siblings('div'), 'show');
-		readURL(this);
-	});
+		lastFileSelected = $(elmt).val();
+		loader($(elmt).siblings('div'), 'show');
+		readURL(elmt);
+	}
 
 	function loader(elmt, opt)
 	{
@@ -116,7 +115,7 @@
 		var maxAge = $('#maxAge');
 		var untakers = $('#untakers');
 		var directionOfUse = $('#directionOfUse');
-		var picture = $('#picture').siblings('div').find('img').attr('src');
+		var picture = $('#pictureUploadInp').siblings('div').find('img').attr('src');
 		var desc = $('#desc');
 		var purpose = $('#purpose');
 		var takers = $('#takers');
@@ -221,6 +220,13 @@
 					render: function(data, type, row){
 						return data;
 					}
+				},
+				{
+					data: 'id',
+					render: function(data, type, row){
+						return '<button class="admin-option btn-light" onmouseover="generatePopoverAdminOption('+ data +')" id="optionAdmin'+ data +'"> <i class="material-icons">more_vert</i> </button>';
+					},
+					orderable: false
 				}
 			],
 			"createdRow": function( nRow, aData, iDataIndex ) {
@@ -230,5 +236,60 @@
 
 	});
 
+	function generatePopoverAdminOption(id)
+	{
+		var popoverHtml = $('#optionAdmin'+id);
+						popoverHtml.attr({'data-toggle' : 'popover', 'data-placement': 'bottom', 'data-content' : '<div class="man-list-btn" ><i class="material-icons">mode_edit</i> Edit</div>' +
+  						'<div class="man-list-btn" onclick="deleteMed('+ id +')"><i class="material-icons">delete</i> Delete</div>'
+  						});
+  		appendPopoverClick(popoverHtml);
+	}
 
+	function appendPopoverClick(elmt)
+	{
+		elmt.popover({ trigger: "manual" , html: true, animation:false})
+	        .on("click", function () {
+	            
+	            elmt.popover("show");
+	            $(".popover").on("mouseleave", function () {
+	                elmt.popover('hide');
+	            });
+	        }).on("mouseleave", function () {
+	            
+	            setTimeout(function () {
+	                if (!$(".popover:hover").length) {
+	                    elmt.popover("hide");
+	                }
+	            }, 300);
+	    });
+	}
+
+	function deleteMed(id)
+	{
+		swal({
+		  title: "Are you sure?",
+		  text: "This will be deleted permanently!",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-danger",
+		  confirmButtonText: "Yes, delete it!",
+		  closeOnConfirm: false,
+		  showLoaderOnConfirm: true
+		},function(){
+			$.ajax({
+				url: '{{ route("deleteMedicine") }}',
+				headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' },
+				type: 'POST',
+				data: { medcine_id: id },
+				success: function(){
+					swal("Deleted!", "", "success");
+					displayMedicineDataTable.ajax.reload();
+				},
+				error: function(){
+					swal("Whoops!", "There's an error. Please try again", "error");
+				} 
+			});
+		});
+		console.log(id);
+	}
 </script>

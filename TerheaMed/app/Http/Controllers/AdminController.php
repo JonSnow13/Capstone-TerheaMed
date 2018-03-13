@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Medicines;
 use Yajra\Datatables\Datatables;
+use File;
 
 class AdminController extends Controller
 {
@@ -46,7 +47,16 @@ class AdminController extends Controller
 
     public function getAllMedicineData(Request $request)
     {
-        return Datatables::of(Medicines::all())->make(true);
+        $medicineData = Medicines::all();
+        return Datatables::of($medicineData)->make(true);
+    }
+
+    public function deleteMedicine(Request $request)
+    {
+        $medicineData = Medicines::find($request->medcine_id);
+        $picture = str_replace('uploads/', '', $medicineData->picture);
+        File::delete(public_path('uploads/') . $picture);
+        $medicineData->delete();
     }
 
 }

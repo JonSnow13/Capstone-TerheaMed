@@ -1,7 +1,12 @@
 <script type="text/javascript">
 	
 	$(function(){
-	
+		
+		@if ($searchName)
+			$('#searchBox').val('{{ $searchName }}');
+			console.log('{{ $searchName }}');
+		@endif
+
 		// $('#openHoursModal').modal('show');
 		$('.navbar').scrollToFixed();
 		var pharmaClinicPanel = $('.pharma-clinic-panel');

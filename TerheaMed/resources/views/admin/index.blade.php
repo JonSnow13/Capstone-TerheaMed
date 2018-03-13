@@ -17,6 +17,7 @@
 		      	<th scope="col">Age</th>
 		      	<th scope="col">Non Takers</th>
 		      	<th scope="col">Usage</th>
+		      	<th scope="col"></th>
 	    	</tr>
 	  	</thead>
 	  	<tbody>
@@ -119,7 +120,7 @@
 			  	</div>
 		  		<div class="form-group">
 			    	<label for="picture">Picture</label>
-			    	<input type="file" class="form-control" id="picture">
+			    	<input type="file" class="form-control" id="pictureUploadInp" onchange="uploadPicture(this)">
 			    	<div class="man-img-center">
 			  			<img style="height: 100%;">
 			  		</div>

@@ -242,3 +242,13 @@ a.man-link{
     transition: .5s ease;
     transition-delay: .3s;
 }
+.admin-option{
+    display: none;
+    padding: 1px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0);
+}
+tr:hover .admin-option{
+    display: block;
+}
