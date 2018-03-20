@@ -3934,7 +3934,7 @@ tbody.collapse.show {
 }
 
 .navbar {
-  position: relative;
+  /*position: relative;*/
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3947,6 +3947,12 @@ tbody.collapse.show {
   -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+
 }
 
 .navbar > .container,

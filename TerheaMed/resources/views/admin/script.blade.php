@@ -1,5 +1,11 @@
 <script type="text/javascript">
 	
+	$(function(){
+		$('.modal').on('shown.bs.modal', function () {
+		  $(this).find("input:enabled:visible:first").focus();
+		});
+	});
+
 	function readURL(input) 
 	{
 		if (input.files && input.files[0]) 
@@ -58,7 +64,7 @@
 							var dataurlTemp = canvas.toDataURL();
 
 							setTimeout(function(){
-								loader(input, 'hide');
+								loader($(input).siblings('div'), 'hide');
 								$(input).siblings('div').find('img').attr('src', dataurlTemp);
 							},500);
 							
@@ -93,32 +99,36 @@
 		else
 		{
 			try{
-				$('.open-loader').remove();
+				$(elmt).find('.open-loader').remove();
 			}catch(err){}
 		}
+	}
+
+	function openMedModal()
+	{
+		clearAllModalInputField();
+		$('#addMedicineModal').modal('show');
 	}
 
 	$('#addMedicineModal input, textarea').keypress(function(e){
 		if (e.which == 13) 
 		{
-			saveMed();
+			saveMedBtn();
 		}
 	});
 
-	function saveMed()
+	function saveMedBtn()
 	{
 		var medInfoArray = [];
 		var name = $('#name');
 		var brandName = $('#brandName');
 		var type = $('#type');
-		var minAge = $('#minAge');
-		var maxAge = $('#maxAge');
-		var untakers = $('#untakers');
 		var directionOfUse = $('#directionOfUse');
 		var picture = $('#pictureUploadInp').siblings('div').find('img').attr('src');
 		var desc = $('#desc');
 		var purpose = $('#purpose');
-		var takers = $('#takers');
+		var sideEffects = $('#sideEffect');
+		var warning = $('#warning');
 
 		var valid = validateMedData();
 
@@ -129,42 +139,65 @@
 		$('#addMedicineModal input, textarea').bind('change', handler);
 		if (valid) 
 		{
+			if (isNullOrWhitespace(sideEffects.val())) sideEffects.val('N/A');
+			if (isNullOrWhitespace(warning.val())) warning.val('N/A'); 
+			
 			$('#saveMedBtn').text('Saving...');
 
 			medInfoArray.push({
 				name: name.val(),
 				brandName: brandName.val(),
 				type: type.val(),
-				age: minAge.val() + ' - ' + maxAge.val(),
-				untakers: untakers.val(),
 				directionOfUse: directionOfUse.val(),
 				picture: picture,
 				desc: desc.val(),
 				purpose: purpose.val(),
-				takers: takers.val()
+				sideEffects: sideEffects.val(),
+				warning: warning.val()
 			});
 
 			setTimeout(function(){
-				$.ajax({
-					url: '{{ route("json_add_medicine") }}',
-					headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' },
-					type: 'POST',
-					data: {medInfoArray: medInfoArray},
-					success: function(){
-
-						$('#addMedicineModal input, textarea').unbind('change');
-						$('#addMedicineModal input, textarea')
-						$('#addMedicineModal input, textarea').val('');
-						$('#addMedicineModal').modal('hide');
-						$('#saveMedBtn').text('Save');
-						$('#picture').siblings('div').find('img').attr('src', '');
-						displayMedicineDataTable.ajax.reload();
-					}
-				});
+				
+				if ($('#medEditId').val() == '') 
+				{
+					$.ajax({
+						url: '{{ route("json_add_medicine") }}',
+						headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' },
+						type: 'POST',
+						data: {medInfoArray: medInfoArray},
+						success: function(){
+							clearAllModalInputField();
+							displayMedicineDataTable.ajax.reload();
+						}
+					});
+				}
+				else
+				{
+					$.ajax({
+						url: '{{ route("json_update_medicine") }}',
+						headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' },
+						type: 'POST',
+						data: {medInfoArray: medInfoArray, medcineId: $('#medEditId').val()},
+						success: function(){
+							clearAllModalInputField();
+							displayMedicineDataTable.ajax.reload();
+						}
+					});
+				}
 
 			},100);
 		}
 
+	}
+
+	function clearAllModalInputField()
+	{
+		$('#addMedicineModal input, textarea').unbind('change');
+		$('#addMedicineModal input, textarea')
+		$('#addMedicineModal input, textarea').val('');
+		$('#addMedicineModal').modal('hide');
+		$('#saveMedBtn').text('Save');
+		$('#pictureUploadInp').siblings('div').find('img').attr('src', '');
 	}
 
 	var displayMedicineDataTable;
@@ -201,22 +234,25 @@
 					}
 				},
 				{
-					render: function(data, type, row){
-						var temp = row['takers'];
-						temp = temp.replace(/\&quot;/g, '"');
-						var obj = jQuery.parseJSON(temp);
-
-						return obj.age + ' yo';
-					}
-				},
-				{
-					data: 'untakers',
+					data: 'purpose',
 					render: function(data, type, row){
 						return data;
 					}
 				},
 				{
-					data: 'how_to_take',
+					data: 'direction_of_use',
+					render: function(data, type, row){
+						return data;
+					}
+				},
+				{
+					data: 'warningMsg',
+					render: function(data, type, row){
+						return data;
+					}
+				},
+				{
+					data: 'side_effects',
 					render: function(data, type, row){
 						return data;
 					}
@@ -239,7 +275,7 @@
 	function generatePopoverAdminOption(id)
 	{
 		var popoverHtml = $('#optionAdmin'+id);
-						popoverHtml.attr({'data-toggle' : 'popover', 'data-placement': 'bottom', 'data-content' : '<div class="man-list-btn" ><i class="material-icons">mode_edit</i> Edit</div>' +
+						popoverHtml.attr({'data-toggle' : 'popover', 'data-placement': 'bottom', 'data-content' : '<div class="man-list-btn" onclick="editMed('+ id +')" ><i class="material-icons">mode_edit</i> Edit</div>' +
   						'<div class="man-list-btn" onclick="deleteMed('+ id +')"><i class="material-icons">delete</i> Delete</div>'
   						});
   		appendPopoverClick(popoverHtml);
@@ -251,17 +287,55 @@
 	        .on("click", function () {
 	            
 	            elmt.popover("show");
+	            elmt.css('display', 'block');
 	            $(".popover").on("mouseleave", function () {
 	                elmt.popover('hide');
+	                elmt.removeAttr('style');
 	            });
 	        }).on("mouseleave", function () {
 	            
 	            setTimeout(function () {
 	                if (!$(".popover:hover").length) {
 	                    elmt.popover("hide");
+	                    elmt.removeAttr('style');
 	                }
 	            }, 300);
-	    });
+	    	});
+	}
+
+	function editMed(id)
+	{
+		clearAllModalInputField();
+		$('#addMedicineModal').modal('show');
+		loader($('#editLoader'), 'show');
+		$('#addMedicineModal .modal-title').text('Edit data');
+		$('#saveMedBtn').text('Update');
+		var temp = $('#medicineDataTable > tbody').get(0).rows;
+		$(temp).each(function(index){
+			var data = $(this).data('medicineData');
+			if (data.id == id) 
+			{
+				setTimeout(function(){
+					$('#medEditId').val(data.id)
+					$('#name').val(data.name);
+					$('#brandName').val(data.brand_name);
+					$('#type').val(data.category_id);
+
+					// var temp = data.takers;
+					// temp = temp.replace(/\&quot;/g, '"');
+					// var obj = jQuery.parseJSON(temp);
+					// var age = (obj.age).split('-');
+
+					$('#directionOfUse').val(data.direction_of_use);
+					$('#pictureUploadInp').siblings('div').find('img').attr('src', data.picture);
+					$('#desc').val(data.desc);
+					$('#purpose').val(data.purpose);
+					$('#sideEffect').val(data.side_effects);
+					$('#warning').val(data.warningMsg);
+					loader($('#editLoader'), 'hide');
+				},1000);
+			}
+		});
 	}
 
 	function deleteMed(id)

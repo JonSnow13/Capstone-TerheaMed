@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Medicines;
 
 class HomeController extends Controller
 {
@@ -21,5 +22,11 @@ class HomeController extends Controller
     	}
     	
     	return view('layout.index', compact('searchName'));
+    }
+
+    public function searchJson(Request $request)
+    {
+        $searchData = Medicines::where('name', 'LIKE', '%' . $request->searchName . '%')->orWhere('purpose', 'LIKE', '%' . $request->searchName . '%')->get();
+        return $searchData;
     }
 }

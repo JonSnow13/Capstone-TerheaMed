@@ -441,16 +441,49 @@
 
     function searchBtn()
     {
-    	var searhName = $('#searchBox').val();
+    	var searchName = $('#searchBox').val();
+
+    	if (isNullOrWhitespace(searchName)) return false;
+
+    	$('#searchedPanel').html('');
     	
-    	if (!isNullOrWhitespace(searhName)) 
+    	if (!isNullOrWhitespace(searchName)) 
     	{
     		@if (Request::is('admin'))
-    			window.history.pushState('admin', 'Search', 'admin?search=' + searhName);
+    			window.history.pushState('admin', 'Search', 'admin?search=' + searchName);
     		@else
-    			window.history.pushState('index', 'Search', 'search=' + searhName);
+    			window.history.pushState('index', 'Search', 'search=' + searchName);
     		@endif
     	}
+
+    	$.ajax({
+    		url: '{{ route("json_search") }}',
+    		type: 'GET',
+    		data: {searchName: searchName},
+    		success: function(data){
+
+    			console.log(data);
+    			for (var i = 0; i < data.length; i++) 
+    			{
+    				var htmlAppend =  	'<div class="man-card" onclick="view_medicine()">' +
+	    									'<div class="man-row">' +
+										  		'<div class="col-md-4 man-img-med-shell">' +
+											  			'<img src="'+ data[i].picture +'" style="width: 100%;">' +
+											  	'</div>' +
+											  	'<div class="col-md-8">' +
+											  		'<div class="card-title"><b>'+ data[i].name +'</b></div>' +
+											  		'<p style="font-size: 15px;">'+ data[i].desc +'</p>' +
+											  	'</div>' +
+									  		'</div>' +
+									  	'</div>' +
+									  	'<hr style="margin-right: 1%; margin-left: 1%;">';
+
+					$('#searchedPanel').append(htmlAppend);
+    			}
+
+    		}
+
+    	});
     }
 
     $('#searchBox').keypress(function(e){

@@ -8,7 +8,7 @@
 		@endif
 
 		// $('#openHoursModal').modal('show');
-		$('.navbar').scrollToFixed();
+		// $('.navbar').scrollToFixed();
 		var pharmaClinicPanel = $('.pharma-clinic-panel');
 		pharmaClinicPanel.scrollToFixed ({
                 marginTop: $ ( '.navbar'). outerHeight (true) + 10
@@ -69,7 +69,7 @@
 		    	$('.pharma-clinic-panel').attr('class', 'pharma-clinic-panel col-md-6');
 		    }
 		};
-
+		
 	})
 
 

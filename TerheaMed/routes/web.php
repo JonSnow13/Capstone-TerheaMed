@@ -45,5 +45,15 @@ Route::post(
 	['as' => 'deleteMedicine','uses' => 'AdminController@deleteMedicine']
 );
 
+Route::get(
+	'/search',
+	['as' => 'json_search', 'uses' => 'HomeController@searchJson']
+);
+
+Route::post(
+	'/json_update_medicine',
+	['as' => 'json_update_medicine', 'uses' => 'AdminController@updateMedicine']
+);
+
 // Route::group(['middleware' => 'csrf'], function()
 // {});

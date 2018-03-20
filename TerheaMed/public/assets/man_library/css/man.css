@@ -252,3 +252,12 @@ a.man-link{
 tr:hover .admin-option{
     display: block;
 }
+.man-content{
+    padding: 16px; 
+    margin-top: 40px; 
+    height: auto;
+}
+.welcome-card{
+    padding: 5px;
+    height: 500px;
+}

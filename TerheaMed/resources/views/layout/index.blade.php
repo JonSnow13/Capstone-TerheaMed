@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('content')
-	<div class="content">
+	<div class="man-content">
 		<div class="row">
 			<div class="col-md-6" id="medicinePanel">
 				<div class="man-loader col-md-6">
@@ -28,7 +28,8 @@
 			  		</div>
 				</div>
 				<div class="card-panel-medicine">
-					<div class="card">
+					<div class="card" id="searchedPanel">
+						{{-- @for($i = 0; $i < 6; $i++)
 						<div class="man-card" onclick="view_medicine()">
 					  		<div class="man-row">
 					  			<div class="col-md-4 man-img-med-shell">
@@ -41,92 +42,12 @@
 					  		</div>
 					  	</div>
 					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	<div class="man-card">
-					  		<div class="man-row">
-					  			<div class="col-md-4 man-img-med-shell">
-						  			<img src="{{asset('assets/images/img1.jpg')}}" style="width: 100%;">
-						  		</div>
-						  		<div class="col-md-8">
-						  			<p style="font-size: 15px;">These medicines are used for the relief of clogged nose, runny nose, postnasal drip, itchy and watery eyes, sneezing, headache, body aches, and fever associated with the common cold, allergic rhinitis, sinusitis, flu, and other minor respiratory tract infections. They also help decongest sinus openings and passages.</p>
-						  		</div>
-					  		</div>
-					  	</div>
-					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	<div class="man-card">
-					  		<div class="man-row">
-					  			<div class="col-md-4 man-img-med-shell">
-						  			<img src="{{asset('assets/images/biogesic.jpg')}}" style="width: 100%;">
-						  		</div>
-						  		<div class="col-md-8">
-						  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
-						  		</div>
-					  		</div>
-					  	</div>
-					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	<div class="man-card" onclick="view_medicine()">
-					  		<div class="man-row">
-					  			<div class="col-md-4 man-img-med-shell">
-						  			<img src="{{asset('assets/images/img1.jpg')}}" style="width: 100%;">
-						  		</div>
-						  		<div class="col-md-8">
-						  			<p style="font-size: 15px;">These medicines are used for the relief of clogged nose, runny nose, postnasal drip, itchy and watery eyes, sneezing, headache, body aches, and fever associated with the common cold, allergic rhinitis, sinusitis, flu, and other minor respiratory tract infections. They also help decongest sinus openings and passages.</p>
-						  		</div>
-					  		</div>
-					  	</div>
-					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	<div class="man-card">
-					  		<div class="man-row">
-					  			<div class="col-md-4 man-img-med-shell">
-						  			<img src="{{asset('assets/images/biogesic.jpg')}}" style="width: 100%;">
-						  		</div>
-						  		<div class="col-md-8">
-						  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
-						  		</div>
-					  		</div>
-					  	</div>
-					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	<div class="man-card" onclick="view_medicine()">
-					  		<div class="man-row">
-					  			<div class="col-md-4 man-img-med-shell">
-						  			<img src="{{asset('assets/images/img1.jpg')}}" style="width: 100%;">
-						  		</div>
-						  		<div class="col-md-8">
-						  			<p style="font-size: 15px;">These medicines are used for the relief of clogged nose, runny nose, postnasal drip, itchy and watery eyes, sneezing, headache, body aches, and fever associated with the common cold, allergic rhinitis, sinusitis, flu, and other minor respiratory tract infections. They also help decongest sinus openings and passages.</p>
-						  		</div>
-					  		</div>
-					  	</div>
-					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	<div class="man-card">
-					  		<div class="man-row">
-					  			<div class="col-md-4 man-img-med-shell">
-						  			<img src="{{asset('assets/images/biogesic.jpg')}}" style="width: 100%;">
-						  		</div>
-						  		<div class="col-md-8">
-						  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
-						  		</div>
-					  		</div>
-					  	</div>
-					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	<div class="man-card" onclick="view_medicine()">
-					  		<div class="man-row">
-					  			<div class="col-md-4 man-img-med-shell">
-						  			<img src="{{asset('assets/images/img1.jpg')}}" style="width: 100%;">
-						  		</div>
-						  		<div class="col-md-8">
-						  			<p style="font-size: 15px;">These medicines are used for the relief of clogged nose, runny nose, postnasal drip, itchy and watery eyes, sneezing, headache, body aches, and fever associated with the common cold, allergic rhinitis, sinusitis, flu, and other minor respiratory tract infections. They also help decongest sinus openings and passages.</p>
-						  		</div>
-					  		</div>
-					  	</div>
-					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	<div class="man-card">
-					  		<div class="man-row">
-					  			<div class="col-md-4 man-img-med-shell">
-						  			<img src="{{asset('assets/images/biogesic.jpg')}}" style="width: 100%;">
-						  		</div>
-						  		<div class="col-md-8">
-						  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
-						  		</div>
-					  		</div>
+					  	@endfor --}}
+					  	<div class="welcome-card">
+			  				<center>
+			  					<h2>Welcome to Terhea</h2>
+			  					<p>We find cure for you.</p>
+			  				</center>
 					  	</div>
 					</div>
 				</div>

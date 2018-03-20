@@ -50,11 +50,6 @@
 			purpose.siblings('.err-msg').text(reqMsg);
 			valid = false;
 		}
-		if (isNullOrWhitespace(takers.val())) 
-		{
-			takers.siblings('.err-msg').text(reqMsg);
-			valid = false;
-		}
 
 		return valid;
 	}

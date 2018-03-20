@@ -22,7 +22,6 @@
 </head>
 <body>
 
-<div class="col-md-12">
 	<nav class="navbar navbar-expand-lg navbar-light" style="background: #0b95d2; margin-bottom: 1rem;">
 	  <a class="navbar-brand" href="/CapstoneTerheaMed/TerheaMed/public/" style="color: #fff"><b>Terhea</b></a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" id="burgerMenu">
@@ -56,7 +55,6 @@
 	
 	@yield('content')
 	
-</div>
 
 @include('admin.script')
 @include('admin.validation')
