@@ -490,4 +490,19 @@
     	if (e.which == 13) searchBtn();
     });
 
+
+    function appendComment()
+    {
+    	for (var i = 0; i < 3; i++) {
+    		$('.comment-group').append('<li class="comment-item">Cras justo odio</li>');
+    	}
+
+    	setTimeout(function(){
+    		var tempHeight = $('.comment-group').height();
+    		$('#commentPanel').animate({
+				height: tempHeight+"px"
+			},50);
+    	},400);
+    }
+
 </script>

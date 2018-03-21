@@ -29,7 +29,7 @@
 				</div>
 				<div class="card-panel-medicine">
 					<div class="card" id="searchedPanel">
-						{{-- @for($i = 0; $i < 6; $i++)
+						@for($i = 0; $i < 1; $i++)
 						<div class="man-card" onclick="view_medicine()">
 					  		<div class="man-row">
 					  			<div class="col-md-4 man-img-med-shell">
@@ -41,8 +41,24 @@
 						  		</div>
 					  		</div>
 					  	</div>
+					  	<div class="med-footer">
+			  				<div class="row">
+								<button type="button" class="btn btn-light col-md-6">
+								  Rate <span class="badge badge-light">4.5</span>
+								</button>
+			  					<button type="button" class="btn btn-light col-md-6" onclick="appendComment()">
+								  Comments <span class="badge badge-light">4</span>
+								</button>
+			  				</div>
+			  			</div>
+			  			<div class="comment-section" id="commentPanel">
+			  				<ul class="comment-group">
+							  {{-- <li class="comment-item">Cras justo odio</li>
+							  <li class="comment-item">Dapibus ac facilisis in</li> --}}
+							</ul>
+			  			</div>
 					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	@endfor --}}
+					  	@endfor
 					  	<div class="welcome-card">
 			  				<center>
 			  					<h2>Welcome to Terhea</h2>

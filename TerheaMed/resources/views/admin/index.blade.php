@@ -124,6 +124,9 @@
 			    	<label for="picture">Picture</label>
 			    	<input type="file" class="form-control" id="pictureUploadInp" onchange="uploadPicture(this)">
 			    	<div class="man-img-center">
+			    		<div class="clear-btn" onclick="clearImgBtn(this)">
+			    			<i class="material-icons">highlight_off</i>
+			    		</div>
 			  			<img style="height: 100%;">
 			  		</div>
 			  	</div>

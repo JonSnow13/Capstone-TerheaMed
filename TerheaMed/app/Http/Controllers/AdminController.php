@@ -74,13 +74,17 @@ class AdminController extends Controller
         if (isset($request->medInfoArray[0]['picture'])) 
         {
             $temp = explode("/", $request->medInfoArray[0]['picture']);
-            if ($temp[0] != 'uploads') {
+            if ($temp[0] != 'uploads' && $temp[0] != 'assets') {
                 $imgname = str_random(20) . time() . '.jpg';
                 $base64 = substr($request->medInfoArray[0]['picture'], strpos($request->medInfoArray[0]['picture'], ',')+1);
                 file_put_contents(public_path() . '/uploads/' . $imgname, base64_decode($base64));
 
                 $medicineData->picture = 'uploads/' . $imgname;
             }
+        }
+        else
+        {
+            $medicineData->picture = 'assets/images/default_image.png';
         }
 
         $medicineData->update();

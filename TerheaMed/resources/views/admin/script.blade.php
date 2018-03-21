@@ -218,42 +218,49 @@
 				{
 					data: 'name',
 					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
 						return data;
 					}
 				},
 				{
 					data: 'brand_name',
 					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
 						return data;
 					}
 				},
 				{
 					data: 'desc',
 					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
 						return data;
 					}
 				},
 				{
 					data: 'purpose',
 					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
 						return data;
 					}
 				},
 				{
 					data: 'direction_of_use',
 					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
 						return data;
 					}
 				},
 				{
 					data: 'warningMsg',
 					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
 						return data;
 					}
 				},
 				{
 					data: 'side_effects',
 					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
 						return data;
 					}
 				},
@@ -365,5 +372,10 @@
 			});
 		});
 		console.log(id);
+	}
+
+	function clearImgBtn(elmt)
+	{
+		$(elmt).siblings('img').attr('src', '');
 	}
 </script>
