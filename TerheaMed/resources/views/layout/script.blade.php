@@ -4,6 +4,11 @@
 	var clinicPlace;
 
 	$(function(){
+
+		$('.pharma-clinic-panel').scroll(function(){
+			$('.big-map-panel').css('top', '-683px');
+		});
+
 		// $('#mapModal').modal('show');
 		// $('#pharmacy-section-holder').scrollToFixed();
 		
@@ -78,13 +83,31 @@
         	});
 	}
 
-	function view_medicine()
+	function view_medicine(id)
 	{
 		$('.man-loader').css('display', 'flex');
 		setTimeout(function(){
 			$('.man-loader').css('display', 'none');
 			$('.card-panel-medicine').hide();
 			$('.card-specific-med').show();
+
+			for (var i = 0; i < resultRearchData.length; i++) 
+			{
+				if (resultRearchData[i].id == id) 
+				{
+					$('#productPicture').attr('src', resultRearchData[i].picture);
+					$('#productName').text(resultRearchData[i].name);
+					$('#productBrand').text('Brand Name: ' + resultRearchData[i].brand_name);
+					$('#productFormat').text('Format: ' + resultRearchData[i].format);
+					$('#productDesc').text(resultRearchData[i].desc);
+					$('#productUsage').text(resultRearchData[i].direction_of_use);
+					$('#productSideEffects').text(resultRearchData[i].side_effect);
+				}
+			}
+
+			var body = $("html, body");
+			body.stop().animate({scrollTop:0}, 500, 'swing');
+
 		},800);
 		// $('.card-panel-medicine').hide();
 
@@ -439,6 +462,7 @@
     	
     }
 
+    var resultRearchData;
     function searchBtn()
     {
     	var searchName = $('#searchBox').val();
@@ -461,11 +485,12 @@
     		type: 'GET',
     		data: {searchName: searchName},
     		success: function(data){
-
-    			console.log(data);
+    			resultRearchData = data;
+    			// console.log(data);
     			for (var i = 0; i < data.length; i++) 
     			{
-    				var htmlAppend =  	'<div class="man-card" onclick="view_medicine()">' +
+    				
+    				var htmlAppend =  	'<div class="man-card" onclick="view_medicine('+ data[i].id +')">' +
 	    									'<div class="man-row">' +
 										  		'<div class="col-md-4 man-img-med-shell">' +
 											  			'<img src="'+ data[i].picture +'" style="width: 100%;">' +
@@ -476,11 +501,35 @@
 											  	'</div>' +
 									  		'</div>' +
 									  	'</div>' +
+									  	'<div class="med-footer">' +
+							  				'<div class="row">' +
+												'<button type="button" class="btn btn-light col-md-6" style="padding: 15px;">' +
+												  	'<div class="fb-like" ' +
+													    'data-href="https://terheamed.com/commentPanel'+ data[i].id +'"' +
+													    'data-layout="button_count" ' +
+													    'data-action="recommend" ' +
+													    'data-size="large"' +
+													'</div>' +
+												'</button>' +
+							  					'<button type="button" class="btn btn-light col-md-6 commentBtn" onclick="appendComment('+ "'" +'#commentPanel' + data[i].id +"'" +', '+ "'" +'terheamed.com/commentPanel' + data[i].id +"'" +')">' +
+												  'Comments' +
+												'</button>' +
+							  				'</div>' +
+							  			'</div>' +
+							  			'<div class="comment-section" id="commentPanel'+ data[i].id +'">' +
+							  				'<ul class="comment-group">' +
+							  				'</ul>' +
+			  							'</div>' +
 									  	'<hr style="margin-right: 1%; margin-left: 1%;">';
 
 					$('#searchedPanel').append(htmlAppend);
     			}
+    			FB.XFBML.parse();
 
+    			// FB.logout(function(response) {
+       //              // this part just clears the $_SESSION var
+       //              // replace with your own code
+       //          });
     		}
 
     	});
@@ -490,19 +539,82 @@
     	if (e.which == 13) searchBtn();
     });
 
-
-    function appendComment()
-    {
-    	for (var i = 0; i < 3; i++) {
-    		$('.comment-group').append('<li class="comment-item">Cras justo odio</li>');
+    window.onload = function(){
+    	FB.init({
+			      appId      : '161442394556549',
+			      xfbml      : true,
+			      version    : 'v2.5',
+			      logout     : true
+			    });
+    	if(FB.getLoginStatus() != null) {
+    		FB.api('/me', function(response) 
+		    {
+		        alert ("Welcome " + response.name + ": Your UID is " + response.id); 
+		    });
     	}
 
-    	setTimeout(function(){
-    		var tempHeight = $('.comment-group').height();
-    		$('#commentPanel').animate({
-				height: tempHeight+"px"
-			},50);
-    	},400);
+    	// FB.logout(re);
+
+    };
+
+
+    function appendComment(elmt, urlForComment)
+    {
+  //   	FB.api(
+		//   '/{100004330294967}',
+		//   'GET',
+		//   {},
+		//   function(response) {
+		//      console.log(response);
+		//   }
+		// );
+
+    	if (!$(elmt).hasClass('man-show')) 
+    	{
+    		$(elmt).prev('.med-footer').find('.commentBtn').append('<img src="{{asset('assets/images/busy.gif')}}" style="width: 15%">');
+
+    		// for (var i = 0; i < 3; i++) 
+    		// {
+    		// 	var commentHtml =  	'<li class="comment-item">' +
+    		// 							'<div style="width: 13%">' +
+						// 			  		'<img src="{{asset('assets/images/manuel.png')}}" style="width: 45px; border-radius: 50%;">' +
+						// 			  	'</div>' +
+						// 			  	'<div style="width: 87%">' +
+						// 			  		'Cras justo odio  Cras justo odio  Cras justo odio  Cras justo odio  Cras justo odio' +
+						// 			  	'</div>' +
+    		// 						'</li>';
+
+    		// 	$(elmt + ' .comment-group').append(commentHtml);
+	    	// }
+
+			if (!$(elmt + ' .comment-group').children().length > 0) 
+			{
+				var commentHtml = '<div class="fb-comments" data-href="https://'+ urlForComment +'" data-numposts="2"></div>';
+		    	$(elmt + ' .comment-group').append(commentHtml);
+		    	FB.XFBML.parse();
+			}
+
+	    	setTimeout(function(){
+
+	    		$(elmt).addClass('man-show');
+
+				$(elmt).siblings('.med-footer').find('.commentBtn').find('img').remove();
+
+	    	},1000);
+    	}
+    	else
+    	{
+    		$(elmt).animate({
+				height: "0px"
+			},400);
+
+    		setTimeout(function(){
+    			$(elmt).removeClass('man-show');
+    			$(elmt).css('height', '100%');
+    		},430);
+    	}
+
     }
+
 
 </script>

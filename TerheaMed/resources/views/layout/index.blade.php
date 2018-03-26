@@ -12,24 +12,28 @@
 					<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="backToAllSearchMed()">< back</button>
 			  		<div class="man-row">
 			  			<div class="col-md-12 man-img-center">
-				  			<img src="{{asset('assets/images/biogesic.jpg')}}" style="height: 100%;">
+				  			<img id="productPicture" src="{{asset('assets/images/biogesic.jpg')}}" style="height: 100%;">
 				  		</div>
 				  		<div class="col-md-8">
-				  			<div class="card-title"><b>Paracetamol Biogesic</b></div>
+				  			<div class="card-title"><b id="productName">Paracetamol Biogesic</b></div>
 				  			<b>Product Details</b>
-				  			<p>Brand Name: Unilab</p>
-				  			<p>Format: Caplet</p>
-				  			<p>What is this medicine for?</p>
-				  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
+				  			<p id="productBrand">Brand Name: Unilab</p>
+				  			<p id="productFormat">Format: Caplet</p>
 
-				  			<p>How much and how often should you use this medicine?</p>
-				  			<p style="font-size: 15px;">This medicine should be taken orally every 4 hours, as needed for pain and/or as directed by doctor.</p>
+				  			<b>What is this medicine for?</b>
+				  			<p style="font-size: 15px;" id="productDesc">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
+
+				  			<b>How much and how often should you use this medicine?</b>
+				  			<p style="font-size: 15px;" id="productUsage">This medicine should be taken orally every 4 hours, as needed for pain and/or as directed by doctor.</p>
+
+				  			<b>Side effects</b>
+				  			<p style="font-size: 15px;" id="productSideEffects">This medicine should be taken orally every 4 hours, as needed for pain and/or as directed by doctor.</p>
 				  		</div>
 			  		</div>
 				</div>
 				<div class="card-panel-medicine">
 					<div class="card" id="searchedPanel">
-						@for($i = 0; $i < 1; $i++)
+						{{-- @for($i = 0; $i < 1; $i++)
 						<div class="man-card" onclick="view_medicine()">
 					  		<div class="man-row">
 					  			<div class="col-md-4 man-img-med-shell">
@@ -46,19 +50,25 @@
 								<button type="button" class="btn btn-light col-md-6">
 								  Rate <span class="badge badge-light">4.5</span>
 								</button>
-			  					<button type="button" class="btn btn-light col-md-6" onclick="appendComment()">
+			  					<button type="button" class="btn btn-light col-md-6 commentBtn" onclick="appendComment('#commentPanel')">
 								  Comments <span class="badge badge-light">4</span>
 								</button>
 			  				</div>
 			  			</div>
 			  			<div class="comment-section" id="commentPanel">
 			  				<ul class="comment-group">
-							  {{-- <li class="comment-item">Cras justo odio</li>
-							  <li class="comment-item">Dapibus ac facilisis in</li> --}}
+							  <li class="comment-item"> 
+							  	<div style="width: 13%">
+							  		<img src="{{asset('assets/images/manuel.png')}}" style="width: 45px; border-radius: 50%;">
+							  	</div>
+							  	<div style="width: 87%">
+							  		Cras justo odio  Cras justo odio  Cras justo odio  Cras justo odio  Cras justo odio
+							  	</div>
+							  </li>
 							</ul>
 			  			</div>
 					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	@endfor
+					  	@endfor --}}
 					  	<div class="welcome-card">
 			  				<center>
 			  					<h2>Welcome to Terhea</h2>
@@ -141,8 +151,20 @@
 				</div>
 				</div>
 			</div>
-			
+
+			<div class="col-md-12">
+				<div class="big-map-panel">
+					<div class="man-row">
+						<div style="width: 25%">
+							<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="hideBigMap()">< back</button>
+						</div>
+						<div style="width: 75%" id="seeAllMap"></div>
+					</div>
+				</div>
+			</div>
+
 		</div>
+
 	</div>
 
 @endsection

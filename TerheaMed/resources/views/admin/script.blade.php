@@ -4,6 +4,7 @@
 		$('.modal').on('shown.bs.modal', function () {
 		  $(this).find("input:enabled:visible:first").focus();
 		});
+		$('[data-toggle="tooltip"]').tooltip();
 	});
 
 	function readURL(input) 
@@ -129,6 +130,7 @@
 		var purpose = $('#purpose');
 		var sideEffects = $('#sideEffect');
 		var warning = $('#warning');
+		var format = $('#format');
 
 		var valid = validateMedData();
 
@@ -141,6 +143,7 @@
 		{
 			if (isNullOrWhitespace(sideEffects.val())) sideEffects.val('N/A');
 			if (isNullOrWhitespace(warning.val())) warning.val('N/A'); 
+			if (isNullOrWhitespace(format.val())) format.val('N/A'); 
 			
 			$('#saveMedBtn').text('Saving...');
 
@@ -153,7 +156,8 @@
 				desc: desc.val(),
 				purpose: purpose.val(),
 				sideEffects: sideEffects.val(),
-				warning: warning.val()
+				warning: warning.val(),
+				format: format.val()
 			});
 
 			setTimeout(function(){
@@ -230,6 +234,23 @@
 					}
 				},
 				{
+					data: 'format',
+					render: function(data, type, row){
+						if (data == null) 
+						{
+							return 'N/A';
+						}
+						return (data.length > 25)? data.substr(0,24) + "..." : data;;
+					}
+				},
+				{
+					data: 'category_id',
+					render: function(data, type, row){
+						data = (data == 1)? 'Non - Herbal' :  'Herbal';
+						return data;
+					}
+				},
+				{
 					data: 'desc',
 					render: function(data, type, row){
 						data = (data.length > 25)? data.substr(0,24) + "..." : data;
@@ -258,7 +279,7 @@
 					}
 				},
 				{
-					data: 'side_effects',
+					data: 'side_effect',
 					render: function(data, type, row){
 						data = (data.length > 25)? data.substr(0,24) + "..." : data;
 						return data;
@@ -327,6 +348,7 @@
 					$('#name').val(data.name);
 					$('#brandName').val(data.brand_name);
 					$('#type').val(data.category_id);
+					$('#format').val(data.format);
 
 					// var temp = data.takers;
 					// temp = temp.replace(/\&quot;/g, '"');
@@ -337,7 +359,7 @@
 					$('#pictureUploadInp').siblings('div').find('img').attr('src', data.picture);
 					$('#desc').val(data.desc);
 					$('#purpose').val(data.purpose);
-					$('#sideEffect').val(data.side_effects);
+					$('#sideEffect').val(data.side_effect);
 					$('#warning').val(data.warningMsg);
 					loader($('#editLoader'), 'hide');
 				},1000);

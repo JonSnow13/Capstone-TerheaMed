@@ -26,7 +26,8 @@ class AdminController extends Controller
     	$medicineData->purpose = $request->medInfoArray[0]['purpose'];
     	$medicineData->direction_of_use = $request->medInfoArray[0]['directionOfUse'];
         $medicineData->warningMsg = $request->medInfoArray[0]['warning'];
-        $medicineData->side_effects = $request->medInfoArray[0]['sideEffects'];
+        $medicineData->side_effect = $request->medInfoArray[0]['sideEffects'];
+        $medicineData->format = $request->medInfoArray[0]['format'];
 
     	if (isset($request->medInfoArray[0]['picture'])) 
     	{
@@ -69,7 +70,8 @@ class AdminController extends Controller
         $medicineData->purpose = $request->medInfoArray[0]['purpose'];
         $medicineData->direction_of_use = $request->medInfoArray[0]['directionOfUse'];
         $medicineData->warningMsg = $request->medInfoArray[0]['warning'];
-        $medicineData->side_effects = $request->medInfoArray[0]['sideEffects'];
+        $medicineData->side_effect = $request->medInfoArray[0]['sideEffects'];
+        $medicineData->format = $request->medInfoArray[0]['format'];
 
         if (isset($request->medInfoArray[0]['picture'])) 
         {

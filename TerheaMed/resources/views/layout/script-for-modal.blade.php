@@ -2,10 +2,13 @@
 
 	var windowHeight = $( window ).height();
 	var	mapHeight = windowHeight * .70;
+	var	mapHeight2 = windowHeight * .91;
 	var windowWidth = $(window).width();
 	var streetViewWidth = windowWidth * .30; 
 
 	$('.man-map').css('height', mapHeight+'px');
+	$('.big-map-panel').css('height', mapHeight2+'px');
+	$('#seeAllMap').css('height', mapHeight2+'px');
 	$('#man-streeview').css('height', mapHeight+'px');
 	$('#streetView').css({'height' : (mapHeight*.60)+'px', 'width' : streetViewWidth+'px'});
 
@@ -35,10 +38,11 @@
 
 	function seeAllPharmaClinic()
 	{
-		setMapOnAll(map);
-		map.setZoom(15);
+		setMapOnAll(map2);
+		map2.setZoom(15);
 		directionsDisplay.setMap(null);
 		$('.moreMapInfo').hide();
+
 
 		if (panorama != undefined) 
 		{
@@ -47,13 +51,31 @@
 
 		$.when(directionsDisplay).done(function(){
 			$('#mapModal .modal-title').text('Nearby pharmacy and clinic / hospital');
-			$('#mapModal').modal('show');
+			// $('#mapModal').modal('show');
+
+			$('.big-map-panel').css('display', 'block');
+			$('#medicinePanel').fadeOut();
+			$('.pharma-clinic-panel').fadeOut();
+
+			setTimeout(function(){
+				$('.big-map-panel').addClass('show');
+			},100);
 		});
 
 		// $('#mapModal').css('padding', '10px');
 	}
 
-	var map, infoWindow, pos, service;
+	function hideBigMap()
+	{
+		$('.big-map-panel').removeClass('show');
+		setTimeout(function(){
+			$('.big-map-panel').css('display', 'none');
+			$('#medicinePanel').fadeIn();
+			$('.pharma-clinic-panel').fadeIn();
+		},820);
+	}
+
+	var map, infoWindow, pos, service, map2;
 	var myAddress;
 	var directionsDisplay;
 	var directionsService;
@@ -63,6 +85,11 @@
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 15
+        });
+
+        map2 = new google.maps.Map(document.getElementById('seeAllMap'), {
           center: {lat: -34.397, lng: 150.644},
           zoom: 15
         });
@@ -110,7 +137,13 @@
 		    	map: map,
 		    	icon: icon
 		  	});
+		  	var marker2 = new google.maps.Marker({
+		    	position: pos,
+		    	map: map2,
+		    	icon: icon
+		  	});
             map.setCenter(pos);
+            map2.setCenter(pos);
 
 
 //=======================================================================
@@ -142,10 +175,12 @@
 
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
+            handleLocationError(true, infoWindow, map2.getCenter());
           });
         } else {
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
+          handleLocationError(false, infoWindow, map2.getCenter());
         }
 
 
@@ -157,6 +192,7 @@
 	                          'Error: The Geolocation service failed.' :
 	                          'Error: Your browser doesn\'t support geolocation.');
 	    infoWindow.open(map);
+	    infoWindow.open(map2);
 	}
 
   	function callbackPharmacy(results, status) {
@@ -353,7 +389,7 @@
     }
     
     var mapRenderCount = 0;
-	function renderMap()
+	function renderMap()//unused
 	{
 		if (mapRenderCount < 2) 
 		{

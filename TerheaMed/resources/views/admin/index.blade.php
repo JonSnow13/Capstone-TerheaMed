@@ -13,12 +13,14 @@
 		      	<th scope="col">Picture</th>
 		      	<th scope="col">Name</th>
 		      	<th scope="col">Brand Name</th>
+		      	<th scope="col">Format</th>
+		      	<th scope="col">Type</th>
 		      	<th scope="col">Description</th>
 		      	<th scope="col">Purpose</th>
 		      	<th scope="col">Usage</th>
 		      	<th scope="col">Warning</th>
 		      	<th scope="col">Side Effects</th>
-		      	<th scope="col"></th>
+		      	<th scope="col"><i class="material-icons">settings</i></th>
 	    	</tr>
 	  	</thead>
 	  	<tbody>
@@ -78,17 +80,17 @@
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="desc">Description</label>
-			    	<textarea class="form-control" id="desc" rows="3"></textarea>
+			    	<textarea class="form-control" id="desc" rows="3" placeholder="Description"></textarea>
 			    	<i class="err-msg"></i>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="purpose">Purpose</label>
-			    	<textarea class="form-control" id="purpose" rows="3"></textarea>
+			    	<textarea class="form-control" id="purpose" rows="3" placeholder="Purpose"></textarea>
 			    	<i class="err-msg"></i>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="sideEffect">Side effects</label>
-			    	<textarea class="form-control" id="sideEffect" rows="3"></textarea>
+			    	<textarea class="form-control" id="sideEffect" rows="3" placeholder="Side effects"></textarea>
 			    	<i class="err-msg"></i>
 			  	</div>
 		  	</div>
@@ -112,12 +114,19 @@
 			  	</div> --}}
 			  	<div class="form-group">
 			    	<label for="warning">Warning</label>
-			    	<textarea class="form-control" id="warning" rows="3"></textarea>
+			    	<textarea class="form-control" id="warning" rows="3" placeholder="Warning"></textarea>
 			    	<i class="err-msg"></i>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="directionOfUse">Direction of use</label>
-			    	<textarea class="form-control" id="directionOfUse" rows="3"></textarea>
+			    	<textarea class="form-control" id="directionOfUse" rows="3" placeholder="Direction of use"></textarea>
+			    	<i class="err-msg"></i>
+			  	</div>
+			  	<div class="form-group">
+			    	<label for="format" style="display: flex;">Format &nbsp
+			    		<span<i class="material-icons" data-toggle="tooltip" data-placement="right" title="E.g. Caplet | Syrup | Tablet | Inhaler | Capsule | Inhaler">help_outline</i></span>
+			    	</label>
+			    	<input type="text" class="form-control" id="format" placeholder="Format">
 			    	<i class="err-msg"></i>
 			  	</div>
 		  		<div class="form-group">

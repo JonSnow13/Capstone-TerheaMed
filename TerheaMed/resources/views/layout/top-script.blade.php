@@ -13,6 +13,7 @@
 		pharmaClinicPanel.scrollToFixed ({
                 marginTop: $ ( '.navbar'). outerHeight (true) + 10
         	});
+		
 		var minusHeight = windowHeight * .10;
 		pharmaClinicPanel.css('max-height', (windowHeight - minusHeight));
 

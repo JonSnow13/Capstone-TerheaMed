@@ -284,9 +284,12 @@ tr:hover .admin-option{
 .comment-section{
     position: relative;
     width: 100%;
-    overflow:hidden;
-    height: 0;
-    transition: 0.4s ease-out;
+    overflow:auto;
+    height: 100%;
+    display: none;
+}
+.man-show{
+    display: block;
 }
 .comment-group{
     display: -webkit-box;
@@ -298,14 +301,30 @@ tr:hover .admin-option{
     flex-direction: column;
     padding-left: 0;
     margin-bottom: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8;
 }
 .comment-item{
     position: relative;
-    display: block;
+    display: flex;
     padding: 0.75rem 1.25rem;
     margin-bottom: -1px;
-    background-color: #fff;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    background-color: #f7f7f7;
+    border: 1px solid rgba(0, 0, 0, 0.8);
     border-right: none;
     border-left: none;
+}
+.big-map-panel{
+    width: 100%; 
+    z-index: 9999; 
+    height: 100%; 
+    position: absolute; 
+    transition: .8s ease; 
+    left: 1520px; 
+    display: none;
+    top: -550px;
+}
+.big-map-panel.show{
+    left: 0;
 }
