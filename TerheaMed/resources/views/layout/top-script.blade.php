@@ -51,6 +51,10 @@
 		window.onresize = function(event) {
 		    windowWidth = $( window ).width();
 		    pharmaClinicPanel.css('max-height', (windowHeight - 150));
+		    if ($('.big-map-panel').hasClass('show')) 
+		    {
+		    	return false;
+		    }
 		    if (windowWidth <= 980) 
 		    {
 		    	$('#medicinePanel').attr('class', 'col-md-12');

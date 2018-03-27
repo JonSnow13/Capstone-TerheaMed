@@ -27,7 +27,7 @@ class AdminController extends Controller
     	$medicineData->direction_of_use = $request->medInfoArray[0]['directionOfUse'];
         $medicineData->warningMsg = $request->medInfoArray[0]['warning'];
         $medicineData->side_effect = $request->medInfoArray[0]['sideEffects'];
-        $medicineData->format = $request->medInfoArray[0]['format'];
+        $medicineData->format = json_encode(['format' => $request->medInfoArray[0]['format'], 'prescription_required' => $request->medInfoArray[0]['prescription']]);
 
     	if (isset($request->medInfoArray[0]['picture'])) 
     	{
@@ -71,7 +71,7 @@ class AdminController extends Controller
         $medicineData->direction_of_use = $request->medInfoArray[0]['directionOfUse'];
         $medicineData->warningMsg = $request->medInfoArray[0]['warning'];
         $medicineData->side_effect = $request->medInfoArray[0]['sideEffects'];
-        $medicineData->format = $request->medInfoArray[0]['format'];
+        $medicineData->format = json_encode(['format' => $request->medInfoArray[0]['format'], 'prescription_required' => $request->medInfoArray[0]['prescription']]);
 
         if (isset($request->medInfoArray[0]['picture'])) 
         {

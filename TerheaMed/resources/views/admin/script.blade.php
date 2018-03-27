@@ -111,7 +111,7 @@
 		$('#addMedicineModal').modal('show');
 	}
 
-	$('#addMedicineModal input, textarea').keypress(function(e){
+	$('#addMedicineModal input').keypress(function(e){
 		if (e.which == 13) 
 		{
 			saveMedBtn();
@@ -120,8 +120,10 @@
 
 	function saveMedBtn()
 	{
+		
 		var medInfoArray = [];
 		var name = $('#name');
+		var prescription = ($('#optionPres1').is(':checked'))? 1 : 0;
 		var brandName = $('#brandName');
 		var type = $('#type');
 		var directionOfUse = $('#directionOfUse');
@@ -157,7 +159,8 @@
 				purpose: purpose.val(),
 				sideEffects: sideEffects.val(),
 				warning: warning.val(),
-				format: format.val()
+				format: format.val(),
+				prescription: prescription
 			});
 
 			setTimeout(function(){
@@ -236,6 +239,10 @@
 				{
 					data: 'format',
 					render: function(data, type, row){
+						var temp = data;
+						temp = temp.replace(/\&quot;/g, '"');
+						var obj = jQuery.parseJSON(temp);
+						data = obj.format;
 						if (data == null) 
 						{
 							return 'N/A';
@@ -348,12 +355,22 @@
 					$('#name').val(data.name);
 					$('#brandName').val(data.brand_name);
 					$('#type').val(data.category_id);
-					$('#format').val(data.format);
 
-					// var temp = data.takers;
-					// temp = temp.replace(/\&quot;/g, '"');
-					// var obj = jQuery.parseJSON(temp);
-					// var age = (obj.age).split('-');
+					var temp = data.format;
+					temp = temp.replace(/\&quot;/g, '"');
+					var obj = jQuery.parseJSON(temp);
+					$('#format').val(obj.format);
+
+					if (obj.prescription_required == 1) 
+					{
+						document.getElementById('optionPres1').checked = true;
+						document.getElementById('optionPres2').checked = false;
+					}
+					else
+					{
+						document.getElementById('optionPres2').checked = true;
+						document.getElementById('optionPres1').checked = false;
+					}
 
 					$('#directionOfUse').val(data.direction_of_use);
 					$('#pictureUploadInp').siblings('div').find('img').attr('src', data.picture);

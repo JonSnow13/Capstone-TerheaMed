@@ -75,7 +75,6 @@ a.man-link{
     background-color: #fff;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
     overflow: hidden;
 }
 .clinic-panel{
@@ -92,7 +91,6 @@ a.man-link{
     background-color: #fff;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
     overflow: hidden;
 }
 .man-img-med-shell{
@@ -323,8 +321,14 @@ tr:hover .admin-option{
     transition: .8s ease; 
     left: 1520px; 
     display: none;
-    top: -550px;
+    top: 0;
+    margin-top: 57px;
 }
 .big-map-panel.show{
     left: 0;
+}
+.prescription{
+    background: red; 
+    padding: 10px; 
+    color: white;
 }

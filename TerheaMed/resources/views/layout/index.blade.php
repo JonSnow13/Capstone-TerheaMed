@@ -9,7 +9,8 @@
 				</div>
 				<h5 style="padding: .5rem .5rem; color: #696a6d;">Suggested Medicine(s):</h5>
 				<div class="card-specific-med" style="display: none;">
-					<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="backToAllSearchMed()">< back</button>
+						<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="backToAllSearchMed()">< back</button>
+						<div class="prescription">You can't obtain this medicine without a prescription from a doctor or nurse</div>
 			  		<div class="man-row">
 			  			<div class="col-md-12 man-img-center">
 				  			<img id="productPicture" src="{{asset('assets/images/biogesic.jpg')}}" style="height: 100%;">
@@ -28,6 +29,22 @@
 
 				  			<b>Side effects</b>
 				  			<p style="font-size: 15px;" id="productSideEffects">This medicine should be taken orally every 4 hours, as needed for pain and/or as directed by doctor.</p>
+
+				  			<b>What is in this medicine?</b>
+				  			<table class="table">
+							  <tbody>
+							    <tr>
+							      <th scope="row">1</th>
+							      <td>Cetirizine dihydrochloride</td>
+							      <td>5 mg</td>
+							    </tr>
+							    <tr>
+							      <th scope="row">2</th>
+							      <td>Phenylephrine HCI</td>
+							      <td>10 mg</td>
+							    </tr>
+							  </tbody>
+							</table>
 				  		</div>
 			  		</div>
 				</div>
@@ -152,19 +169,17 @@
 				</div>
 			</div>
 
-			<div class="col-md-12">
-				<div class="big-map-panel">
-					<div class="man-row">
-						<div style="width: 25%">
-							<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="hideBigMap()">< back</button>
-						</div>
-						<div style="width: 75%" id="seeAllMap"></div>
-					</div>
-				</div>
-			</div>
-
 		</div>
 
+	</div>
+
+	<div class="big-map-panel">
+		<div class="man-row">
+			<div style="width: 25%">
+				<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="hideBigMap()">< back</button>
+			</div>
+			<div style="width: 75%" id="seeAllMap"></div>
+		</div>
 	</div>
 
 @endsection

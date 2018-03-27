@@ -129,6 +129,16 @@
 			    	<input type="text" class="form-control" id="format" placeholder="Format">
 			    	<i class="err-msg"></i>
 			  	</div>
+			  	<div class="form-group">
+			    	<label for="prescription">Require Prescription?</label>
+			    	<label>
+			    		<input type="radio" name="optionA" id="optionPres1"  checked="checked" value="1"> Yes
+			    	</label>
+			    	<label>
+			    		<input type="radio" name="optionA" id="optionPres2" value="0"> No
+			    	</label>
+			    	<i class="err-msg"></i>
+			  	</div>
 		  		<div class="form-group">
 			    	<label for="picture">Picture</label>
 			    	<input type="file" class="form-control" id="pictureUploadInp" onchange="uploadPicture(this)">

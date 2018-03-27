@@ -5,10 +5,6 @@
 
 	$(function(){
 
-		$('.pharma-clinic-panel').scroll(function(){
-			$('.big-map-panel').css('top', '-683px');
-		});
-
 		// $('#mapModal').modal('show');
 		// $('#pharmacy-section-holder').scrollToFixed();
 		
@@ -93,15 +89,17 @@
 
 			for (var i = 0; i < resultRearchData.length; i++) 
 			{
-				if (resultRearchData[i].id == id) 
+				var data = resultRearchData[i];
+				if (data.id == id) 
 				{
-					$('#productPicture').attr('src', resultRearchData[i].picture);
-					$('#productName').text(resultRearchData[i].name);
-					$('#productBrand').text('Brand Name: ' + resultRearchData[i].brand_name);
-					$('#productFormat').text('Format: ' + resultRearchData[i].format);
-					$('#productDesc').text(resultRearchData[i].desc);
-					$('#productUsage').text(resultRearchData[i].direction_of_use);
-					$('#productSideEffects').text(resultRearchData[i].side_effect);
+					var format = jQuery.parseJSON(data.format);
+					$('#productPicture').attr('src', data.picture);
+					$('#productName').text(data.name);
+					$('#productBrand').text('Brand Name: ' + data.brand_name);
+					$('#productFormat').text('Format: ' + format.format);
+					$('#productDesc').text(data.desc);
+					$('#productUsage').text(data.direction_of_use);
+					$('#productSideEffects').text(data.side_effect);
 				}
 			}
 

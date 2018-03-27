@@ -38,6 +38,8 @@
 
 	function seeAllPharmaClinic()
 	{
+		var body = $("html, body");
+		body.stop().animate({scrollTop:0}, 20, 'swing');
 		setMapOnAll(map2);
 		map2.setZoom(15);
 		directionsDisplay.setMap(null);

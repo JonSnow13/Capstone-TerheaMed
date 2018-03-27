@@ -56,10 +56,7 @@
 	    </div>
 	      </li>
 	      <li class="nav-item">
-	        <a class="man-link" href="#">Adults</a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="man-link" href="#">Kids</a>
+	        <a class="man-link" href="#">About</a>
 	      </li>
 	      <li class="nav-item add-menu-for-mobile">
 	        <a class="man-link" href="javascript: showPharmacy()">Nearby pharmacy and clinic / hospital</a>
@@ -69,7 +66,6 @@
 	</nav>
 	
 	@yield('content')
-	
 
 @include('layout.script')
 @include('layout.script-for-modal')
