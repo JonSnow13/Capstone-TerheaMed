@@ -177,6 +177,7 @@
 		<div class="man-row">
 			<div style="width: 25%">
 				<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="hideBigMap()">< back</button>
+				<div class="big-map-streetview" id="bigMapStreetview"></div>
 			</div>
 			<div style="width: 75%" id="seeAllMap"></div>
 		</div>

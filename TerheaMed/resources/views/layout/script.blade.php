@@ -100,6 +100,8 @@
 					$('#productDesc').text(data.desc);
 					$('#productUsage').text(data.direction_of_use);
 					$('#productSideEffects').text(data.side_effect);
+
+				 	(format.prescription_required == 0)? $('.prescription').hide() : $('.prescription').show();
 				}
 			}
 
@@ -478,12 +480,16 @@
     		@endif
     	}
 
+    	$('.man-loader').css('display', 'flex');
     	$.ajax({
     		url: '{{ route("json_search") }}',
     		type: 'GET',
     		data: {searchName: searchName},
     		success: function(data){
     			resultRearchData = data;
+    			$('.card-panel-medicine').show();
+				$('.card-specific-med').hide();
+				$('.man-loader').css('display', 'none');
     			// console.log(data);
     			for (var i = 0; i < data.length; i++) 
     			{

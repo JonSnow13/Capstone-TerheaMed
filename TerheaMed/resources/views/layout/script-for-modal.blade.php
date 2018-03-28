@@ -265,6 +265,7 @@
           infowindow.open(map, this);
           $('#streetView').show();
           renderStreetView(place.geometry.location, 'streetView');
+          showStreetView(place.geometry.location, 'bigMapStreetview');
           $('#mapModal .modal-title').text(place.name);
         });
     }
@@ -292,6 +293,7 @@
           infowindow.open(map, this);
           $('#streetView').show();
           renderStreetView(place.geometry.location, 'streetView');
+          showStreetView(place.geometry.location, 'bigMapStreetview');
           $('#mapModal .modal-title').text(place.name);
         });
     }
@@ -328,8 +330,11 @@
 	{
 		    panorama = new google.maps.StreetViewPanorama(
 		      document.getElementById(id), {
-		        position: place.geometry.location,
-		        disableDefaultUI: true,
+		        position: place,
+		        pov: {
+		          heading: 280,
+		          pitch: 0
+		        },
 		      }
 		      );
 		  map.setStreetView(panorama);
