@@ -77,6 +77,73 @@
 		},820);
 	}
 
+	function searchPlaceFunction()
+	{
+		// Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        // map2.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map2.addListener('bounds_changed', function() {
+          searchBox.setBounds(map2.getBounds());
+        });
+
+        var searchedMarkers = [];
+         // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          searchedMarkers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          searchedMarkers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+             	url: "{{asset('assets/images/icon-establishment.png')}}", // url
+			    scaledSize: new google.maps.Size(46, 46), // scaled size
+			    origin: new google.maps.Point(0,0), // origin
+			    anchor: new google.maps.Point(0, 0) // anchor
+            };
+
+            var marker = new google.maps.Marker({
+              map: map2,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location,
+              animation: google.maps.Animation.DROP
+            })
+            // Create a marker for each place.
+            searchedMarkers.push(marker);
+
+          	infowindow.setContent(place.name);
+          	infowindow.open(map2, marker);
+          	showStreetView(place.geometry.location, 'bigMapStreetview');
+          	$('#placeName').text(place.name);
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map2.fitBounds(bounds);
+        });
+	}
+
 	var map, infoWindow, pos, service, map2;
 	var myAddress;
 	var directionsDisplay;
@@ -95,6 +162,8 @@
           center: {lat: -34.397, lng: 150.644},
           zoom: 15
         });
+
+        searchPlaceFunction();
 
         directionsDisplay = new google.maps.DirectionsRenderer;
         directionsService = new google.maps.DirectionsService;
@@ -295,6 +364,7 @@
           renderStreetView(place.geometry.location, 'streetView');
           showStreetView(place.geometry.location, 'bigMapStreetview');
           $('#mapModal .modal-title').text(place.name);
+          $('#placeName').text(place.name);
         });
     }
 
@@ -332,7 +402,7 @@
 		      document.getElementById(id), {
 		        position: place,
 		        pov: {
-		          heading: 280,
+		          heading: 200,
 		          pitch: 0
 		        },
 		      }
@@ -385,7 +455,7 @@
 		      document.getElementById(viewId), {
 		        position: posTemp,
 		        pov: {
-		          heading: 280,
+		          heading: 200,
 		          pitch: 0
 		        },
 		        enableCloseButton: true,

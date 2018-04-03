@@ -48,7 +48,14 @@
 	      <li>
 	      	<div class="man-search-form">
 	    	<div class="input-group" style="justify-content: center;">
-			    <input type="text" id="searchBox" class="form-control" placeholder="Search" aria-describedby="btnGroupAddon">
+			    <input type="text" list="category" id="searchBox" class="form-control" placeholder="Search" aria-describedby="btnGroupAddon">
+			    <datalist id="category">
+				    <option value="Fever">
+				    <option value="Cough">
+				    <option value="Headache">
+				    <option value="Stomach Pain relief">
+				    <option value="Allergy">
+				</datalist>
 			    <div class="input-group-prepend">
 			      <button class="input-group-text" onclick="searchBtn()"><i class="material-icons" style="font-size:20px;">search</i></button>
 			    </div>

@@ -10,7 +10,7 @@
 				<h5 style="padding: .5rem .5rem; color: #696a6d;">Suggested Medicine(s):</h5>
 				<div class="card-specific-med" style="display: none;">
 						<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="backToAllSearchMed()">< back</button>
-						<div class="prescription">You can't obtain this medicine without a prescription from a doctor or nurse</div>
+						<div class="prescription">You can't obtain this medicine without a prescription from a doctor.</div>
 			  		<div class="man-row">
 			  			<div class="col-md-12 man-img-center">
 				  			<img id="productPicture" src="{{asset('assets/images/biogesic.jpg')}}" style="height: 100%;">
@@ -21,16 +21,16 @@
 				  			<p id="productBrand">Brand Name: Unilab</p>
 				  			<p id="productFormat">Format: Caplet</p>
 
-				  			<b>What is this medicine for?</b>
+				  			<b id="whatDesc">What is this medicine for?</b>
 				  			<p style="font-size: 15px;" id="productDesc">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
 
-				  			<b>How much and how often should you use this medicine?</b>
+				  			<b id="whatUsage">How much and how often should you use this medicine?</b>
 				  			<p style="font-size: 15px;" id="productUsage">This medicine should be taken orally every 4 hours, as needed for pain and/or as directed by doctor.</p>
 
 				  			<b>Side effects</b>
 				  			<p style="font-size: 15px;" id="productSideEffects">This medicine should be taken orally every 4 hours, as needed for pain and/or as directed by doctor.</p>
 
-				  			<b>What is in this medicine?</b>
+				  			<b id="whatsInside">What is in this medicine?</b>
 				  			<table class="table">
 							  <tbody>
 							    <tr>
@@ -177,8 +177,15 @@
 		<div class="man-row">
 			<div style="width: 25%">
 				<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="hideBigMap()">< back</button>
-				<div class="big-map-streetview" id="bigMapStreetview"></div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<input id="pac-input" class="form-control" type="text" placeholder="Search">
+					</div>
+					<div class="big-map-streetview" id="bigMapStreetview"></div>
+					<b id="placeName">Name</b>
+				</div>
 			</div>
+
 			<div style="width: 75%" id="seeAllMap"></div>
 		</div>
 	</div>
