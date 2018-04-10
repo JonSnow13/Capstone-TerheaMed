@@ -285,7 +285,7 @@
     	serviceDetails.getDetails({
     		placeId: place_id
     	}, function(place, status){
-    		console.log(place);
+    		// console.log(place);
     		$('.open-hours-loader').hide();
     		try
     		{
@@ -334,7 +334,8 @@
 	  	}catch(err){}
 
 	  	var cardView = '<div class="pharmacy-panel">' +
-							'<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="pharma'+i+'" >' +
+							// '<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="pharma'+i+'" >' +
+							'<div class="img-box" style="background: #e4e2e2" id="pharma'+i+'" >' +
 								'<h6 class="pharma-title">'+ place.name +'</h6>' +
 								openNowDisplay +
 								personWaving +
@@ -391,7 +392,8 @@
 	  	}catch(err){}
 
   		var cardView = '<div class="clinic-panel">' +
-						'<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="clinic'+i+'" >' +
+						// '<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="clinic'+i+'" >' +
+						'<div class="img-box" style="background: #e4e2e2" id="clinic'+i+'" >' +
 							'<h6 class="pharma-title">'+ place.name +'</h6>' +
 							openNowDisplay +
 							personWaving +

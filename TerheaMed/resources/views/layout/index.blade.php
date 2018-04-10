@@ -101,6 +101,7 @@
 
 				<div class="row">
 					<div class="col-md-6">
+						<h6 style="padding: .5rem .5rem; color: #696a6d;">Pharmacy</h6>
 						<div class="pharmacy-container" id="panel-1">
 							
 							{{-- @for($i = 0; $i < 5; $i++)
@@ -141,6 +142,7 @@
 					</div>
 
 				<div class="col-md-6">
+					<h6 style="padding: .5rem .5rem; color: #696a6d;">Clinic</h6>
 					<div class="pharmacy-container" id="panel-2">
 						{{-- <div class="pharmacy-panel-2">
 							<img class="card-img-top" src="{{asset('assets/images/generic.jpg')}}" alt="Card image cap">

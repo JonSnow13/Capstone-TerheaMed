@@ -173,10 +173,14 @@
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-            pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
+            
+            if (pos == undefined) 
+            {
+            	pos = {
+	              lat: position.coords.latitude,
+	              lng: position.coords.longitude
+	            };
+            }
             
             var geocoder = new google.maps.Geocoder;
             geocoder.geocode({'location': pos}, function(results, status) {
@@ -190,56 +194,16 @@
 			    	myAddress = 'Dipolog City'
 			    }
 			});
-            
+
             // infoWindow.setPosition(pos);
             // infoWindow.setContent('<i class="material-icons">my_location</i> your location');
             // infoWindow.open(map);
 
 
      //        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-     		var icon = {
-				    url: "{{asset('assets/images/pulse_dot.gif')}}", // url
-				    scaledSize: new google.maps.Size(28, 28), // scaled size
-				    origin: new google.maps.Point(0,0), // origin
-				    anchor: new google.maps.Point(0, 0) // anchor
-					};
-		  	var marker = new google.maps.Marker({
-		    	position: pos,
-		    	map: map,
-		    	icon: icon
-		  	});
-		  	var marker2 = new google.maps.Marker({
-		    	position: pos,
-		    	map: map2,
-		    	icon: icon
-		  	});
-            map.setCenter(pos);
-            map2.setCenter(pos);
 
-
-//=======================================================================
-	     	infowindow = new google.maps.InfoWindow();
-	        var service = new google.maps.places.PlacesService(map);
-	        service.nearbySearch({
-	          location: pos,
-	          rankBy: google.maps.places.RankBy.DISTANCE,
-	          type: ['pharmacy']
-	        }, callbackPharmacy);
-
-	        // var service3 = new google.maps.places.PlacesService(map);
-	        // service3.nearbySearch({
-	        //   location: pos,
-	        //   rankBy: google.maps.places.RankBy.DISTANCE,
-	        //   type: ['drug store']
-	        // }, callbackPharmacy);
-
-
-	        var service2 = new google.maps.places.PlacesService(map);
-	        service2.nearbySearch({
-	          location: pos,
-	          rankBy: google.maps.places.RankBy.DISTANCE,
-	          type: ['hospital']
-	        }, callbackClinic);
+     		initializePhamacyClinicMarker();
+     		
 //==========================================================================
 
 
@@ -267,6 +231,7 @@
 	}
 
   	function callbackPharmacy(results, status) {
+  		$('#panel-1').html('');
 	  if (status == google.maps.places.PlacesServiceStatus.OK) {
 	  	pharmaPlace = results;
 
@@ -279,7 +244,9 @@
 	      // createMarker(place);
 
 	      	// showStreetView(place, 'pharma'+i);
-	      	appendPharmacyHtml(place, i);
+	      	try{
+	      		appendPharmacyHtml(place, i);
+	      	}catch(err){}
 
 	      // renderStreetView(results[i].geometry.location, 'pharma'+i);
 	    }
@@ -291,8 +258,76 @@
 	  personWavingRandom();
 	}
 
-	function callbackClinic(results, status) {
+	var markerOfYourLocation;
+	var markerOfYourLocation_modal;
+	function initializePhamacyClinicMarker()
+	{
+		setMapOnAll(null);
+		try{
+	    	markerOfYourLocation.setMap(null);
+			markerOfYourLocation_modal.setMap(null);
+	    }catch(err){}
 
+		var icon = {
+				    url: "{{asset('assets/images/pulse_dot.gif')}}", // url
+				    scaledSize: new google.maps.Size(28, 28), // scaled size
+				    origin: new google.maps.Point(0,0), // origin
+				    anchor: new google.maps.Point(0, 0) // anchor
+					};
+		  	markerOfYourLocation_modal = new google.maps.Marker({
+		    	position: pos,
+		    	map: map,
+		    	icon: icon
+		  	});
+		  	markerOfYourLocation = new google.maps.Marker({
+		    	position: pos,
+		    	map: map2,
+		    	icon: icon,
+		    	draggable: true
+		  	});
+            map.setCenter(pos);
+            map2.setCenter(pos);
+            console.log(pos);
+            markerOfYourLocation.addListener('dragend', function(){
+            	pos = this.getPosition();
+            	initializePhamacyClinicMarker();
+            	hideBigMap();
+            });
+
+            infowindow = new google.maps.InfoWindow();
+//=======================================================================
+	     	getNearbyClinicAndPharmacy(pos);
+	}
+
+
+	function getNearbyClinicAndPharmacy(posC)
+	{
+	        var service = new google.maps.places.PlacesService(map);
+	        service.nearbySearch({
+	          location: posC,
+	          rankBy: google.maps.places.RankBy.DISTANCE,
+	          type: ['pharmacy']
+	        }, callbackPharmacy);
+
+	        // var service3 = new google.maps.places.PlacesService(map);
+	        // service3.nearbySearch({
+	        //   location: pos,
+	        //   rankBy: google.maps.places.RankBy.DISTANCE,
+	        //   type: ['drug store']
+	        // }, callbackPharmacy);
+
+
+	        var service2 = new google.maps.places.PlacesService(map);
+	        service2.nearbySearch({
+	          location: posC,
+	          rankBy: google.maps.places.RankBy.DISTANCE,
+	          type: ['hospital']
+	        }, callbackClinic);
+	}
+
+	function callbackClinic(results, status) 
+	{
+		$('#panel-2').html('');
 		if (status == google.maps.places.PlacesServiceStatus.OK) {
 			clinicPlace = results;
 			$.each(results, function(i, val){
@@ -303,7 +338,9 @@
 		      var place = results[i];
 		      // console.log(place);
 		      // createMarker(results[i]);
-		      appendClinicHtml(place, i);
+		      try{
+		      	appendClinicHtml(place, i);
+		      }catch(err){}
 		      
 		    }
 		    // getClassOfHospitalPanel();
@@ -312,7 +349,8 @@
 	}
 
 	//Pharma icon
-	function createMarker(place) {
+	function createMarker(place) 
+	{
 
 		var icon = {
 		    url: "{{asset('assets/images/pharma_icon.png')}}", // url
@@ -336,11 +374,13 @@
           renderStreetView(place.geometry.location, 'streetView');
           showStreetView(place.geometry.location, 'bigMapStreetview');
           $('#mapModal .modal-title').text(place.name);
+          $('#placeName').text(place.name);
         });
     }
 
     //Clinic icon
-    function createMarkerClinic(place) {
+    function createMarkerClinic(place) 
+    {
 
 		var icon = {
 		    url: "{{asset('assets/images/clinic.png')}}", // url
@@ -368,7 +408,8 @@
         });
     }
 
-    function createMarker2(place) {
+    function createMarker2(place) 
+    {
         var placeLoc = place.geometry.location;
         var marker = new google.maps.Marker({
           map: map,
