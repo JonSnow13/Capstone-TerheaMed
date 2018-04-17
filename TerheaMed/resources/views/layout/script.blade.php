@@ -98,8 +98,27 @@
 					$('#productBrand').text('Brand Name: ' + data.brand_name);
 					$('#productFormat').text('Format: ' + format.format);
 					$('#productDesc').text(data.desc);
-					$('#productUsage').text(data.direction_of_use);
 					$('#productSideEffects').text(data.side_effect);
+					$('#productGenericName').text('Generic Name: ' + data.generic_name);
+
+					var directionOfUse = data.direction_of_use;
+						directionOfUse = directionOfUse.split('*');
+
+					$('#productUsage > li').remove();
+					$(directionOfUse).each(function(index){
+						if (directionOfUse.length > 1) 
+						{
+							if (index > 0) 
+							{
+								$('#productUsage').append('<li>' + this + '</li>');
+							}
+						}
+						else
+						{
+							$('#productUsage').append('<li>' + this + '</li>');
+						}
+					});
+
 
 				 	(format.prescription_required == 0)? $('.prescription').hide() : $('.prescription').show();
 
@@ -115,6 +134,8 @@
 				 		$('#whatUsage').text('How much and how often should you use this herbal?');
 				 		$('#whatDesc').text('What is this herbal for?');
 				 	}
+
+				 	getContentOfMedicine(data.id);
 				}
 			}
 
@@ -124,6 +145,30 @@
 		},800);
 		// $('.card-panel-medicine').hide();
 
+	}
+
+	function getContentOfMedicine(id)
+	{
+		$('#contentOfMedicine').html('');
+		$.ajax({
+			url: '{{ route("json_get_content_of_medicine") }}',
+			type: 'GET',
+			data: {medicine_id: id},
+			success: function(data){
+
+				for (var i = 0; i < data.length; i++) 
+				{
+					var tempDensity = (data[i].density == null || data[i].density == '')? '' : data[i].density;
+					var html = '<tr>' +
+							      	'<th scope="row">'+ (i+1) +'</th>' +
+							      	'<td>'+ data[i].name +'</td>' +
+							    	'<td>'+ tempDensity +'</td>' +
+							    '</tr>';
+					$('#contentOfMedicine').append(html);
+				}
+
+			}
+		});
 	}
 
 	function backToAllSearchMed()

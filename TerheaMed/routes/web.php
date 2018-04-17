@@ -31,8 +31,13 @@ Route::post(
 );
 
 Route::get(
-	'/getAllMedicineData',
-	'AdminController@getAllMedicineData'
+	'/getAllMedicineDataNonHerbal',
+	'AdminController@getAllMedicineDataNonHerbal'
+);
+
+Route::get(
+	'/getAllMedicineDataHerbal',
+	'AdminController@getAllMedicineDataHerbal'
 );
 
 Route::get(
@@ -55,5 +60,24 @@ Route::post(
 	['as' => 'json_update_medicine', 'uses' => 'AdminController@updateMedicine']
 );
 
+Route::post(
+	'/json_add_content_to_medicine',
+	['as' => 'json_add_content_to_medicine', 'uses' => 'AdminController@storeContentOfMedicine']
+);
+
+Route::get(
+	'/json_get_content_of_medicine',
+	['as' => 'json_get_content_of_medicine', 'uses' => 'AdminController@getContentOfMedicine']
+);
+
+Route::post(
+	'/json_add_update_content_to_medicine',
+	['as' => 'json_add_update_content_to_medicine', 'uses' => 'AdminController@addUpdateContentOfMedicine']
+);
+
+Route::get(
+	'/delete_content_of_med',
+	['as' => 'delete_content_of_med', 'uses' => 'AdminController@deleteContentOfMed']
+);
 // Route::group(['middleware' => 'csrf'], function()
 // {});

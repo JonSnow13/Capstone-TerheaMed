@@ -19,21 +19,24 @@
 				  			<div class="card-title"><b id="productName">Paracetamol Biogesic</b></div>
 				  			<b>Product Details</b>
 				  			<p id="productBrand">Brand Name: Unilab</p>
+				  			<p id="productGenericName">Generic Name: Paracetamol</p>
 				  			<p id="productFormat">Format: Caplet</p>
 
 				  			<b id="whatDesc">What is this medicine for?</b>
 				  			<p style="font-size: 15px;" id="productDesc">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
 
 				  			<b id="whatUsage">How much and how often should you use this medicine?</b>
-				  			<p style="font-size: 15px;" id="productUsage">This medicine should be taken orally every 4 hours, as needed for pain and/or as directed by doctor.</p>
+				  			<p style="font-size: 15px;">
+				  				<ul id="productUsage"></ul>
+				  			</p>
 
 				  			<b>Side effects</b>
 				  			<p style="font-size: 15px;" id="productSideEffects">This medicine should be taken orally every 4 hours, as needed for pain and/or as directed by doctor.</p>
 
 				  			<b id="whatsInside">What is in this medicine?</b>
 				  			<table class="table">
-							  <tbody>
-							    <tr>
+							  <tbody id="contentOfMedicine">
+							    {{-- <tr>
 							      <th scope="row">1</th>
 							      <td>Cetirizine dihydrochloride</td>
 							      <td>5 mg</td>
@@ -42,7 +45,7 @@
 							      <th scope="row">2</th>
 							      <td>Phenylephrine HCI</td>
 							      <td>10 mg</td>
-							    </tr>
+							    </tr> --}}
 							  </tbody>
 							</table>
 				  		</div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Medicines;
+use App\Contentmed;
 use Yajra\Datatables\Datatables;
 use File;
 
@@ -28,6 +29,7 @@ class AdminController extends Controller
         $medicineData->warningMsg = $request->medInfoArray[0]['warning'];
         $medicineData->side_effect = $request->medInfoArray[0]['sideEffects'];
         $medicineData->format = json_encode(['format' => $request->medInfoArray[0]['format'], 'prescription_required' => $request->medInfoArray[0]['prescription']]);
+        $medicineData->generic_name = $request->medInfoArray[0]['genericName'];
 
     	if (isset($request->medInfoArray[0]['picture'])) 
     	{
@@ -44,17 +46,28 @@ class AdminController extends Controller
 
     	$medicineData->save();
 
+        return [
+            'id' => $medicineData->id,
+            'name' => $medicineData->name
+        ];
+
     }
 
-    public function getAllMedicineData(Request $request)
+    public function getAllMedicineDataNonHerbal(Request $request)
     {
-        $medicineData = Medicines::all();
-        return Datatables::of($medicineData)->make(true);
+        $medicineDataNonHerbal = Medicines::where('category_id', 1);
+        return Datatables::of($medicineDataNonHerbal)->make(true);
+    }
+
+    public function getAllMedicineDataHerbal(Request $request)
+    {
+        $medicineDataHerbal = Medicines::where('category_id', 2);
+        return Datatables::of($medicineDataHerbal)->make(true);
     }
 
     public function deleteMedicine(Request $request)
     {
-        $medicineData = Medicines::find($request->medcine_id);
+        $medicineData = Medicines::find($request->medicine_id);
         $picture = str_replace('uploads/', '', $medicineData->picture);
         File::delete(public_path('uploads/') . $picture);
         $medicineData->delete();
@@ -72,6 +85,7 @@ class AdminController extends Controller
         $medicineData->warningMsg = $request->medInfoArray[0]['warning'];
         $medicineData->side_effect = $request->medInfoArray[0]['sideEffects'];
         $medicineData->format = json_encode(['format' => $request->medInfoArray[0]['format'], 'prescription_required' => $request->medInfoArray[0]['prescription']]);
+        $medicineData->generic_name = $request->medInfoArray[0]['genericName'];
 
         if (isset($request->medInfoArray[0]['picture'])) 
         {
@@ -91,6 +105,61 @@ class AdminController extends Controller
 
         $medicineData->update();
 
+    }
+
+    public function storeContentOfMedicine(Request $request)
+    {
+        for ($i=0; $i < count($request->contentArray) ; $i++) 
+        { 
+            $contentData = new Contentmed();
+            $contentData->medicine_id = $request->medicine_id;
+            $contentData->name = $request->contentArray[$i]['name'];
+            $contentData->density = $request->contentArray[$i]['density'];
+
+            if (strlen($contentData->name) != 0) 
+            {
+                $contentData->save();
+            }
+        }
+    }
+
+    public function getContentOfMedicine(Request $request)
+    {
+        $contentData = Contentmed::where('medicine_id', $request->medicine_id)->get();
+        return $contentData;
+    }
+
+    public function addUpdateContentOfMedicine(Request $request)
+    {
+        for ($i=0; $i < count($request->newContentArray); $i++) 
+        { 
+            $contentData = new Contentmed();
+            $contentData->medicine_id = $request->medicine_id;
+            $contentData->name = $request->newContentArray[$i]['name'];
+            $contentData->density = $request->newContentArray[$i]['density'];
+
+            if (strlen($contentData->name) != 0) 
+            {
+                $contentData->save();
+            }
+        }
+
+        for ($i=0; $i < count($request->oldContentArray); $i++) 
+        { 
+            $oldContentData = Contentmed::find($request->oldContentArray[$i]['id']);
+            $oldContentData->name = $request->oldContentArray[$i]['name'];
+            $oldContentData->density = $request->oldContentArray[$i]['density'];
+
+            if (strlen($oldContentData->name) != 0) 
+            {
+                $oldContentData->update();
+            }
+        }
+    }
+
+    public function deleteContentOfMed(Request $request)
+    {
+        Contentmed::find($request->content_id)->delete();
     }
 
 }

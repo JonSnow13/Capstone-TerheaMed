@@ -15,8 +15,6 @@
 		var name = $('#name');
 		var brandName = $('#brandName');
 		var type = $('#type');
-		var minAge = $('#minAge');
-		var maxAge = $('#maxAge');
 		var directionOfUse = $('#directionOfUse');
 		var desc = $('#desc');
 		var purpose = $('#purpose');

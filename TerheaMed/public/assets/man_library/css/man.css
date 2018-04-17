@@ -162,7 +162,7 @@ a.man-link{
     cursor: pointer;
 }
 .distance-view:hover{
-    background: rgba(0, 0, 0, 0.10);
+    background: #d4d3d357;
 }
 .option-view{
     display: flex; 
@@ -171,7 +171,7 @@ a.man-link{
     cursor: pointer;
 }
 .option-view:hover{
-    background: rgba(0, 0, 0, 0.10);
+    background: #d4d3d357;
 }
 .man-list-btn{
     width: 100%;
@@ -341,6 +341,37 @@ tr:hover .admin-option{
 
 .pac-container, .pac-item{
     z-index: 2147483647 !important;
+}
+
+.man-form-control{
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border: none; 
+    border-bottom: 1px solid #98989870; 
+    width: 100%; 
+    font-size: 1rem;
+    background-color: #fff;
+    line-height: 1.5;
+    padding: .2rem;
+}
+
+.add-circle-btn{
+    color: blue; 
+    margin-left: 11px;
+    cursor: pointer;
+    width: min-content;
+}
+
+.minus-circle-btn{
+    color: red; 
+    margin-left: 11px;
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    left: 16px;
+}
+
+tr:hover .minus-circle-btn{
+    display: block;
 }
 
 /* -----------------Unused below------------------------ */

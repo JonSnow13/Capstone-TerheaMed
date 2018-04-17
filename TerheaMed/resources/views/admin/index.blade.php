@@ -6,46 +6,126 @@
 	<div class="form-group" style="margin-top: 20px;">
 		<button type="button" class="btn btn-primary" onclick="openMedModal()">Add Medicine</button>
 	</div>
-	<table class="table responsive table-hover" id="medicineDataTable">
-	  	<thead class="thead-dark">
-	    	<tr>
-		      	{{-- <th scope="col">#</th> --}}
-		      	<th scope="col">Picture</th>
-		      	<th scope="col">Name</th>
-		      	<th scope="col">Brand Name</th>
-		      	<th scope="col">Format</th>
-		      	<th scope="col">Type</th>
-		      	<th scope="col">Description</th>
-		      	<th scope="col">Purpose</th>
-		      	<th scope="col">Usage</th>
-		      	<th scope="col">Warning</th>
-		      	<th scope="col">Side Effects</th>
-		      	<th scope="col"><i class="material-icons">settings</i></th>
-	    	</tr>
-	  	</thead>
-	  	<tbody>
-		    {{-- <tr>
-		      <th scope="row">1</th>
-		      <td>Mark</td>
-		      <td>Otto</td>
-		      <td>@mdo</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">2</th>
-		      <td>Jacob</td>
-		      <td>Thornton</td>
-		      <td>@fat</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">3</th>
-		      <td>Larry</td>
-		      <td>the Bird</td>
-		      <td>@twitter</td>
-		    </tr> --}}
-	 	</tbody>
-	</table>
+
+	<div>
+
+	  	<!-- Nav tabs -->
+	  	<ul class="nav nav-tabs" id="myTab" role="tablist">
+		  	<li class="nav-item">
+		    	<a class="nav-link active" id="non-herbal-tab" data-toggle="tab" href="#nonHerbal" role="tab" aria-controls="non-herbal" aria-selected="true">Non - Herbal</a>
+		  	</li>
+		  	<li class="nav-item">
+		    	<a class="nav-link" id="herbal-tab" data-toggle="tab" href="#herbal" role="tab" aria-controls="herbal" aria-selected="false">Herbal
+		    	</a>
+		    </li>
+		</ul>
+
+	  	<!-- Tab panes -->
+	  	<div class="tab-content" id="myTabContent">
+	    	<div role="tabpanel" class="tab-pane fade show active" id="nonHerbal" aria-labelledby="non-herbal-tab">
+	    		<table class="table responsive table-hover" id="medicineDataTableNonHerbal">
+				  	<thead class="thead-dark">
+				    	<tr>
+					      	{{-- <th scope="col">#</th> --}}
+					      	<th scope="col">Picture</th>
+					      	<th scope="col">Name</th>
+					      	<th scope="col">Brand Name</th>
+					      	<th scope="col">Generic Name</th>
+					      	<th scope="col">Format</th>
+					      	<th scope="col">Type</th>
+					      	<th scope="col">Description</th>
+					      	<th scope="col">Purpose</th>
+					      	<th scope="col">Usage</th>
+					      	<th scope="col">Warning</th>
+					      	<th scope="col">Side Effects</th>
+					      	<th scope="col"><i class="material-icons">settings</i></th>
+				    	</tr>
+				  	</thead>
+				  	<tbody>
+				 	</tbody>
+				</table>
+	    	</div>
+	    	<div class="tab-pane fade" id="herbal" role="tabpanel" aria-labelledby="herbal-tab">
+	    		<table class="table responsive table-hover" id="medicineDataTableHerbal">
+				  	<thead class="thead-dark">
+				    	<tr>
+					      	{{-- <th scope="col">#</th> --}}
+					      	<th scope="col">Picture</th>
+					      	<th scope="col">Name</th>
+					      	<th scope="col">Brand Name</th>
+					      	<th scope="col">Generic Name</th>
+					      	<th scope="col">Format</th>
+					      	<th scope="col">Type</th>
+					      	<th scope="col">Description</th>
+					      	<th scope="col">Purpose</th>
+					      	<th scope="col">Usage</th>
+					      	<th scope="col">Warning</th>
+					      	<th scope="col">Side Effects</th>
+					      	<th scope="col"><i class="material-icons">settings</i></th>
+				    	</tr>
+				  	</thead>
+				  	<tbody>
+				 	</tbody>
+				</table>
+	    	</div>
+	  	</div>
+
+	</div>
+	
 </div>
 
+<!-- Modal for adding elements -->
+<div class="modal fade" id="elementsModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Elements</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<div class="loader" style="width: 100%"></div>
+        <table class="table">
+		  	<thead>
+		    	<tr>
+		    		<th scope="col"></th>
+		      		<th scope="col">Name</th>
+		      		<th scope="col">Density</th>
+		    	</tr>
+		  	</thead>
+		  	<tbody id="elementTableBody">
+		    	<tr>
+		    		<td>
+		    			<div class="minus-circle-btn minus-element">
+		    				<i class="material-icons">remove_circle_outline</i>
+		    			</div>
+		    		</td>
+			      	<td>
+			      		<input type="text" class="man-form-control nameVal" placeholder="Name">
+			      	</td>
+			      	<td>
+			      		<input type="text" class="man-form-control denVal" placeholder="Density (e.g. 10 mg)">
+			      	</td>
+			    </tr>
+		  	</tbody>
+		</table>
+		<div class="add-circle-btn add-element" data-toggle="tooltip" data-placement="top" title="Add row for content">
+	    	<i class="material-icons">add_circle</i>
+	   	</div>
+	   	<div class="alert alert-secondary" id="countRow" role="alert">
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="saveElementsBtn" class="btn btn-primary" onclick="saveMedElements(this)">Save</button>
+        <button type="button" id="updateElementsBtn" class="btn btn-primary" onclick="updateMedElements(this)">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal for creating medicine-->
 <div id="addMedicineModal" class="modal fade" role="dialog">
   <div class="modal-dialog" style="max-width: 70%;">
 
@@ -67,7 +147,12 @@
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="brandName">Brand Name</label>
-			    	<input type="text" class="form-control" id="brandName" placeholder="Brand">
+			    	<input type="text" class="form-control" id="brandName" placeholder="Brand Name">
+			    	<i class="err-msg"></i>
+			  	</div>
+			  	<div class="form-group">
+			    	<label for="genericName">Generic Name</label>
+			    	<input type="text" class="form-control" id="genericName" placeholder="Generic Name">
 			    	<i class="err-msg"></i>
 			  	</div>
 			  	<div class="form-group">
