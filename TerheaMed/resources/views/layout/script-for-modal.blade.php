@@ -40,7 +40,7 @@
 	{
 		var body = $("html, body");
 		body.stop().animate({scrollTop:0}, 20, 'swing');
-		setMapOnAll(map2);
+
 		map2.setZoom(15);
 		directionsDisplay.setMap(null);
 		$('.moreMapInfo').hide();
@@ -108,9 +108,18 @@
           var bounds = new google.maps.LatLngBounds();
           places.forEach(function(place) {
             if (!place.geometry) {
-              console.log("Returned place contains no geometry");
+              alert("Returned place contains no geometry");
               return;
             }
+
+            if ($('#changeLocRadio').is(':checked')) 
+            {
+            	pos = place.geometry.location;
+            	initializePhamacyClinicMarker();
+            	// hideBigMap();
+            	return;
+            }
+
             var icon = {
              	url: "{{asset('assets/images/icon-establishment.png')}}", // url
 			    scaledSize: new google.maps.Size(46, 46), // scaled size
@@ -140,7 +149,10 @@
               bounds.extend(place.geometry.location);
             }
           });
-          map2.fitBounds(bounds);
+          if (!$('#changeLocRadio').is(':checked')) 
+          {
+          	map2.fitBounds(bounds);
+          }
         });
 	}
 
@@ -148,8 +160,10 @@
 	var myAddress;
 	var directionsDisplay;
 	var directionsService;
-	var markers = []; //pharma marker
-	var markersClinic = [] //clinic marker
+	var markersPharma = []; //pharma marker for map in modal
+	var markersClinic = []; //clinic marker for map in modal
+	var markersPharma2 = []; //pharma marker for bigmap
+	var markersClinic2 = []; //clinic marker for bigmap
 	var panorama;
 
     function initMap() {
@@ -181,19 +195,6 @@
 	              lng: position.coords.longitude
 	            };
             }
-            
-            var geocoder = new google.maps.Geocoder;
-            geocoder.geocode({'location': pos}, function(results, status) {
-		      if (status == google.maps.GeocoderStatus.OK) 
-		      	{
-		      		// console.log(results);
-			      myAddress = results[0].address_components[0].short_name;
-			    }
-			    else
-			    {
-			    	myAddress = 'Dipolog City'
-			    }
-			});
 
             // infoWindow.setPosition(pos);
             // infoWindow.setContent('<i class="material-icons">my_location</i> your location');
@@ -258,6 +259,24 @@
 	  personWavingRandom();
 	}
 
+	function getMyAddress()
+	{
+		var geocoder = new google.maps.Geocoder;
+        geocoder.geocode({'location': pos}, function(results, status) {
+	      if (status == google.maps.GeocoderStatus.OK) 
+	      	{
+	      		// console.log(results);
+		      myAddress = results[0].address_components[0].short_name;
+		      console.log(myAddress);
+		    }
+		    else
+		    {
+		    	myAddress = 'Dipolog City'
+		    }
+		});
+
+	}
+
 	var markerOfYourLocation;
 	var markerOfYourLocation_modal;
 	function initializePhamacyClinicMarker()
@@ -267,6 +286,8 @@
 	    	markerOfYourLocation.setMap(null);
 			markerOfYourLocation_modal.setMap(null);
 	    }catch(err){}
+
+	    getMyAddress();
 
 		var icon = {
 				    url: "{{asset('assets/images/pulse_dot.gif')}}", // url
@@ -290,8 +311,8 @@
             console.log(pos);
             markerOfYourLocation.addListener('dragend', function(){
             	pos = this.getPosition();
-            	initializePhamacyClinicMarker();
-            	hideBigMap();
+;            	initializePhamacyClinicMarker();
+            	// hideBigMap();
             });
 
             infowindow = new google.maps.InfoWindow();
@@ -358,24 +379,9 @@
 		    origin: new google.maps.Point(0,0), // origin
 		    anchor: new google.maps.Point(0, 0) // anchor
 			};
-        var placeLoc = place.geometry.location;
-        var marker = new google.maps.Marker({
-          map: map,
-          position: place.geometry.location,
-          icon: icon
-        });
+        // mapInModalMarkerListener(icon, place);
 
-        markers.push(marker);
-
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent(place.name);
-          infowindow.open(map, this);
-          $('#streetView').show();
-          renderStreetView(place.geometry.location, 'streetView');
-          showStreetView(place.geometry.location, 'bigMapStreetview');
-          $('#mapModal .modal-title').text(place.name);
-          $('#placeName').text(place.name);
-        });
+        bigMapMarkerListener(icon, place);
     }
 
     //Clinic icon
@@ -388,24 +394,10 @@
 		    origin: new google.maps.Point(0,0), // origin
 		    anchor: new google.maps.Point(0, 0) // anchor
 			};
-        var placeLoc = place.geometry.location;
-        var marker = new google.maps.Marker({
-          map: map,
-          position: place.geometry.location,
-          icon: icon
-        });
 
-        markersClinic.push(marker);
+        // mapInModalMarkerListener(icon, place);
 
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent(place.name);
-          infowindow.open(map, this);
-          $('#streetView').show();
-          renderStreetView(place.geometry.location, 'streetView');
-          showStreetView(place.geometry.location, 'bigMapStreetview');
-          $('#mapModal .modal-title').text(place.name);
-          $('#placeName').text(place.name);
-        });
+        bigMapMarkerListener(icon, place);
     }
 
     function createMarker2(place) 
@@ -427,13 +419,49 @@
         });
     }
 
+    function bigMapMarkerListener(icon, place)
+    {
+        var marker = new google.maps.Marker({
+          map: map2,
+          position: place.geometry.location,
+          icon: icon
+        });
+
+        markersClinic2.push(marker); //for bigmap
+
+    	google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map2, this);
+          showStreetView(place.geometry.location, 'bigMapStreetview');
+          $('#placeName').text(place.name);
+        });
+    }
+
+    function mapInModalMarkerListener(icon, place)
+    {
+    	var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location,
+          icon: icon
+        });
+
+        markersClinic.push(marker); //for map in modal
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map, this);
+          $('#streetView').show();
+          renderStreetView(place.geometry.location, 'streetView');
+        });
+    }
+
     function setMapOnAll(map) 
     {
-	    for (var i = 0; i < markers.length; i++) {
-	      markers[i].setMap(map);
+	    for (var i = 0; i < markersPharma2.length; i++) {
+	      markersPharma2[i].setMap(map);
 	    }
-	    for (var i = 0; i < markersClinic.length; i++) {
-	    	markersClinic[i].setMap(map);
+	    for (var i = 0; i < markersClinic2.length; i++) {
+	    	markersClinic2[i].setMap(map);
 	    }
 	}
 
@@ -519,7 +547,7 @@
 	function calculateAndDisplayRoute(directionsService, directionsDisplay, end, distance, timeDriving, timeWalking) 
 	{
 		directionsDisplay.setMap(map);
-		setMapOnAll(null);
+		// setMapOnAll(null);
         directionsService.route({
           origin: pos,
           destination: end.geometry.location,

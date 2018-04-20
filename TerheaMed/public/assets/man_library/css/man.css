@@ -28,6 +28,15 @@ a.man-link{
 .man-card:hover{
     background: rgba(0,0,0,.125);
 }
+.man-card-with-box-shadow{
+    cursor: pointer;
+    height: 220px;
+    overflow: hidden;
+}
+.man-card-with-box-shadow:hover{
+    box-shadow: 1px 1px 14px -3px;
+    z-index: 5;
+}
 .man-fixed-top{
 	position: fixed;
     top: 0;
@@ -106,6 +115,17 @@ a.man-link{
     height: 170px;
     display: flex;
     justify-content: center;
+}
+.man-img-center-without-border{
+    max-height: 170px; 
+    overflow: hidden; 
+    height: 170px;
+    display: flex;
+    justify-content: center;
+    margin-top: 4px;
+}
+.man-img-center-without-border img{
+    height: 100%;
 }
 .man-map{
 	height: 100%;
@@ -372,6 +392,15 @@ tr:hover .admin-option{
 
 tr:hover .minus-circle-btn{
     display: block;
+}
+
+.man-card-title
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 14px;
+    background: #fff;
 }
 
 /* -----------------Unused below------------------------ */

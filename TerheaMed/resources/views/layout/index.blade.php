@@ -9,13 +9,13 @@
 				</div>
 				<h5 style="padding: .5rem .5rem; color: #696a6d;">Suggested Medicine(s):</h5>
 				<div class="card-specific-med" style="display: none;">
-						<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="backToAllSearchMed()">< back</button>
-						<div class="prescription">You can't obtain this medicine without a prescription from a doctor.</div>
+					<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="backToAllSearchMed()">< back</button>
+					<div class="prescription">You can't obtain this medicine without a prescription from a doctor.</div>
 			  		<div class="man-row">
 			  			<div class="col-md-12 man-img-center">
 				  			<img id="productPicture" src="{{asset('assets/images/biogesic.jpg')}}" style="height: 100%;">
 				  		</div>
-				  		<div class="col-md-8">
+				  		<div class="col-md-12">
 				  			<div class="card-title"><b id="productName">Paracetamol Biogesic</b></div>
 				  			<b>Product Details</b>
 				  			<p id="productBrand">Brand Name: Unilab</p>
@@ -50,6 +50,20 @@
 							</table>
 				  		</div>
 			  		</div>
+
+			  		<div class="col-md-12">
+		  				<b>Similar to the generic name of this medicine:</b>
+		  			</div>
+		  			<div class="man-row" id="similarMedPanel">
+		  				{{-- <div class="man-card-with-border col-md-6">
+						  <div class="man-img-center-without-border">
+						  	<img src="{{asset('assets/images/biogesic.jpg')}}" alt="Card image cap">
+						  </div>
+						  <div class="card-body">
+						    <h5 class="card-title">Phenylephrine HCI Chlorphenamine Maleate Paracetamol</h5>
+						  </div>
+						</div> --}}
+		  			</div>
 				</div>
 				<div class="card-panel-medicine">
 					<div class="card" id="searchedPanel">
@@ -183,6 +197,16 @@
 			<div style="width: 25%">
 				<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="hideBigMap()">< back</button>
 				<div class="col-md-12">
+					<div class="form-group">
+						<div class="custom-control custom-radio">
+						  <input type="radio" id="searchEstablishmentRadio" name="radioBtn" class="custom-control-input" checked>
+						  <label class="custom-control-label" for="searchEstablishmentRadio">Search Pharmacy / Clinic / Hospital</label>
+						</div>
+						<div class="custom-control custom-radio">
+						  <input type="radio" id="changeLocRadio" name="radioBtn" class="custom-control-input">
+						  <label class="custom-control-label" for="changeLocRadio">Change location</label>
+						</div>
+					</div>
 					<div class="form-group">
 						<input id="pac-input" class="form-control" type="text" placeholder="Search">
 					</div>

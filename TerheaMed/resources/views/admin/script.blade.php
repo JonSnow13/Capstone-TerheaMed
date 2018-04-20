@@ -112,6 +112,7 @@
 	function openMedModal()
 	{
 		clearAllModalInputField();
+		$('#addMedicineModal .modal-title').text('Fill up data');
 		$('#addMedicineModal').modal('show');
 	}
 
@@ -561,7 +562,7 @@
 				{
 					var html = '<tr>' +
 		    			'<td>' +
-		    				'<div class="minus-circle-btn delete-element" data-id="'+ data[i].id +'">' +
+		    				'<div class="minus-circle-btn delete-element" data-id="'+ data[i].id +'" title="Delete row">' +
 		    					'<i class="material-icons">remove_circle_outline</i>' +
 		    				'</div>' +
 		    			'</td>' +
@@ -738,7 +739,7 @@
 	{
 		var html = '<tr>' +
 		    			'<td>' +
-		    				'<div class="minus-circle-btn minus-element">' +
+		    				'<div class="minus-circle-btn minus-element" title="Delete row">' +
 		    					'<i class="material-icons">remove_circle_outline</i>' +
 		    				'</div>' +
 		    			'</td>' +

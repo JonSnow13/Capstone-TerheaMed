@@ -79,5 +79,10 @@ Route::get(
 	'/delete_content_of_med',
 	['as' => 'delete_content_of_med', 'uses' => 'AdminController@deleteContentOfMed']
 );
+
+Route::get(
+	'/json_get_all_similar_medicine',
+	['as' => 'json_get_all_similar_medicine', 'uses' => 'HomeController@getAllSimilarMedicine']
+);
 // Route::group(['middleware' => 'csrf'], function()
 // {});

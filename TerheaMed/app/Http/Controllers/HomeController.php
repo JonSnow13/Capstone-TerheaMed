@@ -29,4 +29,9 @@ class HomeController extends Controller
         $searchData = Medicines::where('name', 'LIKE', '%' . $request->searchName . '%')->orWhere('purpose', 'LIKE', '%' . $request->searchName . '%')->get();
         return $searchData;
     }
+
+    public function getAllSimilarMedicine(Request $request)
+    {
+        return Medicines::where('generic_name', 'LIKE', '%' . $request->genericName . '%')->get();
+    }
 }
