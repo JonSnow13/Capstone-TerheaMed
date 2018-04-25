@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('master_folder.app')
 
 @section('content')
 	<div class="man-content">
@@ -50,9 +50,15 @@
 							</table>
 				  		</div>
 			  		</div>
-
-			  		<div class="col-md-12">
-		  				<b>Similar to the generic name of this medicine:</b>
+			  		<div class="col-md-12 title-header">
+		  				<b>Reviews:</b>
+		  			</div>
+		  			<div class="col-md-12">
+		  				<div id="reviewsInViewMed"></div>
+		  			</div>
+			  		<hr>
+			  		<div class="col-md-12 title-header">
+		  				<b>More medicine:</b>
 		  			</div>
 		  			<div class="man-row" id="similarMedPanel">
 		  				{{-- <div class="man-card-with-border col-md-6">
@@ -108,7 +114,28 @@
 			  					<h2>Welcome to Terhea</h2>
 			  					<p>We find cure for you.</p>
 			  				</center>
+			  				{{-- <div id="disqus_thread"></div>
+							<script>
+
+							/**
+							*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+							*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+							
+							var disqus_config = function () {
+							this.page.url = '{{Request::url()}}';  // Replace PAGE_URL with your page's canonical URL variable
+							this.page.identifier = 'LALA'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+							};
+							
+							(function() { // DON'T EDIT BELOW THIS LINE
+							var d = document, s = d.createElement('script');
+							s.src = 'https://terheamed.disqus.com/embed.js';
+							s.setAttribute('data-timestamp', +new Date());
+							(d.head || d.body).appendChild(s);
+							})();
+							</script>
+							<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> --}}
 					  	</div>
+
 					</div>
 				</div>
 			</div>
@@ -155,7 +182,7 @@
 								</div>
 							</div> --}}
 						</div>
-						<button class="btn btn-xs btn-light col-md-12" onclick="loadMore(this, 'pharma')">Load more <img src="{{asset('assets/images/loader.gif')}}" class="loader-more"></button>
+						<button class="btn btn-xs btn-light col-md-12" onclick="loadMore(this, 'pharma')"> <span id="pharmaLoadMoreBtn">Load more</span> <img src="{{asset('assets/images/loader.gif')}}" class="loader-more"></button>
 					</div>
 
 				<div class="col-md-6">
@@ -183,7 +210,7 @@
 							</div>
 						</div> --}}
 					</div>
-					<button class="btn btn-xs btn-light col-md-12" onclick="loadMore(this, 'clinic')">Load more <img src="{{asset('assets/images/loader.gif')}}" class="loader-more"></button>
+					<button class="btn btn-xs btn-light col-md-12" onclick="loadMore(this, 'clinic')"> <span id="clinicLoadMoreBtn">Load more</span> <img src="{{asset('assets/images/loader.gif')}}" class="loader-more"></button>
 				</div>
 				</div>
 			</div>
@@ -194,8 +221,8 @@
 
 	<div class="big-map-panel">
 		<div class="man-row">
-			<div style="width: 25%">
-				<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="hideBigMap()">< back</button>
+			<div style="width: 25%; overflow: auto;" id="bigMapPlaceDetails">
+				<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="hideBigMap()">< back to home with this current location</button>
 				<div class="col-md-12">
 					<div class="form-group">
 						<div class="custom-control custom-radio">
@@ -211,7 +238,23 @@
 						<input id="pac-input" class="form-control" type="text" placeholder="Search">
 					</div>
 					<div class="big-map-streetview" id="bigMapStreetview"></div>
+
 					<b id="placeName">Name</b>
+					<div class="form-group">
+						<a href="javascript: directionViewBigMap()" id="directionViewBigMapBtn">View direction</a>
+					</div>
+					<b id="openNOwTitle"></b>
+					<b id="rateTitle" style="padding: 12px;"></b>
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col"><i style="color: #0b95d2;">Open hours</i></th>
+							</tr>
+						</thead>
+						<tbody id="openHoursTable">
+							
+						</tbody>
+					</table>
 				</div>
 			</div>
 

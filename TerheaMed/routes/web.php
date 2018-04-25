@@ -18,7 +18,22 @@ use Illuminate\Http\Request;
 Route::get(
 	'/',
 	'HomeController@index'
-	);
+);
+
+Route::get(
+	'/seebigmap',
+	'HomeController@index'
+);
+
+Route::get(
+	'/home',
+	'HomeController@index'
+);
+
+Route::get(
+	'/viewmed?key={key}',
+	'HomeController@viewmed'
+);
 
 Route::get(
 	'/admin',
@@ -83,6 +98,16 @@ Route::get(
 Route::get(
 	'/json_get_all_similar_medicine',
 	['as' => 'json_get_all_similar_medicine', 'uses' => 'HomeController@getAllSimilarMedicine']
+);
+
+Route::get(
+	'/about',
+	'HomeController@about'
+);
+
+Route::get(
+	'/healthtips',
+	'HomeController@healthTips'
 );
 // Route::group(['middleware' => 'csrf'], function()
 // {});

@@ -1,14 +1,9 @@
 <script type="text/javascript">
 
-	var windowHeight = $( window ).height();
-	var	mapHeight = windowHeight * .70;
-	var	mapHeight2 = windowHeight * .91;
-	var windowWidth = $(window).width();
-	var streetViewWidth = windowWidth * .30; 
-
 	$('.man-map').css('height', mapHeight+'px');
 	$('.big-map-panel').css('height', mapHeight2+'px');
 	$('#seeAllMap').css('height', mapHeight2+'px');
+	$('#bigMapPlaceDetails').css('max-height', mapHeight2+'px');
 	$('#man-streeview').css('height', mapHeight+'px');
 	$('#streetView').css({'height' : (mapHeight*.60)+'px', 'width' : streetViewWidth+'px'});
 
@@ -38,6 +33,10 @@
 
 	function seeAllPharmaClinic()
 	{
+		$('#homeMenu').removeClass('man-active');
+		$('#bigMapMenu').addClass('man-active');
+		window.history.pushState('Map', 'Map', 'seebigmap');
+
 		var body = $("html, body");
 		body.stop().animate({scrollTop:0}, 20, 'swing');
 
@@ -69,6 +68,10 @@
 
 	function hideBigMap()
 	{
+		$('#homeMenu').addClass('man-active');
+		$('#bigMapMenu').removeClass('man-active');
+
+		window.history.replaceState('Map', 'Map', 'home');
 		$('.big-map-panel').removeClass('show');
 		setTimeout(function(){
 			$('.big-map-panel').css('display', 'none');
@@ -120,8 +123,10 @@
             	return;
             }
 
+            viewedPlace = place;
+
             var icon = {
-             	url: "{{asset('assets/images/icon-establishment.png')}}", // url
+             	url: "{{asset('assets/images/pointer.png')}}", // url
 			    scaledSize: new google.maps.Size(46, 46), // scaled size
 			    origin: new google.maps.Point(0,0), // origin
 			    anchor: new google.maps.Point(0, 0) // anchor
@@ -140,7 +145,7 @@
           	infowindow.setContent(place.name);
           	infowindow.open(map2, marker);
           	showStreetView(place.geometry.location, 'bigMapStreetview');
-          	$('#placeName').text(place.name);
+          	getPlaceDetailsBigMap(place.place_id);
 
             if (place.geometry.viewport) {
               // Only geocodes have viewport.
@@ -167,6 +172,7 @@
 	var panorama;
 
     function initMap() {
+
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
           zoom: 15
@@ -176,6 +182,11 @@
           center: {lat: -34.397, lng: 150.644},
           zoom: 15
         });
+
+        @if( Request::is('healthtips') || Request::is('healthtips') )
+    		 return;
+    	@endif 
+
 
         searchPlaceFunction();
 
@@ -219,6 +230,7 @@
           handleLocationError(false, infoWindow, map2.getCenter());
         }
 
+        appearanceManager(); //functionality that manage the appearance of the web depending on the url
 
       }
 
@@ -257,6 +269,7 @@
 
 	  }
 	  personWavingRandom();
+	  $('#pharmaLoadMoreBtn').text((pharmaPlace.length <= 0)? 'No nearby pharmacy / drugstore found.' : 'Load more');
 	}
 
 	function getMyAddress()
@@ -367,6 +380,8 @@
 		    // getClassOfHospitalPanel();
 		}
 		personWavingRandom();
+
+		$('#clinicLoadMoreBtn').text((clinicPlace.length <= 0)? 'No nearby clinic / hospital found.' : 'Load more');
 	}
 
 	//Pharma icon
@@ -430,10 +445,12 @@
         markersClinic2.push(marker); //for bigmap
 
     	google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent(place.name);
-          infowindow.open(map2, this);
-          showStreetView(place.geometry.location, 'bigMapStreetview');
-          $('#placeName').text(place.name);
+	        infowindow.setContent(place.name);
+	    	infowindow.open(map2, this);
+	        showStreetView(place.geometry.location, 'bigMapStreetview');
+	        
+	        getPlaceDetailsBigMap(place.place_id);
+	        viewedPlace = place;
         });
     }
 
@@ -467,16 +484,16 @@
 
     function showStreetView(place, id)
 	{
-		    panorama = new google.maps.StreetViewPanorama(
+		panorama = new google.maps.StreetViewPanorama(
 		      document.getElementById(id), {
 		        position: place,
 		        pov: {
 		          heading: 200,
 		          pitch: 0
-		        },
+		        }
 		      }
-		      );
-		  map.setStreetView(panorama);
+		);
+		map2.setStreetView(panorama);
 	}
 
 	function calculateDistance(distination, id)
@@ -583,7 +600,14 @@
     	$(elmt).click(function(){
 			$('#streetView').hide();
 			
-    		var service = new google.maps.DistanceMatrixService();
+    		timeDistanceCalculator(end);
+    		
+    	});
+    }
+
+    function timeDistanceCalculator(end)
+    {
+    	var service = new google.maps.DistanceMatrixService();
 			service.getDistanceMatrix(
 			  {
 			    origins: [pos, pos],
@@ -619,9 +643,39 @@
 					  );
 			  	}
 			  );
-    		
-    	});
     }
 
+    function getPlaceDetailsBigMap(place_id)
+    {
+    	$('#openHoursTable').html('');
+    	$('#openNOwTitle').text('');
+    	$('#rateTitle').html('');
+    	var serviceDetails = new google.maps.places.PlacesService(map2);
+    	return serviceDetails.getDetails({
+    		placeId: place_id
+    	}, function(place, status){
+    		
+    		$('#placeName').text(place.name);
+    		try{
+	        	$('#openNOwTitle').html((place.opening_hours.open_now)? '<i style="color: #1bda25">Open now: Yes</i>' : '<i style="color: red">Open now: No</i>');
+	        }catch(err){
+	        	$('#openNOwTitle').html('<i>Open now: </i>Unknown');
+	        }
+	        try{
+	        	$(place.opening_hours.weekday_text).each(function(index){
+		        	var html = '<tr>' +
+		        					'<td>' + this + '</td>' +
+		        				'</tr>';
+		        	$('#openHoursTable').append(html);
+		        });
+	        }catch(err){
+	        	$('#openHoursTable').append('<tr> <td>No open hours available</td> </tr>');
+	        }
+	        try{
+	        	if (place.rating == undefined) return;
+	        	$('#rateTitle').html('<i>Rating: ' + place.rating + '</i>');
+	        }catch(err){}
+    	});
+    }
 	// renderMap();
 </script>

@@ -1,7 +1,8 @@
 <script type="text/javascript">
 	var windowHeight = $( window ).height();
 	var pharmaPlace;
-	var clinicPlace;
+	var clinicPlace = [];
+	var viewedPlace = [];
 
 	$(function(){
 
@@ -81,6 +82,7 @@
 
 	function view_medicine(id)
 	{
+		// window.history.pushState('View Medicine', 'View Medicine', 'viewmed?key='+id);
 		$('.man-loader').css('display', 'flex');
 		setTimeout(function(){
 			$('.man-loader').css('display', 'none');
@@ -138,6 +140,8 @@
 
 				 	getContentOfMedicine(data.id);
 				 	getAllSimilarToThisMedicine(data);
+				 	getReviewsForViewMed(data.id)
+
 
 				 	var body = $("html, body");
 					body.stop().animate({scrollTop:0}, 500, 'swing');
@@ -150,75 +154,124 @@
 
 	}
 
+	function getReviewsForViewMed(id)
+	{
+		loadDisqus('#reviewsInViewMed', 'commentPanel' + id , 'https://terheamed.com#!commentPanel' + id);
+	}
+
 	var similarMedIndex = 0;
 	function getAllSimilarToThisMedicine(passedData)
 	{
 		var keyName = passedData.generic_name;
 			keyName = keyName.split(' ');
 
-		if (similarMedIndex >= (keyName.length)) 
+		if (resultRearchData.length < 2) 
 		{
-			if ($('.similarCard').length == 0) 
-			{
-				var html = 	'<div class="col-md-12">' +
-								  		'<div class="card-body">' +
-								  			'<div class="card-title">No similar medicine</div>' +
-								  		'</div>' +
-									'</div>';
-				$('#similarMedPanel').append(html);
-			}
-			
-			similarMedIndex = 0;
-			return;
-		}
-
-		$.ajax({
-			url: '{{ route("json_get_all_similar_medicine") }}',
-			type: 'GET',
-			data: {genericName: keyName[similarMedIndex]},
-			success: function(data){
-
-				$(data).each(function(){
-
-			 		var html = 	'<div data-id="'+ this.id +'" class="similarCard man-card-with-box-shadow col-md-6" onclick="view_medicine('+ this.id +')">' +
-							  		'<div class="man-img-center-without-border">' +
-							  			'<img src="'+ this.picture +'" alt="Card image cap">' +
-							  		'</div>' +
+			var html = 	'<div class="col-md-12">' +
 							  		'<div class="card-body">' +
-							  			'<h5 class="man-card-title">'+ this.name +'</h5>' +
+							  			'<div class="card-title">No similar medicine</div>' +
 							  		'</div>' +
 								'</div>';
+			$('#similarMedPanel').append(html);
+		}
 
-					if (passedData.id != this.id) 
+		$(resultRearchData).each(function(){
+
+	 		var html = 	'<div data-id="'+ this.id +'" class="similarCard man-card-with-box-shadow col-md-6" >' +
+			 				'<a class="man-a-btn" href="viewmed?key='+ this.id +'" target="_blank">View on new tab</a>' +
+							  	'<div class="man-img-center-without-border">' +
+							  		'<img src="'+ this.picture +'" alt="Card image cap">' +
+							  	'</div>' +
+							  	'<div class="card-body" onclick="view_medicine('+ this.id +')">' +
+							  		'<h5 class="man-card-title">'+ this.name +'</h5>' +
+							  	'</div>' +
+						'</div>';
+
+			if (passedData.id != this.id) 
+			{
+				var tempID = this.id;
+				var duplicateChecker = true;
+				$( ".similarCard" ).each(function( index ) {
+
+					if ($(this).attr('data-id') == tempID) 
 					{
-						var tempID = this.id;
-						var duplicateChecker = true;
-						$( ".similarCard" ).each(function( index ) {
-
-							if ($(this).attr('data-id') == tempID) 
-							{
-								duplicateChecker = false;
-							}
-							
-						});
-
-						if (duplicateChecker) 
-						{
-							$('#similarMedPanel').append(html);
-						}
+						duplicateChecker = false;
 					}
+					
+				});
 
-			 	});
-
-			 	similarMedIndex++;
-			 	getAllSimilarToThisMedicine(passedData);
-
-			},
-			error: function(){
-				similarMedIndex = 0;
-				getAllSimilarToThisMedicine(passedData);
+				if (duplicateChecker) 
+				{
+					$('#similarMedPanel').append(html);
+				}
 			}
-		});
+
+	 	});
+
+	 // 	if (similarMedIndex >= (keyName.length)) 
+		// {
+		// 	if ($('.similarCard').length == 0) 
+		// 	{
+		// 		var html = 	'<div class="col-md-12">' +
+		// 						  		'<div class="card-body">' +
+		// 						  			'<div class="card-title">No similar medicine</div>' +
+		// 						  		'</div>' +
+		// 							'</div>';
+		// 		$('#similarMedPanel').append(html);
+		// 	}
+			
+		// 	similarMedIndex = 0;
+		// 	return;
+		// }
+
+		// $.ajax({
+		{{-- //  	url: '{{ route("json_get_all_similar_medicine") }}', --}}
+		// 	type: 'GET',
+		// 	data: {genericName: keyName[similarMedIndex]},
+		// 	success: function(data){
+
+		// 		$(data).each(function(){
+
+		// 	 		var html = 	'<div data-id="'+ this.id +'" class="similarCard man-card-with-box-shadow col-md-6" >' +
+		// 	 						'<a class="man-a-btn" href="viewmed?key='+ this.id +'" target="_blank">View on new tab</a>' +
+		// 					  		'<div class="man-img-center-without-border">' +
+		// 					  			'<img src="'+ this.picture +'" alt="Card image cap">' +
+		// 					  		'</div>' +
+		// 					  		'<div class="card-body" onclick="view_medicine('+ this.id +')">' +
+		// 					  			'<h5 class="man-card-title">'+ this.name +'</h5>' +
+		// 					  		'</div>' +
+		// 						'</div>';
+
+		// 			if (passedData.id != this.id) 
+		// 			{
+		// 				var tempID = this.id;
+		// 				var duplicateChecker = true;
+		// 				$( ".similarCard" ).each(function( index ) {
+
+		// 					if ($(this).attr('data-id') == tempID) 
+		// 					{
+		// 						duplicateChecker = false;
+		// 					}
+							
+		// 				});
+
+		// 				if (duplicateChecker) 
+		// 				{
+		// 					$('#similarMedPanel').append(html);
+		// 				}
+		// 			}
+
+		// 	 	});
+
+		// 	 	similarMedIndex++;
+		// 	 	getAllSimilarToThisMedicine(passedData);
+
+		// 	},
+		// 	error: function(){
+		// 		similarMedIndex = 0;
+		// 		getAllSimilarToThisMedicine(passedData);
+		// 	}
+		// });
 	}
 
 	function getContentOfMedicine(id)
@@ -232,7 +285,7 @@
 
 				for (var i = 0; i < data.length; i++) 
 				{
-					var tempDensity = (isNullOrWhitespace(data[i].density))? '' : data[i].density;
+					var tempDensity = (isNullOrWhitespace(data[i].density) || data[i].density == 'null')? '' : data[i].density;
 					var html = '<tr>' +
 							      	'<td>'+ data[i].name +'</td>' +
 							    	'<td>'+ tempDensity +'</td>' +
@@ -249,6 +302,7 @@
 
 	function backToAllSearchMed()
 	{
+		window.history.pushState('Home', 'Home', 'home');
 		$('.man-loader').css('display', 'flex');
 		setTimeout(function(){
 			$('.man-loader').css('display', 'none');
@@ -290,6 +344,7 @@
 
 	function clinicLoadMore()
 	{
+		if (clinicPlace.length <= 0) return;
 		var count  = ($('#panel-2 .clinic-panel').length);
 
 		if (count < clinicPlace.length) 
@@ -319,6 +374,7 @@
 
 	function pharmaLoadMore()
 	{
+		if (pharmaPlace.length <= 0) return;
 		var count  = ($('#panel-1 .pharmacy-panel').length);
 
 		if (count < pharmaPlace.length) 
@@ -367,7 +423,7 @@
 	function appendPopover(elmt)
 	{
 		elmt.popover({ trigger: "manual" , html: true, animation:false})
-	        .on("mouseenter", function () {
+	        .on("click", function () {
 	            
 	            elmt.popover("show");
 	            $(".popover").on("mouseleave", function () {
@@ -456,7 +512,7 @@
 
 	  	var cardView = '<div class="pharmacy-panel">' +
 							// '<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="pharma'+i+'" >' +
-							'<div class="img-box" style="background: #e4e2e2" id="pharma'+i+'" >' +
+							'<div class="img-box" id="pharma'+i+'" >' +
 								'<h6 class="pharma-title">'+ place.name +'</h6>' +
 								openNowDisplay +
 								personWaving +
@@ -514,7 +570,7 @@
 
   		var cardView = '<div class="clinic-panel">' +
 						// '<div class="img-box" style="background: #'+ bgColor +'; color: '+ textColor +'" id="clinic'+i+'" >' +
-						'<div class="img-box" style="background: #e4e2e2" id="clinic'+i+'" >' +
+						'<div class="img-box" id="clinic'+i+'" >' +
 							'<h6 class="pharma-title">'+ place.name +'</h6>' +
 							openNowDisplay +
 							personWaving +
@@ -600,6 +656,8 @@
 
     function searchBtn()
     {
+    	var searchName = $('#searchBox').val();
+    	if (isNullOrWhitespace(searchName)) return false;
     	$('#searchedPanel').html('');
     	searchFunction();
     }
@@ -624,6 +682,18 @@
 
     	if (searchIndex >= (searchNameArray.length)) 
     	{
+    		var html = '<div class="welcome-card">' +
+					  		'<p>Your search did not match any information in our database.</p>' +
+		  					'<ul>' +
+		  						'<li>Make sure that all words are spelled correctly.</li>' +
+		  						'<li>Try different keywords.</li>' +
+		  						'<li>Try more general keywords.</li>' +
+		  					'</ul>' +
+					  	'</div>';
+			if ($('.searchCard').length <= 0) 
+			{
+				$('#searchedPanel').append(html);
+			}
     		searchIndex = 0;
     		return;
     	}
@@ -664,14 +734,16 @@
 												// 	    'data-size="large"' +
 												// 	'</div>' +
 												// '</button>' +
-							  					'<button type="button" class="btn btn-light col-md-12 commentBtn" onclick="appendComment('+ "'" +'#commentPanel' + data[i].id +"'" +', '+ "'" +'terheamed.com/commentPanel' + data[i].id +"'" +')">' +
+							  			// 		'<button type="button" class="btn btn-light col-md-12 commentBtn" onclick="appendComment('+ "'" +'#commentPanel' + data[i].id +"'" +', '+ "'" +'terheamed.com/commentPanel' + data[i].id +"'" +')">' +
+												//   'Reviews' +
+												// '</button>' +
+												'<button type="button" class="btn btn-light col-md-12 commentBtn" onclick="loadDisqus('+ "'" +'#commentPanel' + data[i].id +"'" +', '+ "'" +'commentPanel' + data[i].id +"'" +', '+ "'" +'https://terheamed.com#!commentPanel' + data[i].id +"'" +')">' +
 												  'Reviews' +
 												'</button>' +
 							  				'</div>' +
 							  			'</div>' +
-							  			'<div class="comment-section" id="commentPanel'+ data[i].id +'">' +
-							  				'<ul class="comment-group">' +
-							  				'</ul>' +
+							  			'<div class="col-md-12 comment-section">' +
+							  				'<div id="commentPanel'+ data[i].id +'"></div>' +
 			  							'</div>' +
 									  	'<hr style="margin-right: 1%; margin-left: 1%;">';
 
@@ -691,7 +763,7 @@
 					}
 					
     			}
-    			FB.XFBML.parse();
+    			// FB.XFBML.parse();
 
     			searchIndex++;
     			searchFunction();
@@ -709,25 +781,26 @@
     	if (e.which == 13) searchBtn();
     });
 
-    window.onload = function(){
-    	FB.init({
-			      appId      : '161442394556549',
-			      xfbml      : true,
-			      version    : 'v2.5',
-			      logout     : true
-			    });
-    	if(FB.getLoginStatus() != null) {
-    		FB.api('/me', function(response) 
-		    {
-		        alert ("Welcome " + response.name + ": Your UID is " + response.id); 
-		    });
-    	}
+    // window.onload = function(){
+    // 	FB.init({
+			 //      appId      : '161442394556549',
+			 //      xfbml      : true,
+			 //      version    : 'v2.5',
+			 //      logout     : true
+			 //    });
+    // 	if(FB.getLoginStatus() != null) {
+    // 		FB.api('/me', function(response) 
+		  //   {
+		  //       alert ("Welcome " + response.name + ": Your UID is " + response.id); 
+		  //   });
+    // 	}
 
-    	// FB.logout(re);
+    // 	// FB.logout(re);
 
-    };
+    // };
 
 
+    //Facebook Comment plugin unused
     function appendComment(elmt, urlForComment)
     {
   //   	FB.api(
@@ -784,6 +857,12 @@
     		},430);
     	}
 
+    }
+
+    function directionViewBigMap()
+    {
+    	if (viewedPlace == undefined) return;
+    	timeDistanceCalculator(viewedPlace);
     }
 
 

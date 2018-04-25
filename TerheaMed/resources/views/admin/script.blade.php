@@ -702,6 +702,7 @@
 		 		name = name.find('.nameVal').val();
 		 	var density = $('#elementTableBody tr').eq(i).find('td').eq(2);
 		 		density = density.find('.denVal').val();
+		 		density = (isNullOrWhitespace(density))? ' ' : density;
 			
 			contentArray.push({
 				name: name,
@@ -774,6 +775,7 @@
 		 			name = name.find('.nameVal').val();
 			 	var density = $('#elementTableBody tr').eq(i).find('td').eq(2);
 			 		density = density.find('.denVal').val();
+			 		density = (isNullOrWhitespace(density))? ' ' : density;
 
 				newContentArray.push({
 					name: name,
@@ -786,6 +788,7 @@
 		 			name = name.find('.nameVal').val();
 			 	var density = $('#elementTableBody tr').eq(i).find('td').eq(2);
 			 		density = density.find('.denVal').val();
+			 		density = (isNullOrWhitespace(density))? ' ' : density;
 
 				oldContentArray.push({
 					id: dataID,

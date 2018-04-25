@@ -6,13 +6,18 @@
 a.man-link{
 	text-decoration: none;
 }
+a.man-link:hover{
+    color: #C5CAE9;
+}
 .man-search-form{
 	display: inline-block;
     width: 500px;
     vertical-align: middle;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 .man-active{
-	background: #3882e9;
+	background: #303F9F;
 }
 .man-row{
 	display: -webkit-box;
@@ -24,9 +29,11 @@ a.man-link{
 .man-card{
     padding: 5px;
     cursor: pointer;
+    max-height: 226px;
+    overflow: hidden;
 }
 .man-card:hover{
-    background: rgba(0,0,0,.125);
+    box-shadow: 1px 1px 14px -3px;
 }
 .man-card-with-box-shadow{
     cursor: pointer;
@@ -36,6 +43,9 @@ a.man-link{
 .man-card-with-box-shadow:hover{
     box-shadow: 1px 1px 14px -3px;
     z-index: 5;
+}
+.man-card-with-box-shadow:hover .man-a-btn{
+    display: block;
 }
 .man-fixed-top{
 	position: fixed;
@@ -137,6 +147,7 @@ a.man-link{
     justify-content: center;
     align-items: center;
     vertical-align: middle;
+    background: #e9ebee;
 }
 .gmnoprint a, .gmnoprint span, .gm-style-cc {
     display:none;
@@ -152,7 +163,6 @@ a.man-link{
     z-index: 999; 
     justify-content: center;
     box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.10);
 }
 .loader-more{
     width: 11%;
@@ -217,7 +227,7 @@ a.man-link{
     left: -112px; 
     z-index: 10;
     align-items: center;
-    background: green;
+    background: #3F51B5;
     padding: 5px;
     display: flex;
     transition: .5s ease;
@@ -335,7 +345,7 @@ tr:hover .admin-option{
 }
 .big-map-panel{
     width: 100%; 
-    z-index: 9999; 
+    z-index: 0; 
     height: 100%; 
     position: absolute; 
     transition: .8s ease; 
@@ -348,7 +358,7 @@ tr:hover .admin-option{
     left: 0;
 }
 .prescription{
-    background: red; 
+    background: #3F51B5; 
     padding: 10px; 
     color: white;
 }
@@ -401,6 +411,71 @@ tr:hover .minus-circle-btn{
     left: 0;
     padding: 14px;
     background: #fff;
+}
+.man-card-title:hover{
+    color: #0b95d2;
+}
+
+.man-a-btn{
+    position: absolute;
+    right: 0;
+    font-size: 14px;
+    padding-top: 7px;
+    padding-right: 10px;
+    display: none;
+}
+
+.title-header{
+    background: #3F51B5;
+    color: #fff;
+    padding: 8px;
+    margin-bottom: 15px;
+}
+
+.man-title-header{
+    padding: 5px;
+    font-size: 23px;
+}
+
+.commentBtn{
+
+}
+.commentBtn:hover{
+    background: #3f51b5;
+    color: #ffffff;
+}
+
+.health-tips-panel{
+    height: -webkit-fill-available;
+}
+
+.health-tips-card{
+    width: 80%;
+    height: 200px;
+    margin-bottom: 3px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.health-tips-card:hover{
+    box-shadow: 1px 1px 6px -3px;
+}
+
+.video-container{
+    width: 25%;
+    overflow: hidden;
+}
+
+.video-cup{
+    position: absolute;
+    background: #8080804d;
+    width: 20%;
+    height: 200px;
+    top: 45px;
+    left: 13px;
 }
 
 /* -----------------Unused below------------------------ */
