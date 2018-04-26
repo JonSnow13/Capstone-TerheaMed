@@ -154,7 +154,7 @@
 			if (isNullOrWhitespace(format.val())) format.val('N/A'); 
 			if (isNullOrWhitespace(genName.val())) genName.val('N/A'); 
 			
-			$('#saveMedBtn').text('Saving...');
+			disableBtn('#saveMedBtn');
 
 			medInfoArray.push({
 				name: name.val(),
@@ -219,7 +219,7 @@
 		$('#addMedicineModal input, textarea')
 		$('#addMedicineModal input, textarea').val('');
 		$('#addMedicineModal').modal('hide');
-		$('#saveMedBtn').text('Save');
+		resetBtn('#saveMedBtn');
 		$('#pictureUploadInp').siblings('div').find('img').attr('src', '');
 	}
 
@@ -829,12 +829,14 @@
 
 	function saveHealthTipsBtn(elmt)
 	{
+		disableBtn(elmt);
 		if (!validateHeathTips()) return;
-		saveHealthTips();
+
+		saveHealthTips(elmt);
 	}
 
 	var healthTipsID;
-	function saveHealthTips()
+	function saveHealthTips(elmt)
 	{
 		var healthTipsArray = [];
 		var heathTipName = $('#heathTipName');
@@ -858,6 +860,10 @@
 				healthTipsID = data;
 				$('#healthModal').modal('hide');
 				$('#tipsModal').modal('show');
+				clearField('#healthModal', elmt);
+			},
+			error: function(){
+				resetBtn(elmt);
 			}
 		});
 
@@ -912,8 +918,9 @@
 
 	});
 
-	function saveTipBtn()
+	function saveTipBtn(elmt)
 	{
+		disableBtn(elmt);
 		var tipFieldCount = $('.tip-field').length;
 		var tipArray = [];
 
@@ -933,10 +940,29 @@
 			data: {tipArray: tipArray, healthTipsID: healthTipsID},
 			success: function(){
 				$('#tipsModal').modal('hide');
-				displayHealthTips.ajax.reload;
+				displayHealthTips.ajax.reload();
+				resetBtn(elmt);
+				$('#tipsPanel').html('');
+				addTipsBtn();
+			},
+			error: function(){
+				resetBtn(elmt);
+				alert('Something went wrong. Please try again.')
 			}
 		});
 		
+	}
+
+	function resetBtn(elmt)
+	{
+		$(elmt).removeAttr('disabled');
+		$(elmt).text('Save');
+	}
+
+	function disableBtn(elmt)
+	{
+		$(elmt).attr('disabled', true);
+		$(elmt).text('Saving...');
 	}
 
 	var displayHealthTips;
@@ -996,6 +1022,23 @@
   							'<div class="man-list-btn" onclick="deleteHealthTip('+ id +')"><i class="material-icons">delete</i> Delete</div>'
   						});
   		appendPopoverClick(popoverHtml);
+	}
+
+	function editHealthTips(id)
+	{
+		$('#healthModal').modal('show');
+		console.log(id);
+	}
+
+	function editTips(id)
+	{
+		$('#tipsModal').modal('show');
+	}
+
+	function clearField(modal, elmt)
+	{
+		$(modal + ' textarea, input').val('');
+		resetBtn(elmt);
 	}
 
 </script>

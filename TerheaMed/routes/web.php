@@ -111,8 +111,8 @@ Route::get(
 );
 
 Route::get(
-	'/watch/{key}',
-	'HomeController@watchVideo'
+	'/viewtip/{key}',
+	'HomeController@viewTip'
 );
 
 Route::get(

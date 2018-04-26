@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Medicines;
+use App\HealthTips;
+use App\HealthTipsPictures;
+use App\Tips;
 
 class HomeController extends Controller
 {
@@ -44,11 +47,14 @@ class HomeController extends Controller
     public function healthTips(Request $request)
     {
         $searchName='';
-        return view('pages.health-tips', compact('searchName'));
+        $healthTips = HealthTips::all();
+        return view('pages.health-tips', compact('searchName', 'healthTips'));
     }
 
-    public function watchVideo(Request $request)
+    public function viewTip(Request $request)
     {
-        return view('pages.health-view-video');
+        $healthTip = HealthTips::find($request->key);
+        $tips = Tips::where('health_tips_id', $request->key)->get();
+        return view('pages.health-view-video', compact('healthTip', 'tips'));
     }
 }

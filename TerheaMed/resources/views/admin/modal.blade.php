@@ -41,7 +41,7 @@
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        	<button type="button" id="saveElementsBtn" class="btn btn-primary" onclick="saveHealthTipsBtn(this)">Save</button>
+	        	<button type="button" class="btn btn-primary" onclick="saveHealthTipsBtn(this)">Save</button>
 	        	{{-- <button type="button" id="updateElementsBtn" class="btn btn-primary" onclick="">Update</button> --}}
 	      	</div>
 	    </div>
@@ -49,7 +49,7 @@
 </div>
 
 <!-- Modal for adding elements -->
-<div class="modal fade" id="tipsModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="tipsModal" tabindex="-1" role="dialog" aria-hidden="true" style="overflow: auto;">
   <div class="modal-dialog" role="document" style="max-width: 70%;">
     <div class="modal-content">
       <div class="modal-header">
@@ -96,7 +96,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="saveTipBtn()">Save</button>
+        <button type="button" class="btn btn-primary" onclick="saveTipBtn(this)">Save</button>
         {{-- <button type="button" id="" class="btn btn-primary" onclick="">Update</button> --}}
       </div>
     </div>
