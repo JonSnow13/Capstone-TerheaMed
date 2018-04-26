@@ -822,4 +822,180 @@
 		});
 	}
 
+	function openHealthTipModal()
+	{
+		$('#healthModal').modal('show');
+	}
+
+	function saveHealthTipsBtn(elmt)
+	{
+		if (!validateHeathTips()) return;
+		saveHealthTips();
+	}
+
+	var healthTipsID;
+	function saveHealthTips()
+	{
+		var healthTipsArray = [];
+		var heathTipName = $('#heathTipName');
+		var descriptionHealthTip = $('#descriptionHealthTip');
+		var tipTitle = $('#tipTitle');
+		var ytEmbedCode = $('#embededCode');
+
+		healthTipsArray.push({
+			health_tip_name: heathTipName.val(),
+			description: descriptionHealthTip.val(),
+			yt_embed_code: ytEmbedCode.val(),
+			tip_title: tipTitle.val()
+		});
+
+		$.ajax({
+			url: '{{ route("json_add_health_tips") }}',
+			headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' },
+			type: 'POST',
+			data: {healthTipsArray: healthTipsArray},
+			success: function(data){
+				healthTipsID = data;
+				$('#healthModal').modal('hide');
+				$('#tipsModal').modal('show');
+			}
+		});
+
+	}
+
+	function addTipsBtn()
+	{
+		var tipFieldCount = $('.tip-field').length;
+
+		var tipFieldHtml = '<div class="form-group">' +
+								'<label for="description" class="tip-label">Tip '+ (tipFieldCount+1) +'</label>' +
+								'<div class="tip-group">' +
+									'<textarea class="form-control tip-field" rows="2"></textarea>' +
+									'<div class="minus-circle-btn-textarea minus-tip-btn">' +
+			    						'<i class="material-icons">remove_circle_outline</i>' +
+			    					'</div>' +
+								'</div>' +
+							'</div>';
+		$('#tipsPanel').append(tipFieldHtml);
+
+		$('.minus-tip-btn').click(function(){
+			$(this).closest('.form-group').remove();
+			countTIps();
+			setTipLabel();
+		});
+
+		countTIps();
+	}
+
+	function setTipLabel()
+	{
+		var i = 1;
+		$('.tip-label').each(function(){
+			$(this).text('Tip ' + i);
+			i++;
+		});
+	}
+
+	function countTIps()
+	{
+		var tipFieldCount = $('.tip-field').length;
+		$('#countTips').text(tipFieldCount + ' tips');
+	}
+
+	$(function(){
+		countTIps();
+		$('.minus-tip-btn').click(function(){
+			$(this).closest('.form-group').remove();
+			countTIps();
+			setTipLabel();
+		});
+
+	});
+
+	function saveTipBtn()
+	{
+		var tipFieldCount = $('.tip-field').length;
+		var tipArray = [];
+
+		for (var i = 0; i < tipFieldCount; i++) 
+		{
+			var tip = document.getElementsByClassName('tip-field')[i].value;
+			tipArray.push({
+				tip_description: tip
+			});
+		}
+		
+		
+		$.ajax({
+			url: '{{ route("json_add_tips") }}',
+			headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' },
+			type: 'POST',
+			data: {tipArray: tipArray, healthTipsID: healthTipsID},
+			success: function(){
+				$('#tipsModal').modal('hide');
+				displayHealthTips.ajax.reload;
+			}
+		});
+		
+	}
+
+	var displayHealthTips;
+	$(function(){
+		displayHealthTips = $('#healthTipsDataTable').DataTable({
+			destroy: true,
+			"pageLength": 10,
+			"ajax" : "{{ url('/getAllHealthTips') }}",
+			"columns": [
+				{
+					data: 'name',
+					render: function(data, type, row){
+						data = (data.length > 45)? data.substr(0,44) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'description',
+					render: function(data, type, row){
+						data = (data.length > 45)? data.substr(0,44) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'tip_title',
+					render: function(data, type, row){
+						data = (data.length > 45)? data.substr(0,44) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'video_embed_code',
+					render: function(data, type, row){
+						data = (data.length > 45)? data.substr(0,44) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'id',
+					render: function(data, type, row){
+						return '<button class="admin-option btn-light" onmouseover="generatePopoverAdminOptionForHealthTip('+ data +')" id="optionAdminHealthTip'+ data +'"> <i class="material-icons">more_vert</i> </button>';
+					},
+					orderable: false
+				}
+			],
+			"createdRow": function( nRow, aData, iDataIndex ) {
+                            $(nRow).data('medicineData', aData);
+                        }
+		});
+	});
+
+	function generatePopoverAdminOptionForHealthTip(id)
+	{
+		var popoverHtml = $('#optionAdminHealthTip'+id);
+						popoverHtml.attr({'data-toggle' : 'popover', 'data-placement': 'bottom', 'data-content' : '<div class="man-list-btn" onclick="editHealthTips('+ id +')" ><i class="material-icons">mode_edit</i> Edit Health Tip</div>' +
+							'<div class="man-list-btn" onclick="editTips('+ id +')"><i class="material-icons">mode_edit</i> Edit Tips</div>' +
+  							'<div class="man-list-btn" onclick="deleteHealthTip('+ id +')"><i class="material-icons">delete</i> Delete</div>'
+  						});
+  		appendPopoverClick(popoverHtml);
+	}
+
 </script>

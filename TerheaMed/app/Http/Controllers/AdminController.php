@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Medicines;
 use App\Contentmed;
+use App\HealthTips;
+use App\HealthTipsPictures;
+use App\Tips;
 use Yajra\Datatables\Datatables;
 use File;
 
@@ -14,6 +17,11 @@ class AdminController extends Controller
     public function index(Request $request)
     {
     	return view('admin.index');
+    }
+
+    public function index2(Request $request)
+    {
+        return view('admin2.herbal');
     }
 
     public function create(Request $request)
@@ -160,6 +168,38 @@ class AdminController extends Controller
     public function deleteContentOfMed(Request $request)
     {
         Contentmed::find($request->content_id)->delete();
+    }
+
+    public function storeHealthTips(Request $request)
+    {
+        $healthTips = new HealthTips();
+        $healthTips->name = $request->healthTipsArray[0]['health_tip_name'];
+        $healthTips->description = $request->healthTipsArray[0]['description'];
+        $healthTips->tip_title = $request->healthTipsArray[0]['tip_title'];
+        $healthTips->video_embed_code = $request->healthTipsArray[0]['yt_embed_code'];
+
+        $healthTips->save();
+
+        return $healthTips->id;
+    }
+
+    public function storeTips(Request $request)
+    {
+        
+        for ($i=0; $i < count($request->tipArray); $i++) 
+        { 
+            $tips = new Tips();
+            $tips->health_tips_id = $request->healthTipsID;
+            $tips->description = $request->tipArray[$i]['tip_description'];
+            $tips->save();
+        }
+
+    }
+
+    public function getAllHealthTips(Request $request)
+    {
+        $healthTips = HealthTips::all();
+        return Datatables::of($healthTips)->make(true);
     }
 
 }

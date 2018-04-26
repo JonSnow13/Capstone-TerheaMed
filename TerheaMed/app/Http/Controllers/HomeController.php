@@ -46,4 +46,9 @@ class HomeController extends Controller
         $searchName='';
         return view('pages.health-tips', compact('searchName'));
     }
+
+    public function watchVideo(Request $request)
+    {
+        return view('pages.health-view-video');
+    }
 }

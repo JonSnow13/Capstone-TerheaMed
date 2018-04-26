@@ -112,7 +112,8 @@
 					  	<div class="welcome-card">
 			  				<center>
 			  					<h2>Welcome to Terhea</h2>
-			  					<p>We find cure for you.</p>
+			  					<p>We find cure for you</p>
+			  					<p>and we find pharmacy / drug store and clinic / hospital for you.</p>
 			  				</center>
 			  				{{-- <div id="disqus_thread"></div>
 							<script>

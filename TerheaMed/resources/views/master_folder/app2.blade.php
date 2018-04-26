@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="{{asset('assets/js/jquery-scrolltofixed.js')}}"></script>
 	<script type="text/javascript" src="{{asset('assets/js/bootstrap.js')}}"></script>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://www.youtube.com/player_api"></script>
 
 	{{-- <script type="text/javascript" src="{{asset('assets/js/jquery.visible.js')}}"></script> --}}
 
@@ -20,7 +21,7 @@
 <body>
 
 	<nav class="navbar navbar-expand-lg navbar-light" style="background: #3F51B5;">
-	  <a class="navbar-brand" href="home" style="color: #fff"><b>Terhea</b></a>
+	  <a class="navbar-brand" href="{{url('/')}}" style="color: #fff"><b>Terhea</b></a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" id="burgerMenu">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
@@ -28,7 +29,7 @@
 	  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
 	    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 	      <li class="nav-item">
-	        <a class="man-link <?php if(Request::is('home') || Request::is('/')) echo 'man-active'; ?>" href="home" id="homeMenu" >Home</a>
+	        <a class="man-link <?php if(Request::is('/')) echo 'man-active'; ?>" href="{{url('/')}}" id="homeMenu" >Home</a>
 	      </li>
 	      <li>
       		<div class="man-search-form" id="searchBoxForm">
@@ -48,13 +49,13 @@
 		    </div>
 	      </li>
 	      <li class="nav-item">
-	        <a class="man-link <?php if(Request::is('healthtips')) echo 'man-active'; ?>" href="healthtips">Health Tips</a>
+	        <a class="man-link <?php if(Request::is('healthtips') || Request::is('watch/*')) echo 'man-active'; ?>" href="{{url('/healthtips')}}">Health Tips</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="man-link <?php if(Request::is('seebigmap')) echo 'man-active'; ?>"" href="seebigmap" id="bigMapMenu" data-toggle="tooltip" data-placement="bottom" title="Nearby pharmacy/drug store and clinic / hospital">Nearby</a>
+	        <a class="man-link <?php if(Request::is('seebigmap')) echo 'man-active'; ?>"" href="{{url('/seebigmap')}}" id="bigMapMenu" data-toggle="tooltip" data-placement="bottom" title="Nearby pharmacy/drug store and clinic / hospital">Nearby</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="man-link <?php if(Request::is('about')) echo 'man-active'; ?>" href="about">About</a>
+	        <a class="man-link <?php if(Request::is('about')) echo 'man-active'; ?>" href="{{url('/about')}}">About</a>
 	      </li>
 	    </ul>
 	  </div>

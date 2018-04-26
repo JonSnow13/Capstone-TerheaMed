@@ -4,7 +4,8 @@
 
 <div class="man-content">
 	<div class="form-group" style="margin-top: 20px;">
-		<button type="button" class="btn btn-primary" onclick="openMedModal()">Add Medicine</button>
+		<button type="button" class="btn btn-light" onclick="openMedModal()">Add Medicine</button>
+		<button type="button" class="btn btn-light" onclick="openHealthTipModal()">Add Health Tips</button>
 	</div>
 
 	<div>
@@ -16,6 +17,10 @@
 		  	</li>
 		  	<li class="nav-item">
 		    	<a class="nav-link" id="herbal-tab" data-toggle="tab" href="#herbal" role="tab" aria-controls="herbal" aria-selected="false">Herbal
+		    	</a>
+		    </li>
+		    <li class="nav-item">
+		    	<a class="nav-link" id="health-tips-tab" data-toggle="tab" href="#healthtips" role="tab" aria-controls="healthtips" aria-selected="false">Health Tips
 		    	</a>
 		    </li>
 		</ul>
@@ -61,6 +66,22 @@
 					      	<th scope="col">Usage</th>
 					      	<th scope="col">Warning</th>
 					      	<th scope="col">Side Effects</th>
+					      	<th scope="col"><i class="material-icons">settings</i></th>
+				    	</tr>
+				  	</thead>
+				  	<tbody>
+				 	</tbody>
+				</table>
+	    	</div>
+	    	<div class="tab-pane fade" id="healthtips" role="tabpanel" aria-labelledby="health-tips-tab">
+	    		<table class="table responsive table-hover" id="healthTipsDataTable">
+				  	<thead class="thead-dark">
+				    	<tr>
+					      	{{-- <th scope="col">#</th> --}}
+					      	<th scope="col">Name</th>
+					      	<th scope="col">Description</th>
+					      	<th scope="col">Tip Title</th>
+					      	<th scope="col">Video Source</th>
 					      	<th scope="col"><i class="material-icons">settings</i></th>
 				    	</tr>
 				  	</thead>

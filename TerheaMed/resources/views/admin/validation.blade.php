@@ -52,6 +52,34 @@
 		return valid;
 	}
 
+	function validateHeathTips()
+	{
+		var heathTipName = $('#heathTipName');
+		var descriptionHealthTip = $('#descriptionHealthTip');
+		var tipTitle = $('#tipTitle');
+
+		$('.err-msg').text('');
+		var valid = true;
+
+		if (isNullOrWhitespace(heathTipName.val())) 
+		{
+			heathTipName.siblings('.err-msg').text(reqMsg);
+			valid = false;
+		}
+		if (isNullOrWhitespace(descriptionHealthTip.val())) 
+		{
+			descriptionHealthTip.siblings('.err-msg').text(reqMsg);
+			valid = false;
+		}
+		if (isNullOrWhitespace(tipTitle.val())) 
+		{
+			tipTitle.siblings('.err-msg').text(reqMsg);
+			valid = false;
+		}
+
+		return valid;
+	}
+
 	// function validateWhenEnterkeyIsPressed()
 	// {
 	// 	var name = $('#name');

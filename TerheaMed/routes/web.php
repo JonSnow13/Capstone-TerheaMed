@@ -109,5 +109,30 @@ Route::get(
 	'/healthtips',
 	'HomeController@healthTips'
 );
+
+Route::get(
+	'/watch/{key}',
+	'HomeController@watchVideo'
+);
+
+Route::get(
+	'admin2',
+	'AdminController@index2'
+);
+
+Route::post(
+	'/json_add_health_tips',
+	['as' => 'json_add_health_tips', 'uses' => 'AdminController@storeHealthTips']
+);
+
+Route::post(
+	'/json_add_tips',
+	['as' => 'json_add_tips', 'uses' => 'AdminController@storeTips']
+);
+
+Route::get(
+	'/getAllHealthTips',
+	['as' => 'getAllHealthTips', 'uses' => 'AdminController@getAllHealthTips']
+);
 // Route::group(['middleware' => 'csrf'], function()
 // {});

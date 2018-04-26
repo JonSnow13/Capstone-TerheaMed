@@ -31,20 +31,7 @@
 	  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
 	    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 	      <li class="nav-item">
-	        <a class="man-link man-active" href="home">Home</a>
-	      </li>
-	      <li>
-	      	<div class="man-search-form">
-	    	<div class="input-group" style="justify-content: center;">
-			    <input type="text" class="form-control" id="searchBox" placeholder="Search" aria-label="Input group example" aria-describedby="btnGroupAddon">
-			    <div class="input-group-prepend">
-			      <button class="input-group-text" onclick="searchBtn()"><i class="material-icons" style="font-size:20px;">search</i></button>
-			    </div>
-			</div>
-	    </div>
-	      </li>
-	      <li class="nav-item">
-	        <a class="man-link" href="about">About</a>
+	        <a class="man-link man-active" href="{{url('admin')}}">Admin</a>
 	      </li>
 	    </ul>
 	  </div>
@@ -55,6 +42,7 @@
 
 @include('admin.script')
 @include('admin.validation')
+@include('admin.modal')
 
 <script type="text/javascript" src="{{asset('assets/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
