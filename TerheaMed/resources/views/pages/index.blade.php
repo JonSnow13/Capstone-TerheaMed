@@ -17,7 +17,7 @@
 				  		</div>
 				  		<div class="col-md-12">
 				  			<div class="card-title"><b id="productName">Paracetamol Biogesic</b></div>
-				  			<b>Product Details</b>
+				  			<b id="productDetailsTitle">Product Details</b>
 				  			<p id="productBrand">Brand Name: Unilab</p>
 				  			<p id="productGenericName">Generic Name: Paracetamol</p>
 				  			<p id="productFormat">Format: Caplet</p>
@@ -25,12 +25,14 @@
 				  			<b id="whatDesc">What is this medicine for?</b>
 				  			<p style="font-size: 15px;" id="productDesc">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
 
+				  			<div id="forHerbalPurpose"></div>
+
 				  			<b id="whatUsage">How much and how often should you use this medicine?</b>
 				  			<p style="font-size: 15px;">
 				  				<ul id="productUsage"></ul>
 				  			</p>
 
-				  			<b>Side effects</b>
+				  			<b>Warning</b>
 				  			<p style="font-size: 15px;" id="productSideEffects">This medicine should be taken orally every 4 hours, as needed for pain and/or as directed by doctor.</p>
 
 				  			<b id="whatsInside">What is in this medicine?</b>
@@ -72,8 +74,8 @@
 		  			</div>
 				</div>
 				<div class="card-panel-medicine">
-					<div class="card" id="searchedPanel">
-						{{-- @for($i = 0; $i < 1; $i++)
+					<div id="searchedPanel">
+						{{--@for($i = 0; $i < 1; $i++)
 						<div class="man-card" onclick="view_medicine()">
 					  		<div class="man-row">
 					  			<div class="col-md-4 man-img-med-shell">
@@ -84,6 +86,7 @@
 						  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
 						  		</div>
 					  		</div>
+					  		<div class="see-more-card">Click to see more</div>
 					  	</div>
 					  	<div class="med-footer">
 			  				<div class="row">
@@ -112,29 +115,51 @@
 					  	<div class="welcome-card">
 			  				<center>
 			  					<h2>Welcome to Terhea</h2>
-			  					<p>We find cure for you</p>
-			  					<p>and we find pharmacy / drug store and clinic / hospital for you.</p>
 			  				</center>
-			  				{{-- <div id="disqus_thread"></div>
-							<script>
+			  				
+			  				<div style="margin-top: 32px; ">
+			  					<div class="welcome-row">
+			  						<div class="medium-card" style="cursor: pointer;">
+					  					<img src="{{asset('assets/images/home_remedy_bg.jpg')}}" style="height: 100%; min-width: 100%;">
+					  					<div class="home-remedy-layer">
+					  						<h3 class="home-remedy-title">Herbals</h3>
+					  					</div>
+					  				</div>
+							  		<div class="medium-card" style="text-align: unset; color: #fff; background: #0b1448;">
+							  			<div style="margin-left: 48px; margin-top: 10px;">
+							  				<h3>Common Illness</h3>
+								  			<a href="javascript: searchBtnByCategory('Cough')">Cough</a><br>
+								  			<a href="javascript: searchBtnByCategory('Fever')">Fever</a><br>
+								  			<a href="javascript: searchBtnByCategory('Headache')">Headache</a><br>
+								  			<a href="javascript: searchBtnByCategory('Toothache')">Toothache</a><br>
+								  			<a href="javascript: searchBtnByCategory('Stomach')">Stomach ache</a>
+							  			</div>
+							  		</div>
+			  					</div>
+						  		<div class="welcome-row">
+						  			<a href="{{url('/healthtips')}}" class="medium-card" >
+							  			<img src="{{asset('assets/images/health-tips.jpg')}}" style="height: 100%; min-width: 100%;">
+					  					<div class="home-remedy-layer">
+					  						<h3 class="home-remedy-title">Health Tips</h3>
+					  					</div>
+							  		</a>
+							  		<a href="{{url('/homeremedy')}}" class="medium-card" >
+							  			<img src="{{asset('assets/images/home_remedy.jpg')}}" style="height: 100%; min-width: 100%;">
+					  					<div class="home-remedy-layer">
+					  						<h3 class="home-remedy-title">Home Remedies</h3>
+					  					</div>
+							  		</a>
+						  		</div>
+						  		<div class="welcome-row">
+						  			<div class="large-card" onclick="seeAllPharmaClinic()">
+							  			<img src="{{asset('assets/images/map.jpg')}}" style="width: 100%; min-height: 100%;">
+							  			<div class="home-remedy-layer">
+							  				<h3 style="padding-top: 10%; color: #fff">Explore Pharmacy and Hospital in your location</h3>
+							  			</div>
+							  		</div>
+						  		</div>
+			  				</div>
 
-							/**
-							*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-							*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-							
-							var disqus_config = function () {
-							this.page.url = '{{Request::url()}}';  // Replace PAGE_URL with your page's canonical URL variable
-							this.page.identifier = 'LALA'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-							};
-							
-							(function() { // DON'T EDIT BELOW THIS LINE
-							var d = document, s = d.createElement('script');
-							s.src = 'https://terheamed.disqus.com/embed.js';
-							s.setAttribute('data-timestamp', +new Date());
-							(d.head || d.body).appendChild(s);
-							})();
-							</script>
-							<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> --}}
 					  	</div>
 
 					</div>
@@ -142,9 +167,15 @@
 			</div>
 
 			<div class="col-md-6 pharma-clinic-panel">
-				<h6 style="padding: .5rem .5rem; color: #696a6d;" id="nearestPhamacy">Nearby pharmacy and clinic / hospital in your area: <small><a href="javascript: seeAllPharmaClinic()">See all</a></small></h6>
 
-				<div class="row">
+				<div style="display: flex;">
+					<p class="title-pharmacy-clinic-panel" id="yourLocationLabel">You're now at:</p>
+					<button class="material-icons location-help" data-html="true" data-trigger="focus" data-toggle="popover" data-content="Not your location?  <a href='javascript: goMapToChange()'>change</a>" data-placement="right">help_outline</button>
+				</div>
+				<p class="title-pharmacy-clinic-panel">To view the map click <a href="javascript: seeAllPharmaClinic()">here.</a></p>
+				<p class="title-pharmacy-clinic-panel" id="nearestPhamacy">Nearby pharmacy and hospital in your area: </p>
+
+				<div class="row" style="margin-top: -20px;">
 					<div class="col-md-6">
 						<h6 style="padding: .5rem .5rem; color: #696a6d;">Pharmacy</h6>
 						<div class="pharmacy-container" id="panel-1">

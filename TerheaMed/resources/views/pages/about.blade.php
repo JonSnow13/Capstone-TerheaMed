@@ -40,8 +40,11 @@
 			</p>
 			<div class="man-title-header">Contact Details</div>
 			<label>Email us: terheamed@gmail.com</label>
+			<div id="disqus_thread"></div>
 		</div>
 	</div>
 </div>
+
+@include('scripts_for_about.script')
 
 @endsection

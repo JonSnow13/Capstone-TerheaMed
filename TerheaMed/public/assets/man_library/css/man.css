@@ -29,16 +29,23 @@ a.man-link:hover{
 .man-card{
     padding: 5px;
     cursor: pointer;
-    max-height: 226px;
+    height: auto;
     overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    margin-bottom: 24px;
 }
 .man-card:hover{
     box-shadow: 1px 1px 14px -3px;
+}
+.man-card:hover .see-more-card{
+    top: 0;
 }
 .man-card-with-box-shadow{
     cursor: pointer;
     height: 220px;
     overflow: hidden;
+    display: block;
 }
 .man-card-with-box-shadow:hover{
     box-shadow: 1px 1px 14px -3px;
@@ -160,6 +167,7 @@ a.man-link:hover{
     align-items: center; 
     display: none; 
     width: 100%;
+    height: 100%;
     z-index: 999; 
     justify-content: center;
     box-sizing: border-box;
@@ -287,7 +295,7 @@ tr:hover .admin-option{
 }
 .welcome-card{
     padding: 5px;
-    height: 500px;
+    height: auto;
 }
 .clear-btn{
     position: absolute; 
@@ -434,7 +442,7 @@ tr:hover .minus-circle-btn{
 
 .man-title-header{
     padding: 5px;
-    font-size: 23px;
+    font-size: 20px;
 }
 
 .commentBtn{
@@ -506,6 +514,15 @@ tr:hover .minus-circle-btn{
     width: 80%;
     margin-top: 15px;
     background: #000;
+}
+
+.big-img-container{
+    width: 80%;
+    margin-top: 15px;
+    background: #3f51b50f; 
+    justify-content: center; 
+    display: flex;
+    height: 406.525px;
 }
 
 .tips-description{
@@ -584,6 +601,98 @@ tr:hover .minus-circle-btn{
     display: block;
 }
 
+.title-pharmacy-clinic-panel{
+    margin-top: -15px;
+    color: #696a6d;
+}
+
+.title-pharmacy-clinic-panel:first-child{
+    margin-top: 3px;
+}
+
+.medium-card{
+    width: 48%;
+    height: 190px;
+    float: left;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: .1s ease; 
+    margin: 4px;
+}
+
+.medium-card a{
+    color: #fff;
+    text-decoration: none;
+}
+
+.medium-card a:hover{
+    color: #cbcbcb;
+}
+
+.medium-card:hover{
+    box-shadow: 1px 1px 6px -3px;
+}
+
+.large-card{
+    width: 97.4%;
+    height: 190px;
+    float: left;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    margin: 4px;
+    transition: .1s ease;
+}
+
+.large-card:hover{
+    box-shadow: 1px 1px 6px -3px;
+}
+
+.home-remedy-title{
+    margin-top: 25%;
+    color: #ffffff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
+.home-remedy-layer{
+    position: absolute;
+    top: 0;
+    background: #0b14484d;
+    width: 100%;
+    height: inherit;
+}
+
+.see-more-card{
+    position: absolute; 
+    top: -40px; 
+    right: 0; 
+    padding: 10px; 
+    padding-top: 4px; 
+    background: #e9ebee;
+    transition: .1s ease;
+}
+
+.location-help{
+    cursor: pointer;
+    border: none;
+    background: none;
+    margin-top: -13px;
+    outline: none!important;
+}
+
+.welcome-row{
+    justify-content: center; 
+    display: flex;
+}
+
+.modal{
+    overflow: auto!important;
+}
 /* -----------------Unused below------------------------ */
 
 

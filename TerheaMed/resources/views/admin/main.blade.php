@@ -31,9 +31,18 @@
 	  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
 	    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 	      <li class="nav-item">
-	        <a class="man-link man-active" href="{{url('admin')}}">Admin</a>
+	      	@if(Request::is('admin'))
+		    	<a class="man-link man-active" href="{{url('admin')}}">Admin</a>
+		    @endif
 	      </li>
 	    </ul>
+	    <ul class="nav justify-content-end">
+		  <li class="nav-item">
+		  	@if(Request::is('admin'))
+		    	<a class="man-link" href="{{ url('admin-login') }}">Log out</a>
+		    @endif
+		  </li>
+		</ul>
 	  </div>
 	</nav>
 	

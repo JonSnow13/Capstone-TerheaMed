@@ -101,7 +101,7 @@
 					$('#productBrand').text('Brand Name: ' + data.brand_name);
 					$('#productFormat').text('Format: ' + format.format);
 					$('#productDesc').text(data.desc);
-					$('#productSideEffects').text(data.side_effect);
+					$('#productSideEffects').text((isNullOrWhitespace(data.side_effect))? 'none' : data.side_effect);
 					$('#productGenericName').text('Generic Name: ' + data.generic_name);
 
 					var directionOfUse = data.direction_of_use;
@@ -130,18 +130,29 @@
 				 		$('#whatsInside').text('What is in this medicine?');
 				 		$('#whatUsage').text('How much and how often should you use this medicine?');
 				 		$('#whatDesc').text('What is this medicine for?');
+				 		$('#productDetailsTitle').text('Product Details');
 				 	}
 				 	else
 				 	{
 				 		$('#whatsInside').text('What is in this herbal?');
 				 		$('#whatUsage').text('How much and how often should you use this herbal?');
-				 		$('#whatDesc').text('What is this herbal for?');
+				 		$('#whatDesc').text('About this herbal');
+				 		$('#productDetailsTitle').text('Herbal Details');
+
+				 		var herbalPuroposeHtml = '<b>What is this herbal for?</b>' +
+				 									'<p style="font-size: 15px;">' +
+				 									data.purpose +
+				 									'</p>';
+				 		$('#forHerbalPurpose').html(herbalPuroposeHtml);
+
 				 	}
 
 				 	getContentOfMedicine(data.id);
 				 	getAllSimilarToThisMedicine(data);
-				 	getReviewsForViewMed(data.id)
+				 	getReviewsForViewMed(data.id);
 
+				 	(data.brand_name == 'N/A' || isNullOrWhitespace(data.brand_name))? $('#productBrand').css('display', 'none') : $('#productBrand').css('display', 'block');
+				 	(data.generic_name == 'N/A' || isNullOrWhitespace(data.generic_name))? $('#productGenericName').css('display', 'none') : $('#productGenericName').css('display', 'block');
 
 				 	var body = $("html, body");
 					body.stop().animate({scrollTop:0}, 500, 'swing');
@@ -178,7 +189,7 @@
 		$(resultRearchData).each(function(){
 
 	 		var html = 	'<div data-id="'+ this.id +'" class="similarCard man-card-with-box-shadow col-md-6" >' +
-			 				'<a class="man-a-btn" href="viewmed?key='+ this.id +'" target="_blank">View on new tab</a>' +
+			 				'<a class="man-a-btn" href="viewmed/'+ this.id +'" target="_blank">View on new tab</a>' +
 							  	'<div class="man-img-center-without-border">' +
 							  		'<img src="'+ this.picture +'" alt="Card image cap">' +
 							  	'</div>' +
@@ -292,6 +303,8 @@
 							    '</tr>';
 					$('#contentOfMedicine').append(html);
 				}
+
+				(data.length <= 0)? $('#whatsInside').css('visibility', 'hidden') : $('#whatsInside').css('visibility', 'visible');
 
 			},
 			error: function(){
@@ -656,8 +669,17 @@
 
     function searchBtn()
     {
+    	resultRearchData = [];
     	var searchName = $('#searchBox').val();
     	if (isNullOrWhitespace(searchName)) return false;
+    	$('#searchedPanel').html('');
+    	searchFunction();
+    }
+
+    function searchBtnByCategory(search)
+    {
+    	resultRearchData = [];
+    	$('#searchBox').val(search);
     	$('#searchedPanel').html('');
     	searchFunction();
     }
@@ -682,18 +704,7 @@
 
     	if (searchIndex >= (searchNameArray.length)) 
     	{
-    		var html = '<div class="welcome-card">' +
-					  		'<p>Your search did not match any information in our database.</p>' +
-		  					'<ul>' +
-		  						'<li>Make sure that all words are spelled correctly.</li>' +
-		  						'<li>Try different keywords.</li>' +
-		  						'<li>Try more general keywords.</li>' +
-		  					'</ul>' +
-					  	'</div>';
-			if ($('.searchCard').length <= 0) 
-			{
-				$('#searchedPanel').append(html);
-			}
+			searchMedSortByRecommends(resultRearchData);
     		searchIndex = 0;
     		return;
     	}
@@ -705,64 +716,8 @@
     		data: {searchName: searchNameArray[searchIndex]},
     		success: function(data){
 
-    			resultRearchData = $.merge(resultRearchData, data);
-    			$('.card-panel-medicine').show();
-				$('.card-specific-med').hide();
-				$('.man-loader').css('display', 'none');
-    			// console.log(data);
-    			for (var i = 0; i < data.length; i++) 
-    			{
-    				
-    				var htmlAppend =  	'<div data-id="'+ data[i].id +'" class="man-card searchCard" onclick="view_medicine('+ data[i].id +')">' +
-	    									'<div class="man-row">' +
-										  		'<div class="col-md-4 man-img-med-shell">' +
-											  			'<img src="'+ data[i].picture +'" style="width: 100%;">' +
-											  	'</div>' +
-											  	'<div class="col-md-8">' +
-											  		'<div class="card-title"><b>'+ data[i].name +'</b></div>' +
-											  		'<p style="font-size: 15px;">'+ data[i].desc +'</p>' +
-											  	'</div>' +
-									  		'</div>' +
-									  	'</div>' +
-									  	'<div class="med-footer">' +
-							  				'<div class="row">' +
-												// '<button type="button" class="btn btn-light col-md-6" style="padding: 15px;">' +
-												//   	'<div class="fb-like" ' +
-												// 	    'data-href="https://terheamed.com/commentPanel'+ data[i].id +'"' +
-												// 	    'data-layout="button_count" ' +
-												// 	    'data-action="recommend" ' +
-												// 	    'data-size="large"' +
-												// 	'</div>' +
-												// '</button>' +
-							  			// 		'<button type="button" class="btn btn-light col-md-12 commentBtn" onclick="appendComment('+ "'" +'#commentPanel' + data[i].id +"'" +', '+ "'" +'terheamed.com/commentPanel' + data[i].id +"'" +')">' +
-												//   'Reviews' +
-												// '</button>' +
-												'<button type="button" class="btn btn-light col-md-12 commentBtn" onclick="loadDisqus('+ "'" +'#commentPanel' + data[i].id +"'" +', '+ "'" +'commentPanel' + data[i].id +"'" +', '+ "'" +'https://terheamed.com#!commentPanel' + data[i].id +"'" +')">' +
-												  'Reviews' +
-												'</button>' +
-							  				'</div>' +
-							  			'</div>' +
-							  			'<div class="col-md-12 comment-section">' +
-							  				'<div id="commentPanel'+ data[i].id +'"></div>' +
-			  							'</div>' +
-									  	'<hr style="margin-right: 1%; margin-left: 1%;">';
-
-					var duplicateChecker = true;
-					$( ".searchCard" ).each(function( index ) {
-
-						if ($(this).attr('data-id') == data[i].id) 
-						{
-							duplicateChecker = false;
-						}
-						
-					});
-
-					if (duplicateChecker) 
-					{
-						$('#searchedPanel').append(htmlAppend);
-					}
-					
-    			}
+    			resultRearchData = $.merge(resultRearchData, data); // pass data to be used in function searchMedSortByRecomennds
+    			
     			// FB.XFBML.parse();
 
     			searchIndex++;

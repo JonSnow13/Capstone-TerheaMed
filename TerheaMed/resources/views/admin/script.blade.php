@@ -6,8 +6,6 @@
 		$('.modal').on('shown.bs.modal', function () {
 		  $(this).find("input:enabled:visible:first").focus();
 		});
-		$('[data-toggle="tooltip"]').tooltip();
-
 		countRowFunc();
 	});
 
@@ -114,6 +112,7 @@
 		clearAllModalInputField();
 		$('#addMedicineModal .modal-title').text('Fill up data');
 		$('#addMedicineModal').modal('show');
+		setFieldForHerbalNonHerbalForm();
 	}
 
 	$('#addMedicineModal input').keypress(function(e){
@@ -139,6 +138,7 @@
 		var warning = $('#warning');
 		var format = $('#format');
 		var genName = $('#genericName');
+		var keyword = $('#keyword');
 
 		var valid = validateMedData();
 
@@ -152,7 +152,7 @@
 			if (isNullOrWhitespace(sideEffects.val())) sideEffects.val('N/A');
 			if (isNullOrWhitespace(warning.val())) warning.val('N/A'); 
 			if (isNullOrWhitespace(format.val())) format.val('N/A'); 
-			if (isNullOrWhitespace(genName.val())) genName.val('N/A'); 
+			if (isNullOrWhitespace(genName.val())) genName.val('N/A');
 			
 			disableBtn('#saveMedBtn');
 
@@ -168,7 +168,8 @@
 				warning: warning.val(),
 				format: format.val(),
 				prescription: prescription,
-				genericName: genName.val()
+				genericName: genName.val(),
+				keyword: keyword.val()
 			});
 
 			setTimeout(function(){
@@ -221,6 +222,8 @@
 		$('#addMedicineModal').modal('hide');
 		resetBtn('#saveMedBtn');
 		$('#pictureUploadInp').siblings('div').find('img').attr('src', '');
+		document.getElementById('optionPres2').checked = true;
+		document.getElementById('optionPres1').checked = false;
 	}
 
 	var displayMedicineDataTableNonHerbal, displayMedicineDataTableHerbal;
@@ -480,6 +483,7 @@
 					$('#name').val(data.name);
 					$('#brandName').val(data.brand_name);
 					$('#type').val(data.category_id);
+					$('#keyword').val(data.key_word);
 
 					var temp = data.format;
 					temp = temp.replace(/\&quot;/g, '"');
@@ -519,11 +523,13 @@
 					$('#name').val(data.name);
 					$('#brandName').val(data.brand_name);
 					$('#type').val(data.category_id);
+					$('#keyword').val(data.key_word);
 
 					var temp = data.format;
 					temp = temp.replace(/\&quot;/g, '"');
 					var obj = jQuery.parseJSON(temp);
 					$('#format').val(obj.format);
+
 
 					if (obj.prescription_required == 1) 
 					{
@@ -824,6 +830,35 @@
 
 	function openHealthTipModal()
 	{
+		tipOrStep = 'Tip ';
+		$('#category_id').val(1);
+		$('#healthModal .modal-title').text('Health Tips');
+		$('#heathTipName').siblings('label').text('Health Tip Name');
+		
+		var html = 'Tip Title &nbsp <span<i class="material-icons" data-toggle="tooltip" data-placement="right" title="E.g. (Tip for preventing diabetes)">help_outline</i></span>';
+
+		$('#tipTitle').siblings('label').html(html);
+		addTipsBtn();//add field to tip or step
+		addTipsBtn();
+		$('[data-toggle="tooltip"]').tooltip();
+
+		$('#healthModal').modal('show');
+	}
+
+	function openHomeRemedyModal()
+	{
+		tipOrStep = 'Step ';
+		$('#category_id').val(2);
+		$('#healthModal .modal-title').text('Home Remedy');
+		$('#heathTipName').siblings('label').text('Home Remedy Name');
+
+		var html = 'Step Title &nbsp <span<i class="material-icons" data-toggle="tooltip" data-placement="right" title="E.g. (step to use dragon vinegar)">help_outline</i></span>';
+
+		$('#tipTitle').siblings('label').html(html);
+		addTipsBtn();//add field to tip or step
+		addTipsBtn();
+		$('[data-toggle="tooltip"]').tooltip();
+
 		$('#healthModal').modal('show');
 	}
 
@@ -843,12 +878,14 @@
 		var descriptionHealthTip = $('#descriptionHealthTip');
 		var tipTitle = $('#tipTitle');
 		var ytEmbedCode = $('#embededCode');
+		var category_id = $('#category_id');
 
 		healthTipsArray.push({
 			health_tip_name: heathTipName.val(),
 			description: descriptionHealthTip.val(),
 			yt_embed_code: ytEmbedCode.val(),
-			tip_title: tipTitle.val()
+			tip_title: tipTitle.val(),
+			category_id: category_id.val()
 		});
 
 		$.ajax({
@@ -869,12 +906,13 @@
 
 	}
 
+	var tipOrStep = 'Tip ';
 	function addTipsBtn()
 	{
 		var tipFieldCount = $('.tip-field').length;
 
 		var tipFieldHtml = '<div class="form-group">' +
-								'<label for="description" class="tip-label">Tip '+ (tipFieldCount+1) +'</label>' +
+								'<label for="description" class="tip-label">'+ tipOrStep + (tipFieldCount+1) +'</label>' +
 								'<div class="tip-group">' +
 									'<textarea class="form-control tip-field" rows="2"></textarea>' +
 									'<div class="minus-circle-btn-textarea minus-tip-btn">' +
@@ -905,7 +943,7 @@
 	function countTIps()
 	{
 		var tipFieldCount = $('.tip-field').length;
-		$('#countTips').text(tipFieldCount + ' tips');
+		$('#countTips').text(tipFieldCount + ' ' +tipOrStep.toLowerCase() + '(s)');
 	}
 
 	$(function(){
@@ -965,7 +1003,7 @@
 		$(elmt).text('Saving...');
 	}
 
-	var displayHealthTips;
+	var displayHealthTips, displayHomeRemedy;
 	$(function(){
 		displayHealthTips = $('#healthTipsDataTable').DataTable({
 			destroy: true,
@@ -1009,7 +1047,53 @@
 				}
 			],
 			"createdRow": function( nRow, aData, iDataIndex ) {
-                            $(nRow).data('medicineData', aData);
+                            $(nRow).data('healthTipData', aData);
+                        }
+		});
+
+		displayHomeRemedy = $('#homeRemedyDataTable').DataTable({
+			destroy: true,
+			"pageLength": 10,
+			"ajax" : "{{ url('/getAllHomeRemedy') }}",
+			"columns": [
+				{
+					data: 'name',
+					render: function(data, type, row){
+						data = (data.length > 45)? data.substr(0,44) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'description',
+					render: function(data, type, row){
+						data = (data.length > 45)? data.substr(0,44) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'tip_title',
+					render: function(data, type, row){
+						data = (data.length > 45)? data.substr(0,44) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'video_embed_code',
+					render: function(data, type, row){
+						data = (data.length > 45)? data.substr(0,44) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'id',
+					render: function(data, type, row){
+						return '<button class="admin-option btn-light" onmouseover="generatePopoverAdminOptionForHomeRemedy('+ data +')" id="optionAdminHomeRemedy'+ data +'"> <i class="material-icons">more_vert</i> </button>';
+					},
+					orderable: false
+				}
+			],
+			"createdRow": function( nRow, aData, iDataIndex ) {
+                            $(nRow).data('homeRemedyData', aData);
                         }
 		});
 	});
@@ -1022,6 +1106,29 @@
   							'<div class="man-list-btn" onclick="deleteHealthTip('+ id +')"><i class="material-icons">delete</i> Delete</div>'
   						});
   		appendPopoverClick(popoverHtml);
+	}
+
+	function generatePopoverAdminOptionForHomeRemedy(id)
+	{
+		var popoverHtml = $('#optionAdminHomeRemedy'+id);
+						popoverHtml.attr({'data-toggle' : 'popover', 'data-placement': 'bottom', 'data-content' : '<div class="man-list-btn" onclick="editHomeRemedy('+ id +')" ><i class="material-icons">mode_edit</i> Edit Home Remedy</div>' +
+							'<div class="man-list-btn" onclick="editStep('+ id +')"><i class="material-icons">mode_edit</i> Edit Steps</div>' +
+  							'<div class="man-list-btn" onclick="deleteHomeRemedy('+ id +')"><i class="material-icons">delete</i> Delete</div>'
+  						});
+  		appendPopoverClick(popoverHtml);
+	}
+
+	function setFieldForHerbalNonHerbalForm()
+	{
+		if ($('#type').val() == 2) 
+		{
+			$('.specfieldForNonHerbal').css('display', 'none');
+		}
+		else
+		{
+			$('.specfieldForNonHerbal').css('display', 'block');
+		}
+		
 	}
 
 	function editHealthTips(id)

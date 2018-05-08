@@ -2,10 +2,11 @@
 <html>
 <head>
 	<title>Terhea Med</title>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+	<link rel="icon" type="image/x-icon" href="{{asset('assets/images/pharma_icon.png')}}" />
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/man_library/css/man.css')}}">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 	<script type="text/javascript" src="{{asset('assets/js/jquery-3.3.1.js')}}"></script>
@@ -63,7 +64,10 @@
 		    </div>
 	      </li>
 	      <li class="nav-item">
-	        <a class="man-link <?php if(Request::is('healthtips') || Request::is('watch/*')) echo 'man-active'; ?>" href="{{url('/healthtips')}}">Health Tips</a>
+	        <a class="man-link <?php if(Request::is('healthtips') || Request::is('viewtip/*')) echo 'man-active'; ?>" href="{{url('/healthtips')}}">Health Tips</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="man-link <?php if(Request::is('homeremedy') || Request::is('viewremedy/*')) echo 'man-active'; ?>" href="{{url('/homeremedy')}}">Home Remedy</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="man-link <?php if(Request::is('seebigmap')) echo 'man-active'; ?>" href="{{url('/seebigmap')}}" id="bigMapMenu" data-toggle="tooltip" data-placement="bottom" title="Nearby pharmacy/drug store and clinic / hospital">Nearby</a>

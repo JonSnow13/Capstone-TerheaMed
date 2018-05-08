@@ -3,12 +3,13 @@
 	<div class="modal-dialog" role="document" style="max-width: 70%;">
 	    <div class="modal-content">
 	      	<div class="modal-header">
-	        	<h5 class="modal-title" id="exampleModalLabel">Health Tips</h5>
+	        	<h5 class="modal-title" >Health Tips</h5>
 	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          		<span aria-hidden="true">&times;</span>
 	        	</button>
 	      	</div>
 	      	<div class="modal-body">
+	      		<input type="hidden" id="category_id">
 	      		<div class="row">
 	      			<div class="col-md-6">
 	      				<div class="form-group">
@@ -63,7 +64,7 @@
        	<div class="row">
        		<div class="col-md-12">
        			<div class="tips-panel" id="tipsPanel">
-		       		<div class="form-group">
+		       		{{-- <div class="form-group">
 						<label for="description" class="tip-label">Tip 1</label>
 						<div class="tip-group">
 							<textarea class="form-control tip-field" rows="2">
@@ -84,7 +85,7 @@
 			    			</div>
 						</div>
 						<i class="err-msg"></i>
-					</div>
+					</div> --}}
 		       	</div>
        		</div>
        	</div>

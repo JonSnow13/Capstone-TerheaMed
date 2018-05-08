@@ -6,6 +6,7 @@
 	<div class="form-group" style="margin-top: 20px;">
 		<button type="button" class="btn btn-light" onclick="openMedModal()">Add Medicine</button>
 		<button type="button" class="btn btn-light" onclick="openHealthTipModal()">Add Health Tips</button>
+		<button type="button" class="btn btn-light" onclick="openHomeRemedyModal()">Add Home Remedy</button>
 	</div>
 
 	<div>
@@ -21,6 +22,10 @@
 		    </li>
 		    <li class="nav-item">
 		    	<a class="nav-link" id="health-tips-tab" data-toggle="tab" href="#healthtips" role="tab" aria-controls="healthtips" aria-selected="false">Health Tips
+		    	</a>
+		    </li>
+		    <li class="nav-item">
+		    	<a class="nav-link" id="home-remedy-tab" data-toggle="tab" href="#homeremedy" role="tab" aria-controls="homeremedy" aria-selected="false">Home Remedies
 		    	</a>
 		    </li>
 		</ul>
@@ -89,6 +94,22 @@
 				 	</tbody>
 				</table>
 	    	</div>
+	    	<div class="tab-pane fade" id="homeremedy" role="tabpanel" aria-labelledby="home-remedy-tab">
+	    		<table class="table responsive table-hover" id="homeRemedyDataTable">
+				  	<thead class="thead-dark">
+				    	<tr>
+					      	{{-- <th scope="col">#</th> --}}
+					      	<th scope="col">Name</th>
+					      	<th scope="col">Description</th>
+					      	<th scope="col">Step Title</th>
+					      	<th scope="col">Video Source</th>
+					      	<th scope="col"><i class="material-icons">settings</i></th>
+				    	</tr>
+				  	</thead>
+				  	<tbody>
+				 	</tbody>
+				</table>
+	    	</div>
 	  	</div>
 
 	</div>
@@ -96,7 +117,7 @@
 </div>
 
 <!-- Modal for adding elements -->
-<div class="modal fade" id="elementsModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="elementsModal" tabindex="-1" role="dialog" aria-hidden="true" >
   <div class="modal-dialog" role="document" style="max-width: 70%;">
     <div class="modal-content">
       <div class="modal-header">
@@ -166,19 +187,19 @@
 			    	<input type="text" class="form-control" id="name" placeholder="Name">
 			    	<i class="err-msg"></i>
 			  	</div>
-			  	<div class="form-group">
+			  	<div class="form-group specfieldForNonHerbal">
 			    	<label for="brandName">Brand Name</label>
 			    	<input type="text" class="form-control" id="brandName" placeholder="Brand Name">
 			    	<i class="err-msg"></i>
 			  	</div>
-			  	<div class="form-group">
+			  	<div class="form-group specfieldForNonHerbal">
 			    	<label for="genericName">Generic Name</label>
 			    	<input type="text" class="form-control" id="genericName" placeholder="Generic Name">
 			    	<i class="err-msg"></i>
 			  	</div>
 			  	<div class="form-group">
 				    <label for="type">Type</label>
-			    	<select class="form-control" id="type">
+			    	<select class="form-control" id="type" onchange="setFieldForHerbalNonHerbalForm()">
 				      	<option value="1">Non - herbal</option>
 				      	<option value="2">Herbal</option>
 			    	</select>
@@ -192,6 +213,11 @@
 			  	<div class="form-group">
 			    	<label for="purpose">Purpose</label>
 			    	<textarea class="form-control" id="purpose" rows="3" placeholder="Purpose"></textarea>
+			    	<i class="err-msg"></i>
+			  	</div>
+			  	<div class="form-group specfieldForHerbal">
+			    	<label for="keyword">Keyword for search</label>
+			    	<textarea class="form-control" id="keyword" rows="3" placeholder="keyword"></textarea>
 			    	<i class="err-msg"></i>
 			  	</div>
 			  	<div class="form-group">
@@ -230,12 +256,12 @@
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="format" style="display: flex;">Format &nbsp
-			    		<span<i class="material-icons" data-toggle="tooltip" data-placement="right" title="E.g. Caplet | Syrup | Tablet | Inhaler | Capsule | Inhaler">help_outline</i></span>
+			    		<span><i class="material-icons" data-toggle="tooltip" data-placement="right" title="E.g. Caplet | Syrup | Tablet | Inhaler | Capsule | Inhaler">help_outline</i></span>
 			    	</label>
 			    	<input type="text" class="form-control" id="format" placeholder="Format">
 			    	<i class="err-msg"></i>
 			  	</div>
-			  	<div class="form-group">
+			  	<div class="form-group specfieldForNonHerbal">
 			    	<label for="prescription">Require Prescription?</label>
 			    	<label>
 			    		<input type="radio" name="optionA" id="optionPres1"  checked="checked" value="1"> Yes

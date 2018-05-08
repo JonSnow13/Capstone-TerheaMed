@@ -38,6 +38,7 @@ class AdminController extends Controller
         $medicineData->side_effect = $request->medInfoArray[0]['sideEffects'];
         $medicineData->format = json_encode(['format' => $request->medInfoArray[0]['format'], 'prescription_required' => $request->medInfoArray[0]['prescription']]);
         $medicineData->generic_name = $request->medInfoArray[0]['genericName'];
+        $medicineData->key_word = $request->medInfoArray[0]['keyword'];
 
     	if (isset($request->medInfoArray[0]['picture'])) 
     	{
@@ -94,6 +95,7 @@ class AdminController extends Controller
         $medicineData->side_effect = $request->medInfoArray[0]['sideEffects'];
         $medicineData->format = json_encode(['format' => $request->medInfoArray[0]['format'], 'prescription_required' => $request->medInfoArray[0]['prescription']]);
         $medicineData->generic_name = $request->medInfoArray[0]['genericName'];
+        $medicineData->key_word = $request->medInfoArray[0]['keyword'];
 
         if (isset($request->medInfoArray[0]['picture'])) 
         {
@@ -177,6 +179,7 @@ class AdminController extends Controller
         $healthTips->description = $request->healthTipsArray[0]['description'];
         $healthTips->tip_title = $request->healthTipsArray[0]['tip_title'];
         $healthTips->video_embed_code = $request->healthTipsArray[0]['yt_embed_code'];
+        $healthTips->category_id = $request->healthTipsArray[0]['category_id'];
 
         $healthTips->save();
 
@@ -198,8 +201,19 @@ class AdminController extends Controller
 
     public function getAllHealthTips(Request $request)
     {
-        $healthTips = HealthTips::all();
+        $healthTips = HealthTips::where('category_id', 1)->get();
         return Datatables::of($healthTips)->make(true);
+    }
+
+    public function getAllHomeRemedy(Request $request)
+    {
+        $healthTips = HealthTips::where('category_id', 2)->get();
+        return Datatables::of($healthTips)->make(true);
+    }
+
+    public function adminLogin(Request $request)
+    {
+        return view('admin.login');
     }
 
 }

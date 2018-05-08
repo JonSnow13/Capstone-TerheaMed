@@ -31,7 +31,7 @@ Route::get(
 );
 
 Route::get(
-	'/viewmed?key={key}',
+	'/viewmed/{id}',
 	'HomeController@viewmed'
 );
 
@@ -106,12 +106,17 @@ Route::get(
 );
 
 Route::get(
+	'/homeremedy',
+	'HomeController@homeRemedy'
+);
+
+Route::get(
 	'/healthtips',
 	'HomeController@healthTips'
 );
 
 Route::get(
-	'/viewtip/{key}',
+	'/view/{key}',
 	'HomeController@viewTip'
 );
 
@@ -133,6 +138,16 @@ Route::post(
 Route::get(
 	'/getAllHealthTips',
 	['as' => 'getAllHealthTips', 'uses' => 'AdminController@getAllHealthTips']
+);
+
+Route::get(
+	'/getAllHomeRemedy',
+	['as' => 'getAllHomeRemedy', 'uses' => 'AdminController@getAllHomeRemedy']
+);
+
+Route::get(
+	'/admin-login',
+	'AdminController@adminLogin'
 );
 // Route::group(['middleware' => 'csrf'], function()
 // {});

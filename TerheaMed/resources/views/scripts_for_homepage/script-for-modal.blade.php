@@ -280,7 +280,8 @@
 	      	{
 	      		// console.log(results);
 		      myAddress = results[0].address_components[0].short_name;
-		      console.log(myAddress);
+		     
+		      $('#yourLocationLabel').text("You're now at: " + myAddress);
 		    }
 		    else
 		    {
@@ -512,6 +513,7 @@
 		  	{
 		  		var result = response.rows[0].elements;
 		  		$(id).html('<b>Distance: </b>' + result[0].distance.text + ' away');
+		  		$(id).parent().parent().parent('.pharmacy-panel').attr('data-distance', result[0].distance.value);
 		  	}
 		  );
 	}
@@ -662,12 +664,62 @@
 	        	$('#openNOwTitle').html('<i>Open now: </i>Unknown');
 	        }
 	        try{
+	        	
+	        	var time = '';
+	        	var schedule = [];
+	        	var lastDay = '';
+	        	var lastIndex = 0;
+	        	var hourLength = (place.opening_hours.weekday_text).length;
+	        	var newSched = false;
+
 	        	$(place.opening_hours.weekday_text).each(function(index){
-		        	var html = '<tr>' +
-		        					'<td>' + this + '</td>' +
-		        				'</tr>';
-		        	$('#openHoursTable').append(html);
+
+	        		console.log(this);
+	        		var data = this.split(':');
+	        		var day = data[0];
+	        		var tempTime = this.substr((data[0].length + 1), (this.length - 1));
+	        		
+	        		if (time == tempTime) 
+	        		{
+	        			lastDay = day;
+	        			newSched = true;
+	        		}
+	        		else
+	        		{
+
+	        			try{
+	        				if (newSched) 
+		        			{
+		        				schedule[lastIndex - 1].days = schedule[lastIndex - 1].days + ' to ' + lastDay;
+		        			}
+	        			}catch(err){}
+
+	        			schedule.push({
+	        				days: day,
+	        				time: tempTime
+	        			});
+
+	        			lastIndex++;
+
+	        			time = tempTime;
+	        			newSched = false;
+	        			
+	        		}
+
+	        		if (index >= (hourLength - 1)) 
+	        		{
+	        			console.log('lastIndex : ' + lastIndex);
+	        			console.log(schedule);
+	        			if (newSched) 
+	        			{
+	        				schedule[lastIndex - 1].days = schedule[lastIndex - 1].days + ' to ' + lastDay;
+	        			}
+	        			
+	        			appendHtmlTimeSched(schedule);
+	        		}
+
 		        });
+
 	        }catch(err){
 	        	$('#openHoursTable').append('<tr> <td>No open hours available</td> </tr>');
 	        }
@@ -675,6 +727,17 @@
 	        	if (place.rating == undefined) return;
 	        	$('#rateTitle').html('<i>Rating: ' + place.rating + '</i>');
 	        }catch(err){}
+    	});
+    }
+
+    function appendHtmlTimeSched(data)
+    {
+    	$(data).each(function(){
+    		var html = '<tr>' +
+	    					'<td>' + this.days + '</td>' +
+	    					'<td>' + this.time + '</td>' +
+	    				'</tr>';
+	    	$('#openHoursTable').append(html);
     	});
     }
 	// renderMap();

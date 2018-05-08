@@ -6,10 +6,13 @@
 	<div class="row">
 		<div class="col-md-2"></div>
 		<div class="col-md-10 health-tips-panel" style="background: #fff">
-			<div class="man-title-header">About 10 health tips</div>
+			<div class="man-title-header">About 
+				{{ count($healthTips) }} 
+				{{ (Request::is('homeremedy'))? ' home remedies' : ' health tips' }}
+			</div>
 
 			@for ($i = 0; $i < count($healthTips); $i++)
-				<a href="viewtip/{{ $healthTips[$i]->id }}" class="health-tips-card">
+				<a href="view/{{ $healthTips[$i]->id }}" class="health-tips-card">
 					<div class="video-container">
 						<iframe id="player" style="width: 100%; height: 100%;" src="{{ $healthTips[$i]->video_embed_code }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 						<div class="video-cup"></div>
@@ -23,7 +26,5 @@
 		</div>
 	</div>
 </div>
-
-@include('scripts_for_health_tips.script-for-retrieving-data')
 
 @endsection
