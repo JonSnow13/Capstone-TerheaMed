@@ -2,6 +2,14 @@
 
 @section('content')
 
+<style type="text/css">
+	
+	.dataTables_wrapper{
+		margin-top: 12px;
+	}	
+
+</style>
+
 <div class="man-content">
 	<div class="form-group" style="margin-top: 20px;">
 		<button type="button" class="btn btn-light" onclick="openMedModal()">Add Medicine</button>
@@ -11,28 +19,31 @@
 
 	<div>
 
+		<?php if (!isset($_GET['tab'])) {
+			$_GET['tab'] = 'nonherbal';
+		} ?>
 	  	<!-- Nav tabs -->
 	  	<ul class="nav nav-tabs" id="myTab" role="tablist">
 		  	<li class="nav-item">
-		    	<a class="nav-link active" id="non-herbal-tab" data-toggle="tab" href="#nonHerbal" role="tab" aria-controls="non-herbal" aria-selected="true">Non - Herbal</a>
+		    	<a class="nav-link {{ ($_GET['tab'] == 'nonherbal')? 'active' : '' }}" onclick="setUrlForTab('nonherbal')" id="non-herbal-tab" data-toggle="tab" href="#nonHerbal" role="tab" aria-controls="non-herbal" aria-selected="true">Non - Herbal</a>
 		  	</li>
 		  	<li class="nav-item">
-		    	<a class="nav-link" id="herbal-tab" data-toggle="tab" href="#herbal" role="tab" aria-controls="herbal" aria-selected="false">Herbal
+		    	<a class="nav-link {{ ($_GET['tab'] == 'herbal')? 'active' : '' }}" onclick="setUrlForTab('herbal')" id="herbal-tab" data-toggle="tab" href="#herbal" role="tab" aria-controls="herbal" aria-selected="false">Herbal
 		    	</a>
 		    </li>
 		    <li class="nav-item">
-		    	<a class="nav-link" id="health-tips-tab" data-toggle="tab" href="#healthtips" role="tab" aria-controls="healthtips" aria-selected="false">Health Tips
+		    	<a class="nav-link {{ ($_GET['tab'] == 'healthtips')? 'active' : '' }}" onclick="setUrlForTab('healthtips')" id="health-tips-tab" data-toggle="tab" href="#healthtips" role="tab" aria-controls="healthtips" aria-selected="false">Health Tips
 		    	</a>
 		    </li>
 		    <li class="nav-item">
-		    	<a class="nav-link" id="home-remedy-tab" data-toggle="tab" href="#homeremedy" role="tab" aria-controls="homeremedy" aria-selected="false">Home Remedies
+		    	<a class="nav-link {{ ($_GET['tab'] == 'homeremedy')? 'active' : '' }}" onclick="setUrlForTab('homeremedy')" id="home-remedy-tab" data-toggle="tab" href="#homeremedy" role="tab" aria-controls="homeremedy" aria-selected="false">Home Remedies
 		    	</a>
 		    </li>
 		</ul>
 
 	  	<!-- Tab panes -->
 	  	<div class="tab-content" id="myTabContent">
-	    	<div role="tabpanel" class="tab-pane fade show active" id="nonHerbal" aria-labelledby="non-herbal-tab">
+	    	<div role="tabpanel" class="tab-pane fade {{ ($_GET['tab'] == 'nonherbal')? 'show active' : '' }}" id="nonHerbal" aria-labelledby="non-herbal-tab">
 	    		<table class="table responsive table-hover" id="medicineDataTableNonHerbal">
 				  	<thead class="thead-dark">
 				    	<tr>
@@ -55,7 +66,7 @@
 				 	</tbody>
 				</table>
 	    	</div>
-	    	<div class="tab-pane fade" id="herbal" role="tabpanel" aria-labelledby="herbal-tab">
+	    	<div class="tab-pane fade {{ ($_GET['tab'] == 'herbal')? 'show active' : '' }}" id="herbal" role="tabpanel" aria-labelledby="herbal-tab">
 	    		<table class="table responsive table-hover" id="medicineDataTableHerbal">
 				  	<thead class="thead-dark">
 				    	<tr>
@@ -78,7 +89,7 @@
 				 	</tbody>
 				</table>
 	    	</div>
-	    	<div class="tab-pane fade" id="healthtips" role="tabpanel" aria-labelledby="health-tips-tab">
+	    	<div class="tab-pane fade {{ ($_GET['tab'] == 'healthtips')? 'show active' : '' }}" id="healthtips" role="tabpanel" aria-labelledby="health-tips-tab">
 	    		<table class="table responsive table-hover" id="healthTipsDataTable">
 				  	<thead class="thead-dark">
 				    	<tr>
@@ -94,7 +105,7 @@
 				 	</tbody>
 				</table>
 	    	</div>
-	    	<div class="tab-pane fade" id="homeremedy" role="tabpanel" aria-labelledby="home-remedy-tab">
+	    	<div class="tab-pane fade {{ ($_GET['tab'] == 'homeremedy')? 'show active' : '' }}" id="homeremedy" role="tabpanel" aria-labelledby="home-remedy-tab">
 	    		<table class="table responsive table-hover" id="homeRemedyDataTable">
 				  	<thead class="thead-dark">
 				    	<tr>
@@ -182,6 +193,15 @@
 	  	<div class="row">
 	  		<input type="hidden" id="medEditId">
 	  		<div class="col-md-6">
+			  	<div class="form-group">
+				    <label for="type">Type</label>
+			    	<select class="form-control" id="type" onchange="setFieldForHerbalNonHerbalForm()">
+				      	<option value="1">Non - herbal</option>
+				      	<option value="2">Herbal</option>
+				      	<option value="3">Vitamins & Supplements</option>
+			    	</select>
+			    	<i class="err-msg"></i>
+			  	</div>
 		  		<div class="form-group">
 			    	<label for="name">Name</label>
 			    	<input type="text" class="form-control" id="name" placeholder="Name">
@@ -198,24 +218,16 @@
 			    	<i class="err-msg"></i>
 			  	</div>
 			  	<div class="form-group">
-				    <label for="type">Type</label>
-			    	<select class="form-control" id="type" onchange="setFieldForHerbalNonHerbalForm()">
-				      	<option value="1">Non - herbal</option>
-				      	<option value="2">Herbal</option>
-			    	</select>
-			    	<i class="err-msg"></i>
-			  	</div>
-			  	<div class="form-group">
 			    	<label for="desc">Description</label>
 			    	<textarea class="form-control" id="desc" rows="3" placeholder="Description"></textarea>
 			    	<i class="err-msg"></i>
 			  	</div>
-			  	<div class="form-group">
+			  	<div class="form-group specfieldForHerbal">
 			    	<label for="purpose">Purpose</label>
 			    	<textarea class="form-control" id="purpose" rows="3" placeholder="Purpose"></textarea>
 			    	<i class="err-msg"></i>
 			  	</div>
-			  	<div class="form-group specfieldForHerbal">
+			  	<div class="form-group">
 			    	<label for="keyword">Keyword for search</label>
 			    	<textarea class="form-control" id="keyword" rows="3" placeholder="keyword"></textarea>
 			    	<i class="err-msg"></i>

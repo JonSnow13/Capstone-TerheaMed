@@ -146,8 +146,14 @@ Route::get(
 );
 
 Route::get(
+	'/json_delete_healthtips_homeremedy',
+	['as' => 'json_delete_healthtips_homeremedy', 'uses' => 'AdminController@deleteHealthTipOrHomeRemedy']
+);
+
+Route::get(
 	'/admin-login',
 	'AdminController@adminLogin'
 );
+
 // Route::group(['middleware' => 'csrf'], function()
 // {});

@@ -75,7 +75,7 @@
 				</div>
 				<div class="card-panel-medicine">
 					<div id="searchedPanel">
-						{{--@for($i = 0; $i < 1; $i++)
+						{{-- @for($i = 0; $i < 1; $i++)
 						<div class="man-card" onclick="view_medicine()">
 					  		<div class="man-row">
 					  			<div class="col-md-4 man-img-med-shell">
@@ -86,7 +86,12 @@
 						  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
 						  		</div>
 					  		</div>
-					  		<div class="see-more-card">Click to see more</div>
+					  		<div class="see-more-card">
+					  			<div class="see-more-btnn">Click to see more</div>
+					  			<div class="more-btnn">
+					  				<i class="material-icons">more_vert</i>
+					  			</div>
+					  		</div>
 					  	</div>
 					  	<div class="med-footer">
 			  				<div class="row">
@@ -111,7 +116,7 @@
 							</ul>
 			  			</div>
 					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	@endfor --}}
+					  	@endfor  --}}
 					  	<div class="welcome-card">
 			  				<center>
 			  					<h2>Welcome to Terhea</h2>
@@ -119,20 +124,33 @@
 			  				
 			  				<div style="margin-top: 32px; ">
 			  					<div class="welcome-row">
-			  						<div class="medium-card" style="cursor: pointer;">
+			  						<div class="medium-card" onclick="searchBtnByCategory('herbal')" style="cursor: pointer;">
 					  					<img src="{{asset('assets/images/home_remedy_bg.jpg')}}" style="height: 100%; min-width: 100%;">
 					  					<div class="home-remedy-layer">
 					  						<h3 class="home-remedy-title">Herbals</h3>
 					  					</div>
 					  				</div>
-							  		<div class="medium-card" style="text-align: unset; color: #fff; background: #0b1448;">
-							  			<div style="margin-left: 48px; margin-top: 10px;">
-							  				<h3>Common Illness</h3>
-								  			<a href="javascript: searchBtnByCategory('Cough')">Cough</a><br>
-								  			<a href="javascript: searchBtnByCategory('Fever')">Fever</a><br>
-								  			<a href="javascript: searchBtnByCategory('Headache')">Headache</a><br>
-								  			<a href="javascript: searchBtnByCategory('Toothache')">Toothache</a><br>
-								  			<a href="javascript: searchBtnByCategory('Stomach')">Stomach ache</a>
+							  		<div class="medium-card" style="text-align: unset; color: #fff; background: #0b1448; max-height: 190px; overflow: auto;">
+							  			<div style="display: block; margin-top: 8px;">
+							  				<div style="width: 50%; float: left;">
+							  					<div style="padding-left: 16px; ">
+							  						<b style="font-size: 16px;">Vitamins & Supplements</b>
+										  			<a href="javascript: searchBtnByCategory('enervon vitamin')">Enervon</a><br>
+										  			<a href="javascript: searchBtnByCategory('enervon activ vitamin')">Enervon Activ</a><br>
+										  			<a href="javascript: searchBtnByCategory('Myra-e vitamin')">Myra-e 400</a><br>
+										  			<a href="javascript: searchBtnByCategory('Vigor Ace supplement')">Vigor Ace</a>
+							  					</div>
+								  			</div>
+								  			<div style="width: 50%; float: left;">
+								  				<div style="padding-left: 16px; ">
+									  				<b style="font-size: 16px;">Common symtomps</b>
+										  			<a href="javascript: searchBtnByCategory('Cough')">Cough</a><br>
+										  			<a href="javascript: searchBtnByCategory('Fever')">Fever</a><br>
+										  			<a href="javascript: searchBtnByCategory('Headache')">Headache</a><br>
+										  			<a href="javascript: searchBtnByCategory('Toothache')">Toothache</a><br>
+										  			<a href="javascript: searchBtnByCategory('Stomach')">Stomach ache</a>
+										  		</div>
+								  			</div>
 							  			</div>
 							  		</div>
 			  					</div>

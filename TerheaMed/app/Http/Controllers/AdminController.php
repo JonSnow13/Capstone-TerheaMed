@@ -211,6 +211,11 @@ class AdminController extends Controller
         return Datatables::of($healthTips)->make(true);
     }
 
+    public function deleteHealthTipOrHomeRemedy(Request $request)
+    {
+        HealthTips::find($request->id)->delete();
+    }
+
     public function adminLogin(Request $request)
     {
         return view('admin.login');

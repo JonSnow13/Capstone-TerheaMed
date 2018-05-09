@@ -3,6 +3,7 @@
 	var medIdForElement;
 	
 	$(function(){
+		$('[data-toggle="tooltip"]').tooltip();
 		$('.modal').on('shown.bs.modal', function () {
 		  $(this).find("input:enabled:visible:first").focus();
 		});
@@ -191,6 +192,11 @@
 							$('#updateElementsBtn').hide();
 							$('#elementsModal .modal-title').text('Elements - ' + data.name);
 							$('#elementsModal').modal('show');
+						},
+						error: function(err)
+						{
+							alert('An error occured. Please try again or reload the page.');
+							resetBtn('#saveMedBtn');
 						}
 					});
 				}
@@ -205,6 +211,11 @@
 							clearAllModalInputField();
 							displayMedicineDataTableNonHerbal.ajax.reload();
 							displayMedicineDataTableHerbal.ajax.reload();
+						},
+						error: function(err)
+						{
+							alert('An error occured. Please try again or reload the page.');
+							resetBtn('#saveMedBtn');
 						}
 					});
 				}
@@ -509,6 +520,7 @@
 					$('#warning').val(data.warningMsg);
 					$('#genericName').val(data.generic_name);
 					loader($('#editLoader'), 'hide');
+					setFieldForHerbalNonHerbalForm();
 				},1000);
 			}
 		});
@@ -549,6 +561,7 @@
 					$('#sideEffect').val(data.side_effect);
 					$('#warning').val(data.warningMsg);
 					loader($('#editLoader'), 'hide');
+					setFieldForHerbalNonHerbalForm();
 				},1000);
 			}
 		});
@@ -828,37 +841,49 @@
 		});
 	}
 
-	function openHealthTipModal()
+	function setHealthTipUI()
 	{
 		tipOrStep = 'Tip ';
 		$('#category_id').val(1);
 		$('#healthModal .modal-title').text('Health Tips');
 		$('#heathTipName').siblings('label').text('Health Tip Name');
+		$('#tipsModal .modal-title').text('Tips');
 		
 		var html = 'Tip Title &nbsp <span<i class="material-icons" data-toggle="tooltip" data-placement="right" title="E.g. (Tip for preventing diabetes)">help_outline</i></span>';
 
 		$('#tipTitle').siblings('label').html(html);
-		addTipsBtn();//add field to tip or step
-		addTipsBtn();
 		$('[data-toggle="tooltip"]').tooltip();
+		clearField('#healthModal', '#saveHealthHomeBtn');
 
+	}
+
+	function openHealthTipModal()
+	{
+		setHealthTipUI();
+		loader($('#editHealthTipLoader'), 'hide');
 		$('#healthModal').modal('show');
 	}
 
-	function openHomeRemedyModal()
+	function setHomeRemedyUI()
 	{
 		tipOrStep = 'Step ';
 		$('#category_id').val(2);
 		$('#healthModal .modal-title').text('Home Remedy');
 		$('#heathTipName').siblings('label').text('Home Remedy Name');
+		$('#tipsModal .modal-title').text('Steps');
 
-		var html = 'Step Title &nbsp <span<i class="material-icons" data-toggle="tooltip" data-placement="right" title="E.g. (step to use dragon vinegar)">help_outline</i></span>';
+		var html = 'Step Title &nbsp <span<i class="material-icons" data-toggle="tooltip" data-placement="right" title="E.g. (step to use vinegar)">help_outline</i></span>';
 
 		$('#tipTitle').siblings('label').html(html);
-		addTipsBtn();//add field to tip or step
-		addTipsBtn();
 		$('[data-toggle="tooltip"]').tooltip();
+		clearField('#healthModal', '#saveHealthHomeBtn');
 
+	}
+
+	function openHomeRemedyModal()
+	{
+		setHomeRemedyUI();
+		loader($('#editHealthTipLoader'), 'hide');
 		$('#healthModal').modal('show');
 	}
 
@@ -898,6 +923,20 @@
 				$('#healthModal').modal('hide');
 				$('#tipsModal').modal('show');
 				clearField('#healthModal', elmt);
+				displayHealthTips.ajax.reload();
+				displayHomeRemedy.ajax.reload();
+
+				
+				addTipsBtn();//add field to tip or step
+				addTipsBtn();
+				if (category_id.val() == 1) 
+				{
+					setHealthTipUI();
+				}
+				else
+				{
+					setHomeRemedyUI();
+				}
 			},
 			error: function(){
 				resetBtn(elmt);
@@ -978,7 +1017,6 @@
 			data: {tipArray: tipArray, healthTipsID: healthTipsID},
 			success: function(){
 				$('#tipsModal').modal('hide');
-				displayHealthTips.ajax.reload();
 				resetBtn(elmt);
 				$('#tipsPanel').html('');
 				addTipsBtn();
@@ -1041,7 +1079,7 @@
 				{
 					data: 'id',
 					render: function(data, type, row){
-						return '<button class="admin-option btn-light" onmouseover="generatePopoverAdminOptionForHealthTip('+ data +')" id="optionAdminHealthTip'+ data +'"> <i class="material-icons">more_vert</i> </button>';
+						return '<button class="admin-option btn-light" onmouseover="generatePopoverAdminOptionForHealthTip('+ data +')" id="optionAdminHealthTips'+ data +'"> <i class="material-icons">more_vert</i> </button>';
 					},
 					orderable: false
 				}
@@ -1100,10 +1138,10 @@
 
 	function generatePopoverAdminOptionForHealthTip(id)
 	{
-		var popoverHtml = $('#optionAdminHealthTip'+id);
+		var popoverHtml = $('#optionAdminHealthTips'+id);
 						popoverHtml.attr({'data-toggle' : 'popover', 'data-placement': 'bottom', 'data-content' : '<div class="man-list-btn" onclick="editHealthTips('+ id +')" ><i class="material-icons">mode_edit</i> Edit Health Tip</div>' +
 							'<div class="man-list-btn" onclick="editTips('+ id +')"><i class="material-icons">mode_edit</i> Edit Tips</div>' +
-  							'<div class="man-list-btn" onclick="deleteHealthTip('+ id +')"><i class="material-icons">delete</i> Delete</div>'
+  							'<div class="man-list-btn" onclick="deleteHomeRemedyOrHealthTips('+ id +')"><i class="material-icons">delete</i> Delete</div>'
   						});
   		appendPopoverClick(popoverHtml);
 	}
@@ -1112,8 +1150,8 @@
 	{
 		var popoverHtml = $('#optionAdminHomeRemedy'+id);
 						popoverHtml.attr({'data-toggle' : 'popover', 'data-placement': 'bottom', 'data-content' : '<div class="man-list-btn" onclick="editHomeRemedy('+ id +')" ><i class="material-icons">mode_edit</i> Edit Home Remedy</div>' +
-							'<div class="man-list-btn" onclick="editStep('+ id +')"><i class="material-icons">mode_edit</i> Edit Steps</div>' +
-  							'<div class="man-list-btn" onclick="deleteHomeRemedy('+ id +')"><i class="material-icons">delete</i> Delete</div>'
+							'<div class="man-list-btn" onclick="editSteps('+ id +')"><i class="material-icons">mode_edit</i> Edit Steps</div>' +
+  							'<div class="man-list-btn" onclick="deleteHomeRemedyOrHealthTips('+ id +')"><i class="material-icons">delete</i> Delete</div>'
   						});
   		appendPopoverClick(popoverHtml);
 	}
@@ -1123,23 +1161,103 @@
 		if ($('#type').val() == 2) 
 		{
 			$('.specfieldForNonHerbal').css('display', 'none');
+			$('.specfieldForHerbal').css('display', 'block');
 		}
 		else
 		{
+			$('.specfieldForHerbal').css('display', 'none');
 			$('.specfieldForNonHerbal').css('display', 'block');
 		}
 		
 	}
 
+	function setUrlForTab(tab)
+	{
+		window.history.pushState('admin', 'tab', 'admin?tab=' + tab);
+	}
+
+	function editHomeRemedy(id)
+	{
+		setHomeRemedyUI();
+		loader($('#editHealthTipLoader'), 'show');
+		$('#healthModal').modal('show');
+		var tempHealthRemedy = $('#homeRemedyDataTable > tbody').get(0).rows;
+		$(tempHealthRemedy).each(function(index){
+			var data = $(this).data('homeRemedyData');
+			if (data.id == id) 
+			{
+				setTimeout(function(){
+					$('#heathTipName').val(data.name);
+					$('#descriptionHealthTip').val(data.description);
+					$('#embededCode').val(data.video_embed_code);
+					$('#tipTitle').val(data.tip_title);
+					loader($('#editHealthTipLoader'), 'hide');
+				}, 500);
+			}
+		});
+		
+	}
+
 	function editHealthTips(id)
 	{
+		setHealthTipUI();
+		loader($('#editHealthTipLoader'), 'show');
 		$('#healthModal').modal('show');
-		console.log(id);
+		var tempHealthTips = $('#healthTipsDataTable > tbody').get(0).rows;
+		$(tempHealthTips).each(function(index){
+			var data = $(this).data('healthTipData');
+			if (data.id == id) 
+			{
+				setTimeout(function(){
+					$('#heathTipName').val(data.name);
+					$('#descriptionHealthTip').val(data.description);
+					$('#embededCode').val(data.video_embed_code);
+					$('#tipTitle').val(data.tip_title);
+					loader($('#editHealthTipLoader'), 'hide');
+				}, 500);
+			}
+		});
+		
+	}
+
+	function editSteps(id)
+	{
+		$('#tipsModal .modal-title').text('Edit Steps');
+		$('#tipsModal').modal('show');
 	}
 
 	function editTips(id)
 	{
+		$('#tipsModal .modal-title').text('Edit Tips');
 		$('#tipsModal').modal('show');
+	}
+
+	function deleteHomeRemedyOrHealthTips(id)
+	{
+		swal({
+		  title: "Are you sure?",
+		  text: "This will be deleted permanently!",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonClass: "btn-danger",
+		  confirmButtonText: "Yes, delete it!",
+		  closeOnConfirm: true,
+		  showLoaderOnConfirm: true
+		},function(){
+			$.ajax({
+				url: '{{ route("json_delete_healthtips_homeremedy") }}',
+				type: 'GET',
+				data: {id: id},
+				success: function(){
+					swal("Deleted!", "", "success");
+					displayHealthTips.ajax.reload();
+					displayHomeRemedy.ajax.reload();
+				},
+				error: function(){
+					swal("Whoops!", "There's an error. Please try again", "error");
+				}
+			});
+		});
 	}
 
 	function clearField(modal, elmt)

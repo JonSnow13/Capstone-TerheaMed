@@ -280,7 +280,12 @@
 									  		'<p style="font-size: 15px;">'+ description +'</p>' +
 									  	'</div>' +
 							  		'</div>' +
-							  		'<div class="see-more-card" onclick="view_medicine('+ data.id +')">Click here to see more</div>'+
+							  		'<div class="see-more-card">' +
+							  			'<div class="see-more-btnn" onclick="view_medicine('+ data.id +')">Click me to see more</div>' +
+							  			'<div class="more-btnn" id="morevertBtn'+ data.id +'">' +
+							  				'<i class="material-icons">more_vert</i>' +
+							  			'</div>' +
+							  		'</div>' +
 							  		'<div class="med-footer">' +
 						  				'<div class="row">' +
 											'<button type="button" class="btn btn-light col-md-12 commentBtn" onclick="loadDisqus('+ "'" +'#commentPanel' + data.id +"'" +', '+ "'" +'commentPanel' + data.id +"'" +', '+ "'" +'https://terheamed.com#!commentPanel' + data.id +"'" +')">' +
@@ -306,6 +311,11 @@
 			if (duplicateChecker) 
 			{
 				$('#searchedPanel').append(htmlAppend);
+
+				var popoverElmt = $('#morevertBtn' + data.id);
+		      	popoverElmt.attr({'data-toggle' : 'popover', 'data-placement': 'bottom', 'data-content' : '<a href="{{ url('viewmed') }}/'+ data.id +'" style="text-decoration: none;" target="_blank" class="man-list-btn" onclick="" ><i class="material-icons">tab</i>&nbsp open in new tab</a>'
+		  						});
+		      	appendPopover(popoverElmt);
 			}
 	}
 

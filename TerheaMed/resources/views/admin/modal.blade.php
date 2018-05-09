@@ -10,6 +10,7 @@
 	      	</div>
 	      	<div class="modal-body">
 	      		<input type="hidden" id="category_id">
+	      		<div id="editHealthTipLoader" style="height: 100%;"></div>
 	      		<div class="row">
 	      			<div class="col-md-6">
 	      				<div class="form-group">
@@ -42,7 +43,7 @@
 	      	</div>
 	      	<div class="modal-footer">
 	        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        	<button type="button" class="btn btn-primary" onclick="saveHealthTipsBtn(this)">Save</button>
+	        	<button type="button" id="saveHealthHomeBtn" class="btn btn-primary" onclick="saveHealthTipsBtn(this)">Save</button>
 	        	{{-- <button type="button" id="updateElementsBtn" class="btn btn-primary" onclick="">Update</button> --}}
 	      	</div>
 	    </div>

@@ -30,7 +30,7 @@ class HomeController extends Controller
 
     public function searchJson(Request $request)
     {
-        $searchData = Medicines::where('name', 'LIKE', '%' . $request->searchName . '%')->orWhere('purpose', 'LIKE', '%' . $request->searchName . '%')->orWhere('generic_name', 'LIKE', '%' . $request->searchName . '%')->get();
+        $searchData = Medicines::where('name', 'LIKE', '%' . $request->searchName . '%')->orWhere('purpose', 'LIKE', '%' . $request->searchName . '%')->orWhere('generic_name', 'LIKE', '%' . $request->searchName . '%')->orWhere('key_word', 'LIKE', '%' . $request->searchName . '%')->get();
         return $searchData;
     }
 

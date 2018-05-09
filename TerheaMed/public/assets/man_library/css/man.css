@@ -670,11 +670,31 @@ tr:hover .minus-circle-btn{
 .see-more-card{
     position: absolute; 
     top: -40px; 
-    right: 0; 
-    padding: 10px; 
-    padding-top: 4px; 
+    right: 0;
     background: #e9ebee;
     transition: .1s ease;
+    display: flex;
+    width: 190px;
+}
+
+.see-more-btnn{
+    width: 85%;
+    padding: 5px;
+    padding-top: 4px;
+    padding-left: 8px;
+}
+
+.see-more-btnn:hover{
+    background: #e4e4e4;
+}
+
+.more-btnn{
+    width: 15%;
+    padding-top: 4px;
+}
+
+.more-btnn:hover{
+    background: #e4e4e4;
 }
 
 .location-help{

@@ -189,7 +189,7 @@
 		$(resultRearchData).each(function(){
 
 	 		var html = 	'<div data-id="'+ this.id +'" class="similarCard man-card-with-box-shadow col-md-6" >' +
-			 				'<a class="man-a-btn" href="viewmed/'+ this.id +'" target="_blank">View on new tab</a>' +
+			 				'<a class="man-a-btn" href="viewmed/'+ this.id +'" target="_blank">Open in new tab</a>' +
 							  	'<div class="man-img-center-without-border">' +
 							  		'<img src="'+ this.picture +'" alt="Card image cap">' +
 							  	'</div>' +
@@ -685,12 +685,9 @@
     }
 
     var resultRearchData = [];
-    var searchIndex = 0;
     function searchFunction()
     {
     	var searchName = $('#searchBox').val();
-    	var searchNameArray = searchName.split(' ');
-
     	if (isNullOrWhitespace(searchName)) return false;
     	
     	if (!isNullOrWhitespace(searchName)) 
@@ -701,6 +698,32 @@
     			window.history.pushState('index', 'Search', 'search=' + searchName);
     		@endif
     	}
+    	
+    	$.ajax({
+    		url: '{{ route("json_search") }}',
+    		type: 'GET',
+    		data: {searchName: searchName},
+    		success: function(data){
+
+    			resultRearchData = $.merge(resultRearchData, data); // pass data to be used in function searchMedSortByRecomennds
+    			
+    			// FB.XFBML.parse();
+    			searchFunctionStringDivided();
+
+    			// FB.logout(function(response) {
+       //              // this part just clears the $_SESSION var
+       //              // replace with your own code
+       //          });
+    		}
+
+    	});
+    }
+
+    var searchIndex = 0;
+    function searchFunctionStringDivided()
+    {
+    	var searchName = $('#searchBox').val();
+    	var searchNameArray = searchName.split(' ');
 
     	if (searchIndex >= (searchNameArray.length)) 
     	{
