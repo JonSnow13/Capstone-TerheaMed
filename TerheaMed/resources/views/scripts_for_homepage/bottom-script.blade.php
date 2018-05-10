@@ -1,4 +1,15 @@
 <script type="text/javascript">
+
+	$(function(){
+
+	    	var searchName = $('#searchBox').val();
+	    	if (!isNullOrWhitespace(searchName)) 
+	    	{
+	    		searchBtn();
+	    	}
+	});
+		
+
 	function appearanceManager() 
 	{
 		@if (Request::is('seebigmap'))

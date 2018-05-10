@@ -669,6 +669,7 @@
 
     function searchBtn()
     {
+		hideBigMap();
     	resultRearchData = [];
     	var searchName = $('#searchBox').val();
     	if (isNullOrWhitespace(searchName)) return false;
@@ -684,7 +685,6 @@
     	searchFunction();
     }
 
-    var resultRearchData = [];
     function searchFunction()
     {
     	var searchName = $('#searchBox').val();
@@ -698,7 +698,6 @@
     			window.history.pushState('index', 'Search', 'search=' + searchName);
     		@endif
     	}
-    	
     	$.ajax({
     		url: '{{ route("json_search") }}',
     		type: 'GET',

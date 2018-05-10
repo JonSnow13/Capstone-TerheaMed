@@ -5,6 +5,7 @@
 	var	mapHeight2 = windowHeight * .91;
 	var windowWidth = $(window).width();
 	var streetViewWidth = windowWidth * .30; 
+	var resultRearchData = [];
 	
 	$(function(){
 
@@ -12,7 +13,6 @@
 
 		@if ($searchName)
 			$('#searchBox').val('{{ $searchName }}');
-			console.log('{{ $searchName }}');
 		@endif
 
 		$('[data-toggle="tooltip"]').tooltip();

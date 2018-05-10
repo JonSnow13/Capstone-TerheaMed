@@ -75,48 +75,42 @@
 				</div>
 				<div class="card-panel-medicine">
 					<div id="searchedPanel">
-						{{-- @for($i = 0; $i < 1; $i++)
-						<div class="man-card" onclick="view_medicine()">
-					  		<div class="man-row">
-					  			<div class="col-md-4 man-img-med-shell">
-						  			<img src="{{asset('assets/images/biogesic.jpg')}}" style="width: 100%;">
+						{{-- @if(isset($searchData))
+
+						@foreach ($searchData as $val)
+
+							<div data-id="{{ $val->id }}" class="man-card searchCard">
+								<div class="man-row">
+							  		<div class="col-md-4 man-img-med-shell">
+								  			<img src="{{ $val->picture }}" style="width: 100%;">
+								  	</div>
+								  	<div class="col-md-8">
+								  		<div class="card-title"><b>{{ $val->name }}</b></div>
+								  		<p style="font-size: 15px;">{{ $val->desc }}</p>
+								  	</div>
 						  		</div>
-						  		<div class="col-md-8">
-						  			<div class="card-title"><b>Paracetamol Biogesic</b></div>
-						  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
+						  		<div class="see-more-card">
+						  			<div class="see-more-btnn" onclick="view_medicine({{ $val->id }})">Click me to see more</div>
+						  			<div class="more-btnn" id="morevertBtn{{ $val->id }}">
+						  				<i class="material-icons">more_vert</i>
+						  			</div>
 						  		</div>
-					  		</div>
-					  		<div class="see-more-card">
-					  			<div class="see-more-btnn">Click to see more</div>
-					  			<div class="more-btnn">
-					  				<i class="material-icons">more_vert</i>
+						  		<div class="med-footer">
+					  				<div class="row">
+										<button type="button" class="btn btn-light col-md-12 commentBtn" onclick="loadDisqus('#commentPanel{{ $val->id }}', 'commentPanel{{ $val->id }}', 'https://terheamed.com#!commentPanel{{ $val->id }}' )">
+										  Reviews
+										</button>
+					  				</div>
 					  			</div>
-					  		</div>
-					  	</div>
-					  	<div class="med-footer">
-			  				<div class="row">
-								<button type="button" class="btn btn-light col-md-6">
-								  Rate <span class="badge badge-light">4.5</span>
-								</button>
-			  					<button type="button" class="btn btn-light col-md-6 commentBtn" onclick="appendComment('#commentPanel')">
-								  Comments <span class="badge badge-light">4</span>
-								</button>
-			  				</div>
-			  			</div>
-			  			<div class="comment-section" id="commentPanel">
-			  				<ul class="comment-group">
-							  <li class="comment-item"> 
-							  	<div style="width: 13%">
-							  		<img src="{{asset('assets/images/manuel.png')}}" style="width: 45px; border-radius: 50%;">
-							  	</div>
-							  	<div style="width: 87%">
-							  		Cras justo odio  Cras justo odio  Cras justo odio  Cras justo odio  Cras justo odio
-							  	</div>
-							  </li>
-							</ul>
-			  			</div>
-					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	@endfor  --}}
+					  			<div class="col-md-12 comment-section">
+					  				<div id="commentPanel{{ $val->id }}"></div>
+	  							</div>
+						  	</div>
+
+						@endforeach
+
+					  	@else --}}
+
 					  	<div class="welcome-card">
 			  				<center>
 			  					<h2>Welcome to Terhea</h2>
@@ -177,8 +171,51 @@
 							  		</div>
 						  		</div>
 			  				</div>
-
 					  	</div>
+
+						{{-- @for($i = 0; $i < 1; $i++)
+						<div class="man-card" onclick="view_medicine()">
+					  		<div class="man-row">
+					  			<div class="col-md-4 man-img-med-shell">
+						  			<img src="{{asset('assets/images/biogesic.jpg')}}" style="width: 100%;">
+						  		</div>
+						  		<div class="col-md-8">
+						  			<div class="card-title"><b>Paracetamol Biogesic</b></div>
+						  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
+						  		</div>
+					  		</div>
+					  		<div class="see-more-card">
+					  			<div class="see-more-btnn">Click to see more</div>
+					  			<div class="more-btnn">
+					  				<i class="material-icons">more_vert</i>
+					  			</div>
+					  		</div>
+					  	</div>
+					  	<div class="med-footer">
+			  				<div class="row">
+								<button type="button" class="btn btn-light col-md-6">
+								  Rate <span class="badge badge-light">4.5</span>
+								</button>
+			  					<button type="button" class="btn btn-light col-md-6 commentBtn" onclick="appendComment('#commentPanel')">
+								  Comments <span class="badge badge-light">4</span>
+								</button>
+			  				</div>
+			  			</div>
+			  			<div class="comment-section" id="commentPanel">
+			  				<ul class="comment-group">
+							  <li class="comment-item"> 
+							  	<div style="width: 13%">
+							  		<img src="{{asset('assets/images/manuel.png')}}" style="width: 45px; border-radius: 50%;">
+							  	</div>
+							  	<div style="width: 87%">
+							  		Cras justo odio  Cras justo odio  Cras justo odio  Cras justo odio  Cras justo odio
+							  	</div>
+							  </li>
+							</ul>
+			  			</div>
+					  	<hr style="margin-right: 1%; margin-left: 1%;">
+					  	@endfor  --}}
+					  	
 
 					</div>
 				</div>
