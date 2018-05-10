@@ -87,7 +87,7 @@ class HomeController extends Controller
         }
         else
         {
-            $similarMedHer = Medicines::where('category_id', 'LIKE', 2)->get();
+            $similarMedHer = Medicines::where('category_id', 2)->get();
         }
 
         $contentMedHer = Contentmed::where('medicine_id', $specsMedData->id)->get();

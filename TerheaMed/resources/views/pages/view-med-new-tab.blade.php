@@ -87,19 +87,8 @@
   			</div>
 
   			<div class="row" style="padding-bottom: 20px;">
-
-  				<?php $similarMedHer = json_decode(json_encode($similarMedHer)); ?>
-  				<div class="col-md-12" style="display: -webkit-box; display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap;">
-  					@foreach($similarMedHer as $val)
-	  				<a href="{{ url('viewmed') . '/' .$val->id }}" class="similarCard man-card-with-box-shadow col-md-4" style="text-decoration: none; color: #000">
-					  	<div class="man-img-center-without-border">
-					  		<img src="{{ asset('') . $val->picture }}" alt="Card image cap">
-					  	</div>
-					  	<div class="card-body">
-					  		'<h5 class="man-card-title">{{ $val->name }}</h5>
-					  	</div>
-					</a>
-				@endforeach
+  				<div data-similarmed="{{json_encode($similarMedHer)}}" id="similarMedFromDiv"></div>
+  				<div id="similarMedPanel" class="col-md-12" style="display: -webkit-box; display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap;">
   				</div>
 
   			</div>
@@ -108,5 +97,7 @@
 		</div>
 	</div>
 </div>
+
+@include('scripts_for_med_new_tab.script')
 
 @endsection
