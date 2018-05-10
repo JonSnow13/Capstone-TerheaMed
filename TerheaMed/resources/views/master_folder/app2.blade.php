@@ -35,7 +35,15 @@
 	      <li>
       		<div class="man-search-form" id="searchBoxForm">
 		    	<div class="input-group" style="justify-content: center;">
-				    <input type="text" list="category" id="searchBox" class="form-control" placeholder="Search" aria-describedby="btnGroupAddon">
+				    <input type="text" list="category" id="searchBox" class="form-control" placeholder="Search 
+				    <?php
+				     if(Request::is('healthtips')) {
+				     	echo 'health tips...';
+				     } 
+				     else if (Request::is('homeremedy')) {
+				     	echo 'home remedy...';
+			     	}
+				    ?>" aria-describedby="btnGroupAddon">
 				    <datalist id="category">
 					    <option value="Fever">
 					    <option value="Cough">
