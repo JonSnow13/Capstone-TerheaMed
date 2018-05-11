@@ -453,6 +453,11 @@
 	        getPlaceDetailsBigMap(place.place_id);
 	        viewedPlace = place;
         });
+
+        google.maps.event.addListener(marker, 'mouseover', function() {
+	        infowindow.setContent(place.name);
+	    	infowindow.open(map2, this);
+        });
     }
 
     function mapInModalMarkerListener(icon, place)

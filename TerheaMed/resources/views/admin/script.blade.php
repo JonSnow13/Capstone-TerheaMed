@@ -843,6 +843,7 @@
 
 	function setHealthTipUI()
 	{
+		clearField('#healthModal', '#saveHealthHomeBtn');
 		tipOrStep = 'Tip ';
 		$('#category_id').val(1);
 		$('#healthModal .modal-title').text('Health Tips');
@@ -853,7 +854,6 @@
 
 		$('#tipTitle').siblings('label').html(html);
 		$('[data-toggle="tooltip"]').tooltip();
-		clearField('#healthModal', '#saveHealthHomeBtn');
 
 	}
 
@@ -866,6 +866,7 @@
 
 	function setHomeRemedyUI()
 	{
+		clearField('#healthModal', '#saveHealthHomeBtn');
 		tipOrStep = 'Step ';
 		$('#category_id').val(2);
 		$('#healthModal .modal-title').text('Home Remedy');
@@ -876,7 +877,6 @@
 
 		$('#tipTitle').siblings('label').html(html);
 		$('[data-toggle="tooltip"]').tooltip();
-		clearField('#healthModal', '#saveHealthHomeBtn');
 
 	}
 

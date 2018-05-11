@@ -1,26 +1,5 @@
 <script type="text/javascript">
 
-	function isNullOrWhitespace( input ) 
-	{
-
-	    if (typeof input === 'undefined' || input == null) return true;
-
-	    return input.replace(/\s/g, '').length < 1;
-	}
-
-	function searchBtn()
-	{
-		var searchName = $('#searchBox').val();
-    	if (isNullOrWhitespace(searchName)) return false;
-    	location.href = 'search=' + searchName;
-	}
-
-	$(function(){
-		$('#searchBox').keypress(function(e){
-	    	if (e.which == 13) searchBtn();
-	    });
-	});
-
 /**
 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/

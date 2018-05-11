@@ -116,6 +116,16 @@ Route::get(
 );
 
 Route::get(
+	'/healthtips={searchName}',
+	'HomeController@healthTipsSearch'
+);
+
+Route::get(
+	'/homeremedy={searchName}',
+	'HomeController@homeRemedySearch'
+);
+
+Route::get(
 	'/view/{key}',
 	'HomeController@viewTip'
 );

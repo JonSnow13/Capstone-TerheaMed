@@ -190,7 +190,7 @@
 
 	 		var html = 	'<div data-id="'+ this.id +'" class="similarCard man-card-with-box-shadow col-md-6" >' +
 			 				'<a class="man-a-btn" href="viewmed/'+ this.id +'" target="_blank">Open in new tab</a>' +
-							  	'<div class="man-img-center-without-border">' +
+							  	'<div class="man-img-center-without-border" onclick="view_medicine('+ this.id +')">' +
 							  		'<img src="'+ this.picture +'" alt="Card image cap">' +
 							  	'</div>' +
 							  	'<div class="card-body" onclick="view_medicine('+ this.id +')">' +
@@ -315,7 +315,7 @@
 
 	function backToAllSearchMed()
 	{
-		window.history.pushState('Home', 'Home', 'home');
+		// window.history.pushState('Home', 'Home', 'home');
 		$('.man-loader').css('display', 'flex');
 		setTimeout(function(){
 			$('.man-loader').css('display', 'none');
@@ -550,6 +550,7 @@
 
       	calculateDistance(place, '#pharmaD'+i);
 	    directionView('#directionView'+i, place);
+	    directionView('#pharma'+i, place);
     }
 
     function appendClinicHtml(place, i)
@@ -610,6 +611,7 @@
 	     // showStreetView(place, 'clinic'+i);
 	    calculateDistance(place, '#clinicX'+i);
 	    directionView('#directionViewX'+i, place);
+	    directionView('#clinic'+i, place);
     }
 
     function openClinicStreetview(i)
@@ -698,61 +700,62 @@
     			window.history.pushState('index', 'Search', 'search=' + searchName);
     		@endif
     	}
+
+    	$('.man-loader').css('display', 'flex');
+
     	$.ajax({
     		url: '{{ route("json_search") }}',
     		type: 'GET',
     		data: {searchName: searchName},
     		success: function(data){
 
-    			resultRearchData = $.merge(resultRearchData, data); // pass data to be used in function searchMedSortByRecomennds
-    			
-    			// FB.XFBML.parse();
-    			searchFunctionStringDivided();
+    			// resultRearchData = $.merge(resultRearchData, data); // pass data to be used in function searchMedSortByRecomennds
+    			resultRearchData = data;
+    			console.log(resultRearchData);
 
-    			// FB.logout(function(response) {
-       //              // this part just clears the $_SESSION var
-       //              // replace with your own code
-       //          });
+    			//this sort by how many words in searchName are match in each medicine
+				searchSortByQuantitySame(resultRearchData)
+
     		}
 
     	});
     }
 
-    var searchIndex = 0;
-    function searchFunctionStringDivided()
-    {
-    	var searchName = $('#searchBox').val();
-    	var searchNameArray = searchName.split(' ');
+   //  var searchIndex = 0;
+   //  function searchFunctionStringDivided()
+   //  {
+   //  	var searchName = $('#searchBox').val();
+   //  	var searchNameArray = searchName.split(' ');
 
-    	if (searchIndex >= (searchNameArray.length)) 
-    	{
-			searchMedSortByRecommends(resultRearchData);
-    		searchIndex = 0;
-    		return;
-    	}
+   //  	if (searchIndex >= (searchNameArray.length)) 
+   //  	{
+			// searchMedSortByRecommends(resultRearchData);
+   //  		searchIndex = 0;
+   //  		return;
+   //  	}
 
-    	$('.man-loader').css('display', 'flex');
-    	$.ajax({
-    		url: '{{ route("json_search") }}',
-    		type: 'GET',
-    		data: {searchName: searchNameArray[searchIndex]},
-    		success: function(data){
+   //  	$('.man-loader').css('display', 'flex');
+   //  	$.ajax({
+   //  		url: '{{ route("json_search") }}',
+   //  		type: 'GET',
+   //  		data: {searchName: searchNameArray[searchIndex]},
+   //  		success: function(data){
 
-    			resultRearchData = $.merge(resultRearchData, data); // pass data to be used in function searchMedSortByRecomennds
+   //  			resultRearchData = $.merge(resultRearchData, data); // pass data to be used in function searchMedSortByRecomennds
     			
-    			// FB.XFBML.parse();
+   //  			// FB.XFBML.parse();
 
-    			searchIndex++;
-    			searchFunction();
+   //  			searchIndex++;
+   //  			searchFunction();
 
-    			// FB.logout(function(response) {
-       //              // this part just clears the $_SESSION var
-       //              // replace with your own code
-       //          });
-    		}
+   //  			// FB.logout(function(response) {
+   //     //              // this part just clears the $_SESSION var
+   //     //              // replace with your own code
+   //     //          });
+   //  		}
 
-    	});
-    }
+   //  	});
+   //  }
 
     $('#searchBox').keypress(function(e){
     	if (e.which == 13) searchBtn();

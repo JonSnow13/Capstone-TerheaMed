@@ -101,6 +101,7 @@ a.man-link:hover{
     background-color: #fff;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
+    margin-bottom: 12px;
     overflow: hidden;
 }
 .clinic-panel{
@@ -117,6 +118,7 @@ a.man-link:hover{
     background-color: #fff;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
+    margin-bottom: 12px;
     overflow: hidden;
 }
 .man-img-med-shell{
@@ -155,6 +157,7 @@ a.man-link:hover{
     align-items: center;
     vertical-align: middle;
     background: #e9ebee;
+    cursor: pointer;
 }
 .gmnoprint a, .gmnoprint span, .gm-style-cc {
     display:none;
@@ -631,7 +634,7 @@ tr:hover .minus-circle-btn{
 }
 
 .medium-card:hover{
-    box-shadow: 1px 1px 6px -3px;
+    box-shadow: 1px 1px 6px 1px #3f51b5;
 }
 
 .large-card{
@@ -647,7 +650,7 @@ tr:hover .minus-circle-btn{
 }
 
 .large-card:hover{
-    box-shadow: 1px 1px 6px -3px;
+    box-shadow: 1px 1px 6px 1px #3f51b5;
 }
 
 .home-remedy-title{
@@ -662,7 +665,7 @@ tr:hover .minus-circle-btn{
 .home-remedy-layer{
     position: absolute;
     top: 0;
-    background: #0b14484d;
+    background: #0b144880;
     width: 100%;
     height: inherit;
 }

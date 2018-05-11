@@ -51,9 +51,12 @@
 
 		});
 
-		function appendSimilarMed(data)
+		function appendSimilarMed(countSameMed)
 		{
-			$(data).each(function(){
+			countSameMed.sort(function(a, b){
+				return parseFloat(b.quantity) - parseFloat(a.quantity)
+			});
+			$(countSameMed).each(function(){
 
 				var tempId = this.id;
 

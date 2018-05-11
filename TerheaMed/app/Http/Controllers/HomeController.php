@@ -30,7 +30,22 @@ class HomeController extends Controller
 
     public function searchJson(Request $request)
     {
-        $searchData = Medicines::where('name', 'LIKE', '%' . $request->searchName . '%')->orWhere('purpose', 'LIKE', '%' . $request->searchName . '%')->orWhere('generic_name', 'LIKE', '%' . $request->searchName . '%')->orWhere('key_word', 'LIKE', '%' . $request->searchName . '%')->get();
+        $searchKey = explode(' ', $request->searchName);
+        $searchData = array();
+
+        foreach ($searchKey as $value) 
+        {
+
+            $hasConjuction = $this->hasConjuction($value);
+            if (!empty($value) == !$hasConjuction) 
+            {
+                $tempArr = Medicines::where('name', 'LIKE', '%' . $value . '%')->orWhere('generic_name', 'LIKE', '%' . $value . '%')->orWhere('key_word', 'LIKE', '%' . $value . '%')->get()->toArray();
+
+                $searchData = array_merge($searchData, $tempArr);
+
+            }
+        }
+
         return $searchData;
     }
 
@@ -48,8 +63,8 @@ class HomeController extends Controller
     public function healthTips(Request $request)
     {
         $searchName='';
-        $healthTips = HealthTips::where('category_id', 1)->get();
-        return view('pages.health-tips', compact('searchName', 'healthTips'));
+        $healthTipsHomeRemedy = HealthTips::where('category_id', 1)->get();
+        return view('pages.health-tips', compact('searchName', 'healthTipsHomeRemedy'));
     }
 
     public function viewTip(Request $request)
@@ -62,8 +77,8 @@ class HomeController extends Controller
     public function homeRemedy(Request $request)
     {
         $searchName='';
-        $healthTips = HealthTips::where('category_id', 2)->get();
-        return view('pages.health-tips', compact('searchName', 'healthTips'));
+        $healthTipsHomeRemedy = HealthTips::where('category_id', 2)->get();
+        return view('pages.health-tips', compact('searchName', 'healthTipsHomeRemedy'));
     }
 
     public function viewmed(Request $request)
@@ -93,5 +108,61 @@ class HomeController extends Controller
         $contentMedHer = Contentmed::where('medicine_id', $specsMedData->id)->get();
 
         return view('pages.view-med-new-tab', compact('searchName', 'specsMedData', 'similarMedHer', 'contentMedHer'));
+    }
+
+    public function healthTipsSearch(Request $request)
+    {
+        $searchName = $request->searchName;
+        $healthTipsHomeRemedySearched = array();
+        $searchKey = explode(' ', $request->searchName);
+
+        foreach ($searchKey as $value) 
+        {
+            $hasConjuction = $this->hasConjuction($value);
+
+            if (!empty($value) && !$hasConjuction) 
+            {
+                $tempArr = HealthTips::where('name', 'LIKE', '%' . $value . '%')->where('category_id', 1)->get()->toArray();
+                $healthTipsHomeRemedySearched = array_merge($healthTipsHomeRemedySearched, $tempArr);
+            }
+        }
+
+        $healthTipsHomeRemedy = HealthTips::where('category_id', 1)->get()->toArray();
+        return view('pages.health-tips', compact('searchName', 'healthTipsHomeRemedySearched', 'healthTipsHomeRemedy'));
+
+    }
+
+    public function homeRemedySearch(Request $request)
+    {
+        $searchName = $request->searchName;
+        $healthTipsHomeRemedySearched = array();
+        $searchKey = explode(' ', $request->searchName);
+
+        foreach ($searchKey as $value) 
+        {
+            $hasConjuction = $this->hasConjuction($value);
+
+            if (!empty($value) && !$hasConjuction) 
+            {
+                $tempArr = HealthTips::where('name', 'LIKE', '%' . $value . '%')->where('category_id', 2)->get()->toArray();
+                $healthTipsHomeRemedySearched = array_merge($healthTipsHomeRemedySearched, $tempArr);
+            }
+        }
+
+        $healthTipsHomeRemedy = HealthTips::where('category_id', 2)->get()->toArray();
+        return view('pages.health-tips', compact('searchName', 'healthTipsHomeRemedySearched', 'healthTipsHomeRemedy'));
+    }
+
+    private function hasConjuction($word)
+    {
+        $conjunction = array("for", "and", "with", "or", "to", "is", "for");
+        foreach ($conjunction as $value) 
+        {
+            if ($value == $word) 
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

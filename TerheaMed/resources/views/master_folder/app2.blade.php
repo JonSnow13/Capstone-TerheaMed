@@ -35,7 +35,7 @@
 	      <li>
       		<div class="man-search-form" id="searchBoxForm">
 		    	<div class="input-group" style="justify-content: center;">
-				    <input type="text" list="category" id="searchBox" class="form-control" placeholder="Search{{ (Request::is('healthtips'))? ' health tips...' : '' }} {{ (Request::is('homeremedy'))? 'home remedy...' : '' }} {{ (Request::is('about'))? 'common symtoms or medicine...' : '' }}" aria-describedby="btnGroupAddon">
+				    <input type="text" list="category" id="searchBox" class="form-control" placeholder="Search{{ (Request::is('healthtips*'))? ' health tips...' : '' }} {{ (Request::is('homeremedy*'))? 'home remedy...' : '' }} {{ (Request::is('about'))? 'common symtoms or medicine...' : '' }}" aria-describedby="btnGroupAddon">
 				    <datalist id="category">
 					    <option value="Fever">
 					    <option value="Cough">
@@ -50,10 +50,10 @@
 		    </div>
 	      </li>
 	      <li class="nav-item">
-	        <a class="man-link <?php if(Request::is('healthtips') || Request::is('viewtip/*')) echo 'man-active'; ?>" href="{{url('/healthtips')}}">Health Tips</a>
+	        <a class="man-link <?php if(Request::is('healthtips*') || Request::is('viewtip/*')) echo 'man-active'; ?>" href="{{url('/healthtips')}}">Health Tips</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="man-link <?php if(Request::is('homeremedy') || Request::is('viewremedy/*')) echo 'man-active'; ?>" href="{{url('/homeremedy')}}">Home Remedy</a>
+	        <a class="man-link <?php if(Request::is('homeremedy*') || Request::is('viewremedy/*')) echo 'man-active'; ?>" href="{{url('/homeremedy')}}">Home Remedy</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="man-link <?php if(Request::is('seebigmap')) echo 'man-active'; ?>"" href="{{url('/seebigmap')}}" id="bigMapMenu" data-toggle="tooltip" data-placement="bottom" title="Nearby pharmacy/drug store and clinic / hospital">Nearby</a>

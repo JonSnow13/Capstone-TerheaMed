@@ -87,6 +87,7 @@
 @include('scripts_for_homepage.animationScript')
 @include('scripts_for_homepage.bottom-script')
 @include('admin.validation')
+@include('scripts_for_homepage.search-script')
 
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEe9Jl9DxQwW2vDMyd0iUW4TSGYDapeIE&libraries=places&streetview?size=600x300&location=46.414382,10.013988&heading=151.78&pitch=-0.76&callback=initMap" async defer></script>

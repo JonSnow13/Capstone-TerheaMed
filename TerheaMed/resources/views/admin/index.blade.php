@@ -222,7 +222,7 @@
 			    	<textarea class="form-control" id="desc" rows="3" placeholder="Description"></textarea>
 			    	<i class="err-msg"></i>
 			  	</div>
-			  	<div class="form-group specfieldForHerbal">
+			  	<div class="form-group">
 			    	<label for="purpose">Purpose</label>
 			    	<textarea class="form-control" id="purpose" rows="3" placeholder="Purpose"></textarea>
 			    	<i class="err-msg"></i>

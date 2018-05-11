@@ -7,7 +7,7 @@
 				<div class="man-loader col-md-6">
 					<img src="{{asset('assets/images/load.gif')}}" style="width: 40px;">
 				</div>
-				<h5 style="padding: .5rem .5rem; color: #696a6d;">Suggested Medicine(s):</h5>
+
 				<div class="card-specific-med" style="display: none;">
 					<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="backToAllSearchMed()">< back</button>
 					<div class="prescription">You can't obtain this medicine without a prescription from a doctor.</div>
@@ -74,6 +74,7 @@
 		  			</div>
 				</div>
 				<div class="card-panel-medicine">
+					<h5 style="padding: .5rem .5rem; color: #696a6d;" id="suggestedMedicineLabel">Suggested Medicine(s):</h5>
 					<div id="searchedPanel">
 						{{-- @if(isset($searchData))
 
@@ -227,7 +228,7 @@
 					<p class="title-pharmacy-clinic-panel" id="yourLocationLabel">You're now at:</p>
 					<button class="material-icons location-help" data-html="true" data-trigger="focus" data-toggle="popover" data-content="Not your location?  <a href='javascript: goMapToChange()'>change</a>" data-placement="right">help_outline</button>
 				</div>
-				<p class="title-pharmacy-clinic-panel">To view the map click <a href="javascript: seeAllPharmaClinic()">here.</a></p>
+				<p class="title-pharmacy-clinic-panel">To view the map click <a href="javascript: seeAllPharmaClinic()" style="font-weight: bolder; font-size: 20px;">here.</a></p>
 				<p class="title-pharmacy-clinic-panel" id="nearestPhamacy">Nearby pharmacy and hospital in your area: </p>
 
 				<div class="row" style="margin-top: -20px;">
@@ -326,7 +327,7 @@
 					</div>
 					<div class="big-map-streetview" id="bigMapStreetview"></div>
 
-					<b id="placeName">Name</b>
+					<b id="placeName"></b>
 					<div class="form-group">
 						<a href="javascript: directionViewBigMap()" id="directionViewBigMapBtn">View direction</a>
 					</div>
