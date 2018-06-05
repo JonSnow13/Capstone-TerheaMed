@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Terhea Med</title>
+	<link rel="icon" type="image/x-icon" href="{{asset('assets/images/terhea_logo.png')}}" />
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/man_library/css/man.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/sweet-alert/sweetalert.css')}}">

@@ -11,7 +11,7 @@
 						<img src="{{asset('assets/images/angelica.jpg')}}" style="width: 100%">
 					</div>
 					<p class="profile-name">Ma. Angelica Pacaro</p>
-					<b class="position-title">Head Doctor</b>
+					<b class="position-title">Head Physician</b>
 				</div>
 			</div>
 			<div class="profile-form">
@@ -20,7 +20,7 @@
 						<img src="{{asset('assets/images/manuel.jpg')}}" style="width: 100%">
 					</div>
 					<p class="profile-name">Manuel Ortega Jr.</p>
-					<b class="position-title">Doctor</b>
+					<b class="position-title">Physician</b>
 				</div>
 			</div>
 			<div class="profile-form">
@@ -36,9 +36,9 @@
 		<div class="col-md-10 health-tips-panel" style="background: #fff">
 			<div class="man-title-header">About Us</div>
 			<p>
-				The study and development of the Terhea Med is to help, find and suggest the right medication of our common illnesses. It is essential to establish a system that is convenient for our daily life. It is developed for the sake of our health and to provide safe suggestions of medicines. Non-herbal medicines and herbal medicines are provided.
+				The study and development of the Terhea Med is to help, find and suggest the right medication of our common illnesses. It is essential to establish a system that is convenient for our daily life. It is developed for the sake of our health and to provide safe suggestions of medicines. Both herbal and non-herbal medicines are provided.
 				<br><br>
-				Terheamed is made for the people who are not well familiar with the places they are staying, because the system provides a google map with the nearby pharmacy / drug stores / hospitals. Street views and directions are provided with each specific establishment. Time costs are reduced by the help of showing the estemated time of travel from a starting point to a destination.
+				Terheamed is made for the people who are not well familiar with the places they are staying, because the system provides a google map with the nearby pharmacy/ drug stores/ hospitals. Street views and directions are provided with each specific establishment. Time costs are reduced by the help of showing the estimated time of travel from a starting point to a certain destination.
 			</p>
 			<div class="man-title-header">Contact Details</div>
 			<label>Email us: terheamed@gmail.com</label>

@@ -309,25 +309,26 @@
 				    origin: new google.maps.Point(0,0), // origin
 				    anchor: new google.maps.Point(0, 0) // anchor
 					};
-		  	markerOfYourLocation_modal = new google.maps.Marker({
-		    	position: pos,
-		    	map: map,
-		    	icon: icon
-		  	});
-		  	markerOfYourLocation = new google.maps.Marker({
-		    	position: pos,
-		    	map: map2,
-		    	icon: icon,
-		    	draggable: true
-		  	});
-            map.setCenter(pos);
-            map2.setCenter(pos);
-            console.log(pos);
-            markerOfYourLocation.addListener('dragend', function(){
-            	pos = this.getPosition();
-;            	initializePhamacyClinicMarker();
-            	// hideBigMap();
-            });
+	  	markerOfYourLocation_modal = new google.maps.Marker({
+	    	position: pos,
+	    	map: map,
+	    	icon: icon,
+	    	flat: true
+	  	});
+	  	markerOfYourLocation = new google.maps.Marker({
+	    	position: pos,
+	    	map: map2,
+	    	icon: icon,
+	    	draggable: true
+	  	});
+        map.setCenter(pos);
+        map2.setCenter(pos);
+        console.log(pos);
+        markerOfYourLocation.addListener('dragend', function(){
+        	pos = this.getPosition();
+        	initializePhamacyClinicMarker();
+        	// hideBigMap();
+        });
 
             infowindow = new google.maps.InfoWindow();
 //=======================================================================
@@ -555,7 +556,7 @@
 		        fullscreenControl: false
 		      }
 		      );
-		  // map.setStreetView(panorama);
+		  map.setStreetView(panorama);
     }
     
     var mapRenderCount = 0;
@@ -568,8 +569,9 @@
 		}
 	}
 
-	function calculateAndDisplayRoute(directionsService, directionsDisplay, end, distance, timeDriving, timeWalking) 
+	function calculateAndDisplayRoute(end, distance, timeDriving, timeWalking) 
 	{
+		alwaysUpdateLocationWhenDirectionviewIsUsed(end);
 		directionsDisplay.setMap(map);
 		// setMapOnAll(null);
         directionsService.route({
@@ -583,9 +585,9 @@
 
             $('#mapModal .modal-title').text(end.name);
             $('#startingPoint').html('<label style="display: flex; align-items: center;"> <i class="material-icons">my_location</i>&nbsp Starting point: '+ myAddress +'</label>');
-            $('#distination').html('<label style="display: flex; align-items: center;"> <i class="material-icons">location_on</i>&nbsp Distination point: '+ end.vicinity +'</label>');
+            $('#distination').html('<label style="display: flex; align-items: center;"> <i class="material-icons">location_on</i>&nbsp Destination point: '+ end.vicinity +'</label>');
             $('#distance').html('<label style="display: flex; align-items: center;"> <i class="material-icons">local_movies</i>&nbsp Distance: '+ distance +'</label>');
-            $('#time').html('<label style="display: flex; align-items: center;"> <i class="material-icons">timer</i>&nbsp Estemated time:</label> <label style="display: flex; align-items: center;"> <i style="margin-left: 20px;" class="material-icons">drive_eta</i>: &nbsp '+ timeDriving +' </label> <label style="display: flex; align-items: center;"> <i style="margin-left: 20px;" class="material-icons">directions_walk</i>: &nbsp '+ timeWalking +' </label>');
+            $('#time').html('<label style="display: flex; align-items: center;"> <i class="material-icons">timer</i>&nbsp Estimated time:</label> <label style="display: flex; align-items: center;"> <i style="margin-left: 20px;" class="material-icons">drive_eta</i>: &nbsp '+ timeDriving +' </label> <label style="display: flex; align-items: center;"> <i style="margin-left: 20px;" class="material-icons">directions_walk</i>: &nbsp '+ timeWalking +' </label>');
 
             $('#mapModal').modal('show');
 
@@ -602,10 +604,21 @@
         });
     }
 
-    function directionView(elmt, end)
+    function directionView(elmt, end, id, type)
     {
     	$(elmt).click(function(){
 			$('#streetView').hide();
+
+			if (type == 'clinic') 
+			{
+				$('#mapModalStreetviewBtn').attr('onclick', 'openClinicStreetview('+ id +')');
+				$('#mapModalOpenHoursBtn').attr('onclick', 'openHoursClinic('+ id +')');
+			}
+			else
+			{
+				$('#mapModalStreetviewBtn').attr('onclick', 'openPharmaStreetview('+ id +')');
+				$('#mapModalOpenHoursBtn').attr('onclick', 'openHoursPharma('+ id +')');
+			}
 			
     		timeDistanceCalculator(end);
     		
@@ -644,7 +657,7 @@
 					  	{
 					  		var result2 = response.rows[0].elements;
 					  		var timeWalking = result2[0].duration.text;
-					  		calculateAndDisplayRoute(directionsService, directionsDisplay, end, distance, timeDriving, timeWalking);
+					  		calculateAndDisplayRoute(end, distance, timeDriving, timeWalking);
 					  		$('.moreMapInfo').show();
 					  	}
 					  );

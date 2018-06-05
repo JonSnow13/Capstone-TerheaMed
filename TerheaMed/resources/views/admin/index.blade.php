@@ -20,15 +20,19 @@
 	<div>
 
 		<?php if (!isset($_GET['tab'])) {
-			$_GET['tab'] = 'nonherbal';
+			$_GET['tab'] = 'herbal';
 		} ?>
 	  	<!-- Nav tabs -->
 	  	<ul class="nav nav-tabs" id="myTab" role="tablist">
 		  	<li class="nav-item">
+		    	<a class="nav-link {{ ($_GET['tab'] == 'herbal')? 'active' : '' }}" onclick="setUrlForTab('herbal')" id="herbal-tab" data-toggle="tab" href="#herbal" role="tab" aria-controls="herbal" aria-selected="false">Herbal
+		    	</a>
+		    </li>
+		  	<li class="nav-item">
 		    	<a class="nav-link {{ ($_GET['tab'] == 'nonherbal')? 'active' : '' }}" onclick="setUrlForTab('nonherbal')" id="non-herbal-tab" data-toggle="tab" href="#nonHerbal" role="tab" aria-controls="non-herbal" aria-selected="true">Non - Herbal</a>
 		  	</li>
-		  	<li class="nav-item">
-		    	<a class="nav-link {{ ($_GET['tab'] == 'herbal')? 'active' : '' }}" onclick="setUrlForTab('herbal')" id="herbal-tab" data-toggle="tab" href="#herbal" role="tab" aria-controls="herbal" aria-selected="false">Herbal
+		    <li class="nav-item">
+		    	<a class="nav-link {{ ($_GET['tab'] == 'vitamins')? 'active' : '' }}" onclick="setUrlForTab('vitamins')" id="vitamins-tab" data-toggle="tab" href="#vitamins" role="tab" aria-controls="herbal" aria-selected="false">Vitamins & Supplements
 		    	</a>
 		    </li>
 		    <li class="nav-item">
@@ -43,6 +47,29 @@
 
 	  	<!-- Tab panes -->
 	  	<div class="tab-content" id="myTabContent">
+	    	<div class="tab-pane fade {{ ($_GET['tab'] == 'herbal')? 'show active' : '' }}" id="herbal" role="tabpanel" aria-labelledby="herbal-tab">
+	    		<table class="table responsive table-hover" id="medicineDataTableHerbal">
+				  	<thead class="thead-dark">
+				    	<tr>
+					      	{{-- <th scope="col">#</th> --}}
+					      	<th scope="col">Picture</th>
+					      	<th scope="col">Name</th>
+					      	<th scope="col">Brand Name</th>
+					      	<th scope="col">Generic Name</th>
+					      	<th scope="col">Format</th>
+					      	<th scope="col">Type</th>
+					      	<th scope="col">Description</th>
+					      	<th scope="col">Purpose</th>
+					      	<th scope="col">Usage</th>
+					      	<th scope="col">Warning</th>
+					      	<th scope="col">Side Effects</th>
+					      	<th scope="col"><i class="material-icons">settings</i></th>
+				    	</tr>
+				  	</thead>
+				  	<tbody>
+				 	</tbody>
+				</table>
+	    	</div>
 	    	<div role="tabpanel" class="tab-pane fade {{ ($_GET['tab'] == 'nonherbal')? 'show active' : '' }}" id="nonHerbal" aria-labelledby="non-herbal-tab">
 	    		<table class="table responsive table-hover" id="medicineDataTableNonHerbal">
 				  	<thead class="thead-dark">
@@ -66,8 +93,8 @@
 				 	</tbody>
 				</table>
 	    	</div>
-	    	<div class="tab-pane fade {{ ($_GET['tab'] == 'herbal')? 'show active' : '' }}" id="herbal" role="tabpanel" aria-labelledby="herbal-tab">
-	    		<table class="table responsive table-hover" id="medicineDataTableHerbal">
+	    	<div class="tab-pane fade {{ ($_GET['tab'] == 'vitamins')? 'show active' : '' }}" id="vitamins" role="tabpanel" aria-labelledby="vitamins-tab">
+	    		<table class="table responsive table-hover" id="medicineDataTableVitamins">
 				  	<thead class="thead-dark">
 				    	<tr>
 					      	{{-- <th scope="col">#</th> --}}

@@ -9,8 +9,18 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-          <div id="streetView" style="position: absolute; z-index: 50;"></div>
-          <div class="man-map" id="map"></div>
+          <div class="row" style="margin-bottom: 4px;">
+            <div class="col-md-12">
+              <button class="btn btn-primary" type="button" id="mapModalStreetviewBtn">Open street view</button>
+              <button class="btn btn-primary" type="button" id="mapModalOpenHoursBtn">View open hours</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div id="streetView" style="position: absolute; z-index: 50;"></div>
+              <div class="man-map" id="map"></div>
+            </div>
+          </div>
         {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEe9Jl9DxQwW2vDMyd0iUW4TSGYDapeIE&callback=initMap" async></script> --}}
           <div class="row moreMapInfo">
             <div class="col-md-6">

@@ -74,6 +74,12 @@ class AdminController extends Controller
         return Datatables::of($medicineDataHerbal)->make(true);
     }
 
+    public function getAllMedicineDataByCategory(Request $request)
+    {
+        $medicineData = Medicines::where('category_id', $request->key);
+        return Datatables::of($medicineData)->make(true);
+    }
+
     public function deleteMedicine(Request $request)
     {
         $medicineData = Medicines::find($request->medicine_id);

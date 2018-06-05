@@ -47,7 +47,8 @@
 	    	pharmaClinicPanel.removeAttr('style');
 	    	$('.pharma-clinic-panel').hide();
 	    	$('#searchBoxForm').attr('class', 'form-group');
-	    }
+	    	$('#bigMapPlaceDetails').prop('class', 'col-md-12');
+	    	$('#seeAllMap').prop('class', 'col-md-12');	    }
 	    else
 	    {
     		$('#medicinePanel').attr('class', 'col-md-6');
@@ -56,6 +57,8 @@
 	    	$('#medicinePanel').show();
 	    	$('.pharma-clinic-panel').attr('class', 'pharma-clinic-panel col-md-6');
 	    	$('#searchBoxForm').attr('class', 'man-search-form');
+	    	$('#bigMapPlaceDetails').attr('class', 'col-md-3');
+	    	$('#seeAllMap').attr('class', 'col-md-9');
 	    }
 
 		window.onresize = function(event) {
@@ -73,6 +76,8 @@
 		    	pharmaClinicPanel.removeAttr('style');
 		    	$('.pharma-clinic-panel').hide();
 		    	$('#searchBoxForm').attr('class', 'form-group');
+		    	$('#bigMapPlaceDetails').attr('class', 'col-md-12');
+		    	$('#seeAllMap').attr('class', 'col-md-12');
 		    }
 		    else
 		    {
@@ -82,12 +87,17 @@
 		    	$('#medicinePanel').show();
 		    	$('.pharma-clinic-panel').attr('class', 'pharma-clinic-panel col-md-6');
 		    	$('#searchBoxForm').attr('class', 'man-search-form');
+		    	$('#bigMapPlaceDetails').attr('class', 'col-md-3');
+		    	$('#seeAllMap').attr('class', 'col-md-9');
 		    }
 		};
 		
 	});
 
-	
+	function errorAlert()
+	{
+		swal("Whoops!", "An error has occured. Please try again, otherwise reload the page.", "error");
+	}
 
 
 </script>

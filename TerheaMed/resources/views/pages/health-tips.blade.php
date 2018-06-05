@@ -22,14 +22,17 @@
 				<div id="remaininghealthTipsAndHomeRemedyPanel"></div>
 
 			@else
-			
+
 				<div class="man-title-header">About 
 					{{ count($healthTipsHomeRemedy) }} 
 					{{ (Request::is('homeremedy'))? ' home remedies' : ' health tips' }}
 				</div>
 
 				@for ($i = 0; $i < count($healthTipsHomeRemedy); $i++)
-					<a href="view/{{ $healthTipsHomeRemedy[$i]->id }}" class="health-tips-card">
+					<?php
+						$routePath = ($healthTipsHomeRemedy[$i]->category_id == 1)? 'viewhealthtips' : 'viewhomeremedy';
+					?>
+					<a href="{{$routePath}}/{{ $healthTipsHomeRemedy[$i]->id }}" class="health-tips-card">
 						<div class="video-container">
 							<iframe id="player" style="width: 100%; height: 100%;" src="{{ $healthTipsHomeRemedy[$i]->video_embed_code }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 							<div class="video-cup"></div>

@@ -3,8 +3,9 @@
 <head>
 	<title>Terhea Med</title>
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-	<link rel="icon" type="image/x-icon" href="{{asset('assets/images/pharma_icon.png')}}" />
+	<link rel="icon" type="image/x-icon" href="{{asset('assets/images/terhea_logo.png')}}" />
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('assets/sweet-alert/sweetalert.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/man_library/css/man.css')}}">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -49,7 +50,7 @@
 	      <li>
       		<div class="man-search-form" id="searchBoxForm">
 		    	<div class="input-group" style="justify-content: center;">
-				    <input type="text" list="category" id="searchBox" class="form-control" placeholder="Search common symtoms or medicine..." aria-describedby="btnGroupAddon">
+				    <input type="text" list="category" id="searchBox" class="form-control" placeholder="Put common symtoms or medicine for search..." aria-describedby="btnGroupAddon">
 				    <datalist id="category">
 					    <option value="Fever">
 					    <option value="Cough">
@@ -88,13 +89,13 @@
 @include('scripts_for_homepage.bottom-script')
 @include('admin.validation')
 @include('scripts_for_homepage.search-script')
+@include('tawkto_script.script')
 
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEe9Jl9DxQwW2vDMyd0iUW4TSGYDapeIE&libraries=places&streetview?size=600x300&location=46.414382,10.013988&heading=151.78&pitch=-0.76&callback=initMap" async defer></script>
 <script type="text/javascript" src="{{asset('assets/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/sweet-alert/sweetalert.min.js')}}"></script>
 {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> --}}
-
-
 
 </body>
 </html>

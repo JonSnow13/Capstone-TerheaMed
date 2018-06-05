@@ -241,6 +241,7 @@ a.man-link:hover{
     background: #3F51B5;
     padding: 5px;
     display: flex;
+    visibility: hidden;
     transition: .5s ease;
     transition-delay: .3s;
     border-bottom-right-radius: 3px;
@@ -249,10 +250,12 @@ a.man-link:hover{
 .pharmacy-panel:hover .open-icon{
     left: 0;
     transition: .5s ease;
+    visibility: visible;
 }
 .clinic-panel:hover .open-icon{
     left: 0;
     transition: .5s ease;
+    visibility: visible;
 }
 .open-loader{
     display: flex; 
@@ -299,6 +302,7 @@ tr:hover .admin-option{
 .welcome-card{
     padding: 5px;
     height: auto;
+    margin-top: 16px;
 }
 .clear-btn{
     position: absolute; 

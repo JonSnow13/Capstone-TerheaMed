@@ -186,6 +186,7 @@
 							clearAllModalInputField();
 							displayMedicineDataTableNonHerbal.ajax.reload();
 							displayMedicineDataTableHerbal.ajax.reload();
+							displayMedicineDataTableVitamins.ajax.reload();
 							medIdForElement = data.id;
 
 							$('#saveElementsBtn').show();
@@ -195,7 +196,7 @@
 						},
 						error: function(err)
 						{
-							alert('An error occured. Please try again or reload the page.');
+							errorAlert();
 							resetBtn('#saveMedBtn');
 						}
 					});
@@ -211,10 +212,11 @@
 							clearAllModalInputField();
 							displayMedicineDataTableNonHerbal.ajax.reload();
 							displayMedicineDataTableHerbal.ajax.reload();
+							displayMedicineDataTableVitamins.ajax.reload();
 						},
 						error: function(err)
 						{
-							alert('An error occured. Please try again or reload the page.');
+							errorAlert();
 							resetBtn('#saveMedBtn');
 						}
 					});
@@ -237,14 +239,14 @@
 		document.getElementById('optionPres1').checked = false;
 	}
 
-	var displayMedicineDataTableNonHerbal, displayMedicineDataTableHerbal;
+	var displayMedicineDataTableNonHerbal, displayMedicineDataTableHerbal, displayMedicineDataTableVitamins;
 	$(function(){
 		$.fn.dataTable.ext.errMode = 'none';
 
 		displayMedicineDataTableNonHerbal = $('#medicineDataTableNonHerbal').DataTable({
 			destroy: true,
 			"pageLength": 10,
-			"ajax" : "{{ url('/getAllMedicineDataNonHerbal') }}",
+			"ajax" : "{{ url('/getAllMedicineData/1') }}",
 			"columns": [
 				{
 					data: 'picture',
@@ -345,7 +347,108 @@
 		displayMedicineDataTableHerbal = $('#medicineDataTableHerbal').DataTable({
 			destroy: true,
 			"pageLength": 10,
-			"ajax" : "{{ url('/getAllMedicineDataHerbal') }}",
+			"ajax" : "{{ url('/getAllMedicineData/2') }}",
+			"columns": [
+				{
+					data: 'picture',
+					render: function(data, type, row){
+						return '<img src="'+ data +'" style="width:50px;">';
+					}
+				},
+				{
+					data: 'name',
+					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'brand_name',
+					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'generic_name',
+					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'format',
+					render: function(data, type, row){
+						var temp = data;
+						temp = temp.replace(/\&quot;/g, '"');
+						var obj = jQuery.parseJSON(temp);
+						data = obj.format;
+						if (data == null) 
+						{
+							return 'N/A';
+						}
+						return (data.length > 25)? data.substr(0,24) + "..." : data;;
+					}
+				},
+				{
+					data: 'category_id',
+					render: function(data, type, row){
+						data = (data == 1)? 'Non - Herbal' :  'Herbal';
+						return data;
+					}
+				},
+				{
+					data: 'desc',
+					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'purpose',
+					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'direction_of_use',
+					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'warningMsg',
+					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'side_effect',
+					render: function(data, type, row){
+						data = (data.length > 25)? data.substr(0,24) + "..." : data;
+						return data;
+					}
+				},
+				{
+					data: 'id',
+					render: function(data, type, row){
+						return '<button class="admin-option btn-light" onmouseover="generatePopoverAdminOption('+ data +')" id="optionAdmin'+ data +'"> <i class="material-icons">more_vert</i> </button>';
+					},
+					orderable: false
+				}
+			],
+			"createdRow": function( nRow, aData, iDataIndex ) {
+                            $(nRow).data('medicineData', aData);
+                        }
+		});
+
+		displayMedicineDataTableVitamins = $('#medicineDataTableVitamins').DataTable({
+			destroy: true,
+			"pageLength": 10,
+			"ajax" : "{{ url('/getAllMedicineData/3') }}",
 			"columns": [
 				{
 					data: 'picture',
@@ -524,9 +627,50 @@
 				},1000);
 			}
 		});
-
+		
 		var tempHerbal = $('#medicineDataTableHerbal > tbody').get(0).rows;
 		$(tempHerbal).each(function(index){
+			var data = $(this).data('medicineData');
+			if (data.id == id) 
+			{
+				setTimeout(function(){
+					$('#medEditId').val(data.id)
+					$('#name').val(data.name);
+					$('#brandName').val(data.brand_name);
+					$('#type').val(data.category_id);
+					$('#keyword').val(data.key_word);
+
+					var temp = data.format;
+					temp = temp.replace(/\&quot;/g, '"');
+					var obj = jQuery.parseJSON(temp);
+					$('#format').val(obj.format);
+
+
+					if (obj.prescription_required == 1) 
+					{
+						document.getElementById('optionPres1').checked = true;
+						document.getElementById('optionPres2').checked = false;
+					}
+					else
+					{
+						document.getElementById('optionPres2').checked = true;
+						document.getElementById('optionPres1').checked = false;
+					}
+
+					$('#directionOfUse').val(data.direction_of_use);
+					$('#pictureUploadInp').siblings('div').find('img').attr('src', data.picture);
+					$('#desc').val(data.desc);
+					$('#purpose').val(data.purpose);
+					$('#sideEffect').val(data.side_effect);
+					$('#warning').val(data.warningMsg);
+					loader($('#editLoader'), 'hide');
+					setFieldForHerbalNonHerbalForm();
+				},1000);
+			}
+		});
+
+		var tempVitamins = $('#medicineDataTableVitamins > tbody').get(0).rows;
+		$(tempVitamins).each(function(index){
 			var data = $(this).data('medicineData');
 			if (data.id == id) 
 			{
@@ -608,6 +752,9 @@
 				var temp = (data.length < 1)? '1 row(s)' : data.length + ' row(s)';
 				$('#countRow').text(temp);
 				loader($('#elementsModal .modal-body .loader'), 'hide');
+			},
+			error: function(){
+				errorAlert();
 			}
 		});
 	}
@@ -648,7 +795,7 @@
 					},500);
 				},
 				error: function(){
-					swal("Whoops!", "There's an error. Please try again", "error");
+					errorAlert();
 				} 
 			});
 		});
@@ -675,9 +822,10 @@
 					swal("Deleted!", "", "success");
 					displayMedicineDataTableNonHerbal.ajax.reload();
 					displayMedicineDataTableHerbal.ajax.reload();
+					displayMedicineDataTableVitamins.ajax.reload();
 				},
 				error: function(){
-					swal("Whoops!", "There's an error. Please try again", "error");
+					errorAlert();
 				} 
 			});
 		});
@@ -743,6 +891,9 @@
 				$('#elementsModal').modal('hide');
 				$(elmt).text('Save');
 				resetElementsModal();
+			},
+			error: function(){
+				errorAlert();
 			}
 		});
 	}
@@ -837,6 +988,9 @@
 				$('#elementsModal').modal('hide');
 				$(elmt).text('Update');
 				resetElementsModal();
+			},
+			error: function(){
+				errorAlert();
 			}
 		});
 	}
@@ -940,6 +1094,7 @@
 			},
 			error: function(){
 				resetBtn(elmt);
+				errorAlert();
 			}
 		});
 
@@ -1023,7 +1178,7 @@
 			},
 			error: function(){
 				resetBtn(elmt);
-				alert('Something went wrong. Please try again.')
+				errorAlert();
 			}
 		});
 		
@@ -1254,7 +1409,7 @@
 					displayHomeRemedy.ajax.reload();
 				},
 				error: function(){
-					swal("Whoops!", "There's an error. Please try again", "error");
+					 errorAlert();
 				}
 			});
 		});
@@ -1264,6 +1419,11 @@
 	{
 		$(modal + ' textarea, input').val('');
 		resetBtn(elmt);
+	}
+
+	function errorAlert()
+	{
+		swal("Whoops!", "An error has occured. Please try again, otherwise reload the page.", "error");
 	}
 
 </script>

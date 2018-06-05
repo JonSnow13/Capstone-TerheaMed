@@ -46,13 +46,8 @@ Route::post(
 );
 
 Route::get(
-	'/getAllMedicineDataNonHerbal',
-	'AdminController@getAllMedicineDataNonHerbal'
-);
-
-Route::get(
-	'/getAllMedicineDataHerbal',
-	'AdminController@getAllMedicineDataHerbal'
+	'//getAllMedicineData/{key}',
+	'AdminController@getAllMedicineDataByCategory'
 );
 
 Route::get(
@@ -126,7 +121,12 @@ Route::get(
 );
 
 Route::get(
-	'/view/{key}',
+	'/viewhealthtips/{key}',
+	'HomeController@viewTip'
+);
+
+Route::get(
+	'/viewhomeremedy/{key}',
 	'HomeController@viewTip'
 );
 

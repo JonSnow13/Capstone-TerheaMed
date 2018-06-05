@@ -45,14 +45,14 @@
 	{
 		var searchName = $('#searchBox').val();
     	if (isNullOrWhitespace(searchName)) return false;
-    	@if (Request::is('healthtips*'))
-    		location.href = 'healthtips=' + searchName;
+    	@if (Request::is('healthtips*') || Request::is('viewhealthtips/*'))
+    		location.href = '{{ url("healthtips") }}=' + searchName;
     	@endif
-    	@if (Request::is('homeremedy*'))
-    		location.href = 'homeremedy=' + searchName;
+    	@if (Request::is('homeremedy*') || Request::is('viewhomeremedy/*'))
+    		location.href = '{{ url("homeremedy") }}=' + searchName;
     	@endif
     	@if (Request::is('about'))
-    		location.href = 'search=' + searchName;
+    		location.href = '{{ url("search") }}=' + searchName;
     	@endif 
     	
 	}
@@ -166,8 +166,9 @@
 
 	function appendHtmlHealthTipsHomeRemedy(data, whichPanelToAppend)
 	{
+		var routePath = (data.category_id == 1)? 'viewhealthtips' : 'viewhomeremedy';
 		var quantityClassCard = (whichPanelToAppend == '#healthTipsAndHomeRemedyPanelForSeached')? 'searchedCard' : 'otherCard';
-		var html = '<a href="view/'+ data.id +'" data-id="'+ data.id +'" class="health-tips-card healthTipsCard '+ quantityClassCard +'">' +
+		var html = '<a href="'+ routePath +'/'+ data.id +'" data-id="'+ data.id +'" class="health-tips-card healthTipsCard '+ quantityClassCard +'">' +
 						'<div class="video-container">' +
 							'<iframe id="player" style="width: 100%; height: 100%;" src="'+ data.video_embed_code +'" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>' +
 							'<div class="video-cup"></div>' +
@@ -193,6 +194,22 @@
 			$(whichPanelToAppend).append(html);
 		}
 	}
+
+var disqus_url = '{{ Request::url() }}';
+var disqus_identifier = '{{ Request::path() }}';
+
+var disqus_config = function () {
+this.page.url = disqus_url;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = disqus_identifier; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://terheamed.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
 
 
 </script>

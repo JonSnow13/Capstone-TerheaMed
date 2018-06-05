@@ -10,7 +10,7 @@
     	if (!commentSection.hasClass('man-show')) 
     	{
     		commentSection.prev('.med-footer').find('.commentBtn').append('<img src="{{asset('assets/images/busy.gif')}}" style="width: 8%">');
-
+    		commentSection.addClass('man-show');
 
 			if (window.DISQUS) {
 			   jQuery('#disqus_thread').insertAfter(source);
@@ -35,11 +35,10 @@
 			   dsq.async = true;
 			   dsq.src = 'https://'+ disqus_shortname +'.disqus.com/embed.js';
 			   jQuery('head').append(dsq);
+
 			}
 
 	    	setTimeout(function(){
-
-	    		commentSection.addClass('man-show');
 
 				commentSection.siblings('.med-footer').find('.commentBtn').find('img').remove();
 
@@ -67,6 +66,26 @@
 	//this sort by how many words in searchName are match in each medicine
 	function searchSortByQuantitySame(searchedData)
 	{
+		if (searchedData.length <= 0) 
+		{
+			$('.card-panel-medicine').show();
+			$('.card-specific-med').hide();
+			$('.man-loader').css('display', 'none');
+			$('#suggestedMedicineLabel').css('display', 'block');
+			$('#homeMenuBtn').css('display', 'block');
+			$('.welcome-card').fadeOut();
+			var html = '<div class="welcome-card">' +
+				  		'<p>Your search did not match any information in our database.</p>' +
+	  					'<ul>' +
+	  						'<li>Make sure that all words are spelled correctly.</li>' +
+	  						'<li>Try different keywords.</li>' +
+	  						'<li>Try more general keywords.</li>' +
+	  					'</ul>' +
+				  	'</div>';
+
+			$('#searchedPanel').append(html);
+		}
+
 		$(searchedData).each(function(index){
 			
 			var tempId = this.id;
@@ -109,6 +128,9 @@
 
 			if (index >= (searchedData.length - 1)) 
 			{
+				$('#suggestedMedicineLabel').css('display', 'block');
+				$('#homeMenuBtn').css('display', 'block');
+				$('.welcome-card').hide();
 				console.log(countSameMed);
 				appendMedSortByQuantitySame(countSameMed, searchedData);
 			}
@@ -237,24 +259,11 @@
 	}
 
 	function appendSearchedData(data)
-	{
+	{		
 		$('.card-panel-medicine').show();
 		$('.card-specific-med').hide();
 		$('.man-loader').css('display', 'none');
 
-		if (data.length <= 0) 
-		{
-			var html = '<div class="welcome-card">' +
-				  		'<p>Your search did not match any information in our database.</p>' +
-	  					'<ul>' +
-	  						'<li>Make sure that all words are spelled correctly.</li>' +
-	  						'<li>Try different keywords.</li>' +
-	  						'<li>Try more general keywords.</li>' +
-	  					'</ul>' +
-				  	'</div>';
-
-			$('#searchedPanel').append(html);
-		}
 		// console.log(data);
 		for (var i = 0; i < data.length; i++) 
 		{
@@ -262,12 +271,14 @@
 			appendHtmlSearchedMed(data[i]);
 			
 		}
+
 	}
 
 	function appendHtmlSearchedMed(data)
 	{
 		var description = (data.category_id == 2)? data.purpose : data.desc;  
 		description = (description.length > 264)? description.substr(0, 264) + '...' : description;
+		var manufacturer = (!isNullOrWhitespace(data.brand_name) && data.brand_name == 'N/A')? '' : 'Manufacturer: <b>' + data.brand_name + '</b>' ;
 
 		var htmlAppend =  	'<div data-id="'+ data.id +'" class="man-card searchCard">' +
 									'<div class="man-row" onclick="view_medicine('+ data.id +')">' +
@@ -276,6 +287,7 @@
 									  	'</div>' +
 									  	'<div class="col-md-8">' +
 									  		'<div class="card-title"><b>'+ data.name +'</b></div>' +
+									  		'<p>'+ manufacturer +'</p>' +
 									  		'<p style="font-size: 15px;">'+ description +'</p>' +
 									  	'</div>' +
 							  		'</div>' +

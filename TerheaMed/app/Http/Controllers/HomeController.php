@@ -33,6 +33,9 @@ class HomeController extends Controller
         $searchKey = explode(' ', $request->searchName);
         $searchData = array();
 
+        $tempMed = Medicines::where('name', 'LIKE', '%' . $request->searchName . '%')->orWhere('generic_name', 'LIKE', '%' . $request->searchName . '%')->orWhere('key_word', 'LIKE', '%' . $request->searchName . '%')->get()->toArray();
+        $searchData = array_merge($searchData, $tempMed);
+        
         foreach ($searchKey as $value) 
         {
 
@@ -122,7 +125,7 @@ class HomeController extends Controller
 
             if (!empty($value) && !$hasConjuction) 
             {
-                $tempArr = HealthTips::where('name', 'LIKE', '%' . $value . '%')->where('category_id', 1)->get()->toArray();
+                $tempArr = HealthTips::where('name', 'LIKE', '%' . $value . '%')->orWhere('tip_title', 'LIKE', '%' . $value . '%')->where('category_id', 1)->get()->toArray();
                 $healthTipsHomeRemedySearched = array_merge($healthTipsHomeRemedySearched, $tempArr);
             }
         }
@@ -144,7 +147,7 @@ class HomeController extends Controller
 
             if (!empty($value) && !$hasConjuction) 
             {
-                $tempArr = HealthTips::where('name', 'LIKE', '%' . $value . '%')->where('category_id', 2)->get()->toArray();
+                $tempArr = HealthTips::where('name', 'LIKE', '%' . $value . '%')->orWhere('tip_title', 'LIKE', '%' . $value . '%')->where('category_id', 2)->get()->toArray();
                 $healthTipsHomeRemedySearched = array_merge($healthTipsHomeRemedySearched, $tempArr);
             }
         }

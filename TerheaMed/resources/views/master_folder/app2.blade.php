@@ -3,8 +3,9 @@
 <head>
 	<title>Terhea Med</title>
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-	<link rel="icon" type="image/x-icon" href="{{asset('assets/images/pharma_icon.png')}}" />
+	<link rel="icon" type="image/x-icon" href="{{asset('assets/images/terhea_logo.png')}}" />
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('assets/sweet-alert/sweetalert.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/man_library/css/man.css')}}">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -35,7 +36,7 @@
 	      <li>
       		<div class="man-search-form" id="searchBoxForm">
 		    	<div class="input-group" style="justify-content: center;">
-				    <input type="text" list="category" id="searchBox" class="form-control" placeholder="Search{{ (Request::is('healthtips*'))? ' health tips...' : '' }} {{ (Request::is('homeremedy*'))? 'home remedy...' : '' }} {{ (Request::is('about'))? 'common symtoms or medicine...' : '' }}" aria-describedby="btnGroupAddon">
+				    <input type="text" list="category" id="searchBox" class="form-control" placeholder="{{ (Request::is('healthtips*') || Request::is('viewhealthtips*'))? 'Search health tips...' : '' }} {{ (Request::is('homeremedy*') || Request::is('viewhomeremedy*'))? 'Search home remedy...' : '' }} {{ (Request::is('about'))? 'Put common symtoms or medicine for search...' : '' }}" aria-describedby="btnGroupAddon">
 				    <datalist id="category">
 					    <option value="Fever">
 					    <option value="Cough">
@@ -68,8 +69,10 @@
 	@yield('content')
 
 @include('scripts_for_health_tips.script')
+@include('tawkto_script.script')
 
 <script type="text/javascript" src="{{asset('assets/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/sweet-alert/sweetalert.min.js')}}"></script>
 {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> --}}
 
 

@@ -7,7 +7,10 @@
 				<div class="man-loader col-md-6">
 					<img src="{{asset('assets/images/load.gif')}}" style="width: 40px;">
 				</div>
-
+				<div class="man-row" style="margin-top: 4px;">
+					<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px; display: none; float: left;" onclick="backToHomeMenu(this)" id="homeMenuBtn" >< back</button>
+					<h5 style="padding: .5rem .5rem; color: #696a6d; display: none; float: left;" id="suggestedMedicineLabel">Suggested Medicine(s):</h5>
+				</div>
 				<div class="card-specific-med" style="display: none;">
 					<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="backToAllSearchMed()">< back</button>
 					<div class="prescription">You can't obtain this medicine without a prescription from a doctor.</div>
@@ -32,8 +35,11 @@
 				  				<ul id="productUsage"></ul>
 				  			</p>
 
-				  			<b>Warning</b>
+				  			<b>Side Effects</b>
 				  			<p style="font-size: 15px;" id="productSideEffects">This medicine should be taken orally every 4 hours, as needed for pain and/or as directed by doctor.</p>
+
+				  			<b>Warning / Contraindication</b>
+				  			<p style="font-size: 15px;" id="warningContraindication">warning or contraindication desc...</p>
 
 				  			<b id="whatsInside">What is in this medicine?</b>
 				  			<table class="table">
@@ -74,7 +80,7 @@
 		  			</div>
 				</div>
 				<div class="card-panel-medicine">
-					<h5 style="padding: .5rem .5rem; color: #696a6d;" id="suggestedMedicineLabel">Suggested Medicine(s):</h5>
+					
 					<div id="searchedPanel">
 						{{-- @if(isset($searchData))
 
@@ -112,7 +118,53 @@
 
 					  	@else --}}
 
-					  	<div class="welcome-card">
+						{{-- @for($i = 0; $i < 1; $i++)
+						<div class="man-card" onclick="view_medicine()">
+					  		<div class="man-row">
+					  			<div class="col-md-4 man-img-med-shell">
+						  			<img src="{{asset('assets/images/biogesic.jpg')}}" style="width: 100%;">
+						  		</div>
+						  		<div class="col-md-8">
+						  			<div class="card-title"><b>Paracetamol Biogesic</b></div>
+						  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
+						  		</div>
+					  		</div>
+					  		<div class="see-more-card">
+					  			<div class="see-more-btnn">Click to see more</div>
+					  			<div class="more-btnn">
+					  				<i class="material-icons">more_vert</i>
+					  			</div>
+					  		</div>
+					  	</div>
+					  	<div class="med-footer">
+			  				<div class="row">
+								<button type="button" class="btn btn-light col-md-6">
+								  Rate <span class="badge badge-light">4.5</span>
+								</button>
+			  					<button type="button" class="btn btn-light col-md-6 commentBtn" onclick="appendComment('#commentPanel')">
+								  Comments <span class="badge badge-light">4</span>
+								</button>
+			  				</div>
+			  			</div>
+			  			<div class="comment-section" id="commentPanel">
+			  				<ul class="comment-group">
+							  <li class="comment-item"> 
+							  	<div style="width: 13%">
+							  		<img src="{{asset('assets/images/manuel.png')}}" style="width: 45px; border-radius: 50%;">
+							  	</div>
+							  	<div style="width: 87%">
+							  		Cras justo odio  Cras justo odio  Cras justo odio  Cras justo odio  Cras justo odio
+							  	</div>
+							  </li>
+							</ul>
+			  			</div>
+					  	<hr style="margin-right: 1%; margin-left: 1%;">
+					  	@endfor  --}}
+					  	
+
+					</div>
+
+					<div class="welcome-card">
 			  				<center>
 			  					<h2>Welcome to Terhea</h2>
 			  				</center>
@@ -174,51 +226,6 @@
 			  				</div>
 					  	</div>
 
-						{{-- @for($i = 0; $i < 1; $i++)
-						<div class="man-card" onclick="view_medicine()">
-					  		<div class="man-row">
-					  			<div class="col-md-4 man-img-med-shell">
-						  			<img src="{{asset('assets/images/biogesic.jpg')}}" style="width: 100%;">
-						  		</div>
-						  		<div class="col-md-8">
-						  			<div class="card-title"><b>Paracetamol Biogesic</b></div>
-						  			<p style="font-size: 15px;">For the relief of minor aches and pains such as headache, backache, menstrual cramps, muscular aches, minor arthritis pain, toothache, and pain associated with the common cold and flu; For fever reduction. What is in the medicine? Each tablet contains: Paracetamol, 500 mg.</p>
-						  		</div>
-					  		</div>
-					  		<div class="see-more-card">
-					  			<div class="see-more-btnn">Click to see more</div>
-					  			<div class="more-btnn">
-					  				<i class="material-icons">more_vert</i>
-					  			</div>
-					  		</div>
-					  	</div>
-					  	<div class="med-footer">
-			  				<div class="row">
-								<button type="button" class="btn btn-light col-md-6">
-								  Rate <span class="badge badge-light">4.5</span>
-								</button>
-			  					<button type="button" class="btn btn-light col-md-6 commentBtn" onclick="appendComment('#commentPanel')">
-								  Comments <span class="badge badge-light">4</span>
-								</button>
-			  				</div>
-			  			</div>
-			  			<div class="comment-section" id="commentPanel">
-			  				<ul class="comment-group">
-							  <li class="comment-item"> 
-							  	<div style="width: 13%">
-							  		<img src="{{asset('assets/images/manuel.png')}}" style="width: 45px; border-radius: 50%;">
-							  	</div>
-							  	<div style="width: 87%">
-							  		Cras justo odio  Cras justo odio  Cras justo odio  Cras justo odio  Cras justo odio
-							  	</div>
-							  </li>
-							</ul>
-			  			</div>
-					  	<hr style="margin-right: 1%; margin-left: 1%;">
-					  	@endfor  --}}
-					  	
-
-					</div>
 				</div>
 			</div>
 
@@ -298,7 +305,7 @@
 							</div>
 						</div> --}}
 					</div>
-					<button class="btn btn-xs btn-light col-md-12" onclick="loadMore(this, 'clinic')"> <span id="clinicLoadMoreBtn">Load more</span> <img src="{{asset('assets/images/loader.gif')}}" class="loader-more"></button>
+					<button class="btn btn-xs btn-light col-md-12" style="margin-bottom: 36px;" onclick="loadMore(this, 'clinic')"> <span id="clinicLoadMoreBtn">Load more</span> <img src="{{asset('assets/images/loader.gif')}}" class="loader-more"></button>
 				</div>
 				</div>
 			</div>
@@ -309,7 +316,7 @@
 
 	<div class="big-map-panel">
 		<div class="man-row">
-			<div style="width: 25%; overflow: auto;" id="bigMapPlaceDetails">
+			<div class="col-md-3" style="overflow: auto;" id="bigMapPlaceDetails">
 				<button class="btn btn-light btn-xs btn-simple" style="margin-bottom: 5px;" onclick="hideBigMap()">< back to home with this current location</button>
 				<div class="col-md-12">
 					<div class="form-group">
@@ -346,7 +353,7 @@
 				</div>
 			</div>
 
-			<div style="width: 75%" id="seeAllMap"></div>
+			<div class="col-md-9" id="seeAllMap"></div>
 		</div>
 	</div>
 

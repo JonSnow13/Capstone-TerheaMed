@@ -7,7 +7,7 @@
 		<div class="col-md-10 health-tips-panel" style="background: #fff">
 			
 			<div class="big-video-container">
-				<iframe id="player" style="width: 100%; height: 100%;" src="{{ $healthTip->video_embed_code }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+				<iframe id="player" style="width: 100%; height: 100%;" src="{{ $healthTip->video_embed_code }}?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 			</div>
 
 			<div class="man-title-header">{{ $healthTip->name }}</div>
@@ -24,6 +24,8 @@
 					</li>
 				@endfor
 			</ol>
+
+			<div id="disqus_thread"></div>
 
 		</div>
 	</div>

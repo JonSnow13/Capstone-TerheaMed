@@ -5,6 +5,11 @@
 	var viewedPlace = [];
 
 	$(function(){
+		$('#mapModal').on('hidden.bs.modal', function(e) {
+
+			clearInterval(timerForUpdatingLocation);
+
+		});
 
 		// $('#mapModal').modal('show');
 		// $('#pharmacy-section-holder').scrollToFixed();
@@ -52,6 +57,62 @@
 
 	});
 
+	var timerForUpdatingLocation;
+	function alwaysUpdateLocationWhenDirectionviewIsUsed(end)
+	{
+		timerForUpdatingLocation = setInterval(function(){
+			if (navigator.geolocation) {
+	          	navigator.geolocation.getCurrentPosition(function(position) {
+	            pos = {
+			              lat: position.coords.latitude,
+			              lng: position.coords.longitude
+			            };
+			    var icon = {
+				    url: "{{asset('assets/images/pulse_dot.gif')}}", // url
+				    scaledSize: new google.maps.Size(28, 28), // scaled size
+				    origin: new google.maps.Point(0,0), // origin
+				    anchor: new google.maps.Point(0, 0) // anchor
+					};
+				markerOfYourLocation_modal.setMap(null);
+
+				markerOfYourLocation_modal = new google.maps.Marker({
+			    	position: pos,
+			    	map: map,
+			    	icon: icon,
+			    	flat: true
+			  	});
+			  	
+			  	// markerOfYourLocation_modal.setRotation(bearing);
+	     		
+	     		// map.setCenter(pos);
+
+	     		// directionsService.route({
+		      //     origin: pos,
+		      //     destination: end.geometry.location,
+		      //     travelMode: 'DRIVING'
+		      //   }, function(response, status) {
+		      //     if (status === 'OK') {
+
+		      //       directionsDisplay.setDirections(response);
+
+		      //     } else {
+		      //       window.alert('Directions request failed due to ' + status);
+		      //     }
+		      //   });
+	//==========================================================================
+
+
+
+	          }, function() {
+	            handleLocationError(true, infoWindow, map.getCenter());
+	          });
+	        } else {
+	          // Browser doesn't support Geolocation
+	          handleLocationError(false, infoWindow, map.getCenter());
+	        }
+		}, 2000);
+	}
+
 	function getClassOfPharmaPanel()//unused
 	{
 		var secondToLastElement = $('.pharmacy-panel').eq(-3);
@@ -83,6 +144,7 @@
 	function view_medicine(id)
 	{
 		// window.history.pushState('View Medicine', 'View Medicine', 'viewmed?key='+id);
+		$('#homeMenuBtn').css('display', 'none');
 		$('.man-loader').css('display', 'flex');
 		setTimeout(function(){
 			$('.man-loader').css('display', 'none');
@@ -98,10 +160,11 @@
 					var format = jQuery.parseJSON(data.format);
 					$('#productPicture').attr('src', data.picture);
 					$('#productName').text(data.name);
-					$('#productBrand').text('Brand Name: ' + data.brand_name);
+					$('#productBrand').text('Manufacturer: ' + data.brand_name);
 					$('#productFormat').text('Format: ' + format.format);
 					$('#productDesc').text(data.desc);
-					$('#productSideEffects').text((isNullOrWhitespace(data.side_effect))? 'none' : data.side_effect);
+					$('#productSideEffects').text((isNullOrWhitespace(data.side_effect) || data.side_effect=='N/A')? 'none' : data.side_effect);
+					$('#warningContraindication').text((isNullOrWhitespace(data.warningMsg || data.warningMsg=='N/A'))? 'none' : data.warningMsg);
 					$('#productGenericName').text('Generic Name: ' + data.generic_name);
 
 					var directionOfUse = data.direction_of_use;
@@ -132,10 +195,10 @@
 				 		$('#whatDesc').text('What is this medicine for?');
 				 		$('#productDetailsTitle').text('Product Details');
 				 	}
-				 	else
+				 	else if (data.category_id == 2)
 				 	{
 				 		$('#whatsInside').text('What is in this herbal?');
-				 		$('#whatUsage').text('How much and how often should you use this herbal?');
+				 		$('#whatUsage').text('How should you use this herbal?');
 				 		$('#whatDesc').text('About this herbal');
 				 		$('#productDetailsTitle').text('Herbal Details');
 
@@ -144,7 +207,19 @@
 				 									data.purpose +
 				 									'</p>';
 				 		$('#forHerbalPurpose').html(herbalPuroposeHtml);
+				 	}
+				 	else
+				 	{
+				 		$('#whatsInside').text('What is in this medicine?');
+				 		$('#whatUsage').text('How much and how often should you use this medicine?');
+				 		$('#whatDesc').text('About this medicine');
+				 		$('#productDetailsTitle').text('Herbal Details');
 
+				 		var vitaminPuroposeHtml = '<b>What is this medicine for?</b>' +
+				 									'<p style="font-size: 15px;">' +
+				 									data.purpose +
+				 									'</p>';
+				 		$('#forHerbalPurpose').html(vitaminPuroposeHtml);
 				 	}
 
 				 	getContentOfMedicine(data.id);
@@ -318,6 +393,7 @@
 		// window.history.pushState('Home', 'Home', 'home');
 		$('.man-loader').css('display', 'flex');
 		setTimeout(function(){
+			$('#homeMenuBtn').css('display', 'block');
 			$('.man-loader').css('display', 'none');
 			$('.card-specific-med').hide();
 			$('.card-panel-medicine').show();
@@ -549,8 +625,8 @@
       	appendPopover(popoverElmt);
 
       	calculateDistance(place, '#pharmaD'+i);
-	    directionView('#directionView'+i, place);
-	    directionView('#pharma'+i, place);
+	    directionView('#directionView'+i, place, i, 'pharma');
+	    directionView('#pharma'+i, place, i, 'pharma');
     }
 
     function appendClinicHtml(place, i)
@@ -610,8 +686,8 @@
 
 	     // showStreetView(place, 'clinic'+i);
 	    calculateDistance(place, '#clinicX'+i);
-	    directionView('#directionViewX'+i, place);
-	    directionView('#clinic'+i, place);
+	    directionView('#directionViewX'+i, place, i, 'clinic');
+	    directionView('#clinic'+i, place, i, 'clinic');
     }
 
     function openClinicStreetview(i)
@@ -714,12 +790,16 @@
     			console.log(resultRearchData);
 
     			//this sort by how many words in searchName are match in each medicine
-				searchSortByQuantitySame(resultRearchData)
-
+				searchSortByQuantitySame(resultRearchData);
+				
+    		},
+    		error: function(){
+    			errorAlert();
     		}
 
     	});
     }
+
 
    //  var searchIndex = 0;
    //  function searchFunctionStringDivided()
@@ -843,6 +923,14 @@
     {
     	if (viewedPlace == undefined) return;
     	timeDistanceCalculator(viewedPlace);
+    }
+
+    function backToHomeMenu(btn)
+    {
+    	$(btn).css('display', 'none');
+    	$('#suggestedMedicineLabel').css('display', 'none');
+    	$('#searchedPanel').html('');
+    	$('.welcome-card').show();
     }
 
 
